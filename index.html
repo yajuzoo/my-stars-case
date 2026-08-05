@@ -2,489 +2,140 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Stars Cases</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кейсы от Александра</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-      -webkit-user-select: none;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
-
     body {
-      background-color: #0f172a;
-      color: #f8fafc;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 20px;
-      background: #1e293b;
-      border-bottom: 1px solid #334155;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .brand {
-      font-size: 20px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #38bdf8, #818cf8);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .balance-badge {
-      background: #334155;
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 14px;
-      color: #fbbf24;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      border: 1px solid #475569;
-    }
-
-    .content {
-      flex: 1;
+      margin: 0;
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-bottom: 90px;
-    }
-
-    .tab-content {
-      display: none;
-      width: 100%;
-      max-width: 480px;
-    }
-
-    .tab-content.active {
+      background-color: #121318;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
-    .case-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .roulette-container {
-      width: 100%;
-      height: 110px;
-      background: #1e293b;
+    .balance-card {
+      background: #1c1e24;
       border-radius: 16px;
-      border: 2px solid #38bdf8;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 20px;
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
-    }
-
-    .pointer {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 4px;
-      background: #ef4444;
-      transform: translateX(-50%);
-      z-index: 5;
-      box-shadow: 0 0 10px #ef4444;
-    }
-
-    .tape {
-      display: flex;
-      position: absolute;
-      left: 0;
-      top: 15px;
-      height: 80px;
-      will-change: transform;
-    }
-
-    .item {
-      min-width: 80px;
-      max-width: 80px;
-      height: 80px;
-      background: #0f172a;
-      margin: 0 4px;
-      border-radius: 12px;
-      border: 1px solid #334155;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      text-align: center;
-      padding: 4px;
-    }
-
-    .btn-spin {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, #38bdf8, #2563eb);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .btn-spin:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .result-msg {
-      margin-top: 16px;
-      font-size: 16px;
-      font-weight: 600;
-      min-height: 24px;
-      text-align: center;
-    }
-
-    .profile-card {
-      background: #1e293b;
-      border-radius: 16px;
-      padding: 24px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 1px solid #334155;
-    }
-
-    .avatar {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #818cf8, #c084fc);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .user-name {
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .user-handle {
-      font-size: 14px;
-      color: #94a3b8;
-      margin-bottom: 20px;
-    }
-
-    .stats-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .stat-box {
-      background: #0f172a;
-      padding: 14px;
-      border-radius: 12px;
-      text-align: center;
-      border: 1px solid #334155;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: #94a3b8;
-      margin-bottom: 4px;
-    }
-
-    .stat-val {
-      font-size: 18px;
-      font-weight: 700;
-      color: #fbbf24;
-    }
-
-    .btn-topup {
-      width: 100%;
-      padding: 14px;
-      background: #22c55e;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #1e293b;
-      border-top: 1px solid #334155;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-      z-index: 10;
-    }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #64748b;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      gap: 4px;
-    }
-
-    .nav-item.active {
-      color: #38bdf8;
-    }
-
-    .nav-icon {
-      font-size: 20px;
-    }
-
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
       padding: 20px;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal {
-      background: #1e293b;
-      border-radius: 20px;
-      padding: 24px;
-      width: 100%;
+      width: 90%;
       max-width: 400px;
-      border: 1px solid #334155;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
-    .modal-title {
-      font-size: 20px;
-      font-weight: 700;
+    .balance-title {
+      font-size: 14px;
+      color: #8e8e93;
+      margin-bottom: 8px;
+    }
+    .balance-value {
+      font-size: 32px;
+      font-weight: bold;
       margin-bottom: 16px;
-      text-align: center;
+      color: #ffb703;
     }
-
-    .stars-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .star-opt {
-      background: #0f172a;
-      border: 1px solid #334155;
-      padding: 14px;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: 700;
-      color: #fbbf24;
-      cursor: pointer;
-    }
-
-    .star-opt:hover {
-      border-color: #38bdf8;
-    }
-
-    .btn-close {
-      width: 100%;
-      padding: 12px;
-      background: #475569;
+    .btn {
+      background-color: #0088cc;
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 16px;
       font-weight: 600;
       cursor: pointer;
+      width: 100%;
+      transition: background-color 0.2s;
+    }
+    .btn:active {
+      background-color: #006699;
+    }
+    /* Модальное окно */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background: #1c1e24;
+      padding: 24px;
+      border-radius: 20px;
+      width: 80%;
+      max-width: 320px;
+      text-align: center;
+    }
+    .star-option {
+      background: #2c2d35;
+      margin: 8px 0;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .star-option:hover {
+      background: #3a3b45;
     }
   </style>
 </head>
 <body>
 
-  <header class="header">
-    <div class="brand">STARS CASE</div>
-    <div class="balance-badge" onclick="openTopUpModal()">
-      <span id="mainBalanceDisplay">0 ⭐</span>
-      <span style="font-size: 12px; color: #38bdf8;">+</span>
-    </div>
-  </header>
+  <div class="balance-card">
+    <div class="balance-title">Ваш баланс</div>
+    <div class="balance-value" id="balanceDisplay">0 ⭐</div>
+    <button class="btn" onclick="openTopUpModal()">Пополнить</button>
+  </div>
 
-  <main class="content">
-
-    <section id="casesTab" class="tab-content active">
-      <h2 class="case-title">Кейс "Звёздный" (10 ⭐)</h2>
-      <div class="roulette-container">
-        <div class="pointer"></div>
-        <div class="tape" id="tape"></div>
-      </div>
-      <button id="openBtn" class="btn-spin" onclick="spinCase()">Крутить (10 ⭐)</button>
-      <div id="resultMsg" class="result-msg"></div>
-    </section>
-
-    <section id="profileTab" class="tab-content">
-      <div class="profile-card">
-        <div class="avatar" id="userAvatar">U</div>
-        <div class="user-name" id="userName">Пользователь</div>
-        <div class="user-handle" id="userHandle">@username</div>
-
-        <div class="stats-grid">
-          <div class="stat-box">
-            <div class="stat-label">Баланс</div>
-            <div class="stat-val" id="profileMainBalance">0 ⭐</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">Всего выиграно</div>
-            <div class="stat-val" id="totalWonDisplay">0 ⭐</div>
-          </div>
-        </div>
-
-        <button class="btn-topup" onclick="openTopUpModal()">Пополнить Stars</button>
-      </div>
-    </section>
-
-  </main>
-
-  <nav class="bottom-nav">
-    <div id="navCases" class="nav-item active" onclick="switchTab('cases')">
-      <span class="nav-icon">🎰</span>
-      <span>Кейсы</span>
-    </div>
-    <div id="navProfile" class="nav-item" onclick="switchTab('profile')">
-      <span class="nav-icon">👤</span>
-      <span>Профиль</span>
-    </div>
-  </nav>
-
-  <div id="topUpModal" class="modal-overlay">
-    <div class="modal">
-      <h3 class="modal-title">Пополнение баланса</h3>
-      <div class="stars-options">
-        <div class="star-opt" onclick="payStars(10)">10 ⭐</div>
-        <div class="star-opt" onclick="payStars(100)">100 ⭐</div>
-        <div class="star-opt" onclick="payStars(500)">500 ⭐</div>
-        <div class="star-opt" onclick="payStars(1000)">1 000 ⭐</div>
-        <div class="star-opt" onclick="payStars(5000)">5 000 ⭐</div>
-        <div class="star-opt" onclick="payStars(10000)">10 000 ⭐</div>
-      </div>
-      <button class="btn-close" onclick="closeTopUpModal()">Закрыть</button>
+  <!-- Модальное окно пополнения -->
+  <div class="modal" id="topupModal">
+    <div class="modal-content">
+      <h3>Выберите сумму</h3>
+      <div class="star-option" onclick="payStars(10)">10 ⭐</div>
+      <div class="star-option" onclick="payStars(50)">50 ⭐</div>
+      <div class="star-option" onclick="payStars(100)">100 ⭐</div>
+      <div class="star-option" onclick="payStars(500)">500 ⭐</div>
+      <button class="btn" style="background: #3a3b45; margin-top: 12px;" onclick="closeTopUpModal()">Отмена</button>
     </div>
   </div>
 
   <script>
-    // ⚠️ ВАЖНО: Укажи ссылку на твой ngrok или сервер (например "https://xxxx.ngrok-free.app")
-    const SERVER_URL = "https://9f1e-2a03-32c0-7000-cc88-d588-9b53-e53-54a2.ngrok-free.app"; 
-
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    const tgUser = tg.initDataUnsafe?.user || {};
-    const tgUserId = tgUser.id ? String(tgUser.id) : "guest";
+    // ⚠️ УКАЖИ СВОЮ СВЕЖУЮ ССЫЛКУ ИЗ NGROK / LOCALTUNNEL ⚠️
+    const SERVER_URL = "https://9f1e-2a03-32c0-7000-cc88-d588-9b53-e53-54a2.ngrok-free.app";
 
-    document.getElementById('userName').innerText = (tgUser.first_name || 'Игрок') + ' ' + (tgUser.last_name || '');
-    document.getElementById('userHandle').innerText = tgUser.username ? '@' + tgUser.username : 'ID: ' + tgUserId;
-    if (tgUser.first_name) {
-      document.getElementById('userAvatar').innerText = tgUser.first_name[0].toUpperCase();
-    }
+    const tgUserId = tg.initDataUnsafe?.user?.id || 8712421526;
+    let mainBalance = 0;
 
-    const mainKey = `main_balance_${tgUserId}`;
-    const wonKey = `total_won_${tgUserId}`;
-
-    let mainBalance = parseInt(localStorage.getItem(mainKey) || "0");
-    let totalWon = parseInt(localStorage.getItem(wonKey) || "0");
-
-    function renderUI() {
-      document.getElementById('mainBalanceDisplay').innerText = mainBalance + " ⭐";
-      document.getElementById('profileMainBalance').innerText = mainBalance + " ⭐";
-      document.getElementById('totalWonDisplay').innerText = totalWon + " ⭐";
-    }
-
-    async function syncBalanceWithServer() {
+    async function fetchBalance() {
       try {
-        const res = await fetch(`${SERVER_URL}/api/get_balance?user_id=${tgUserId}`);
+        const res = await fetch(`${SERVER_URL}/api/get_balance?user_id=${tgUserId}`, {
+          headers: { 'ngrok-skip-browser-warning': 'true' }
+        });
         const data = await res.json();
         if (data.status === 'ok') {
           mainBalance = data.balance;
-          localStorage.setItem(mainKey, mainBalance);
-          renderUI();
+          updateUI();
         }
-      } catch (e) {}
-    }
-
-    async function updateUI() {
-      renderUI();
-      localStorage.setItem(mainKey, mainBalance);
-      localStorage.setItem(wonKey, totalWon);
-
-      try {
-        await fetch(`${SERVER_URL}/api/update_balance`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user_id: tgUserId, balance: mainBalance })
-        });
-      } catch (e) {}
-    }
-
-    renderUI();
-    syncBalanceWithServer();
-
-    function switchTab(tabName) {
-      document.getElementById('casesTab').classList.remove('active');
-      document.getElementById('profileTab').classList.remove('active');
-      document.getElementById('navCases').classList.remove('active');
-      document.getElementById('navProfile').classList.remove('active');
-
-      if (tabName === 'cases') {
-        document.getElementById('casesTab').classList.add('active');
-        document.getElementById('navCases').classList.add('active');
-      } else {
-        document.getElementById('profileTab').classList.add('active');
-        document.getElementById('navProfile').classList.add('active');
+      } catch (e) {
+        console.error("Ошибка загрузки баланса:", e);
       }
     }
 
-    function openTopUpModal() {
-      document.getElementById('topUpModal').classList.add('active');
+    function updateUI() {
+      document.getElementById('balanceDisplay').textContent = `${mainBalance} ⭐`;
     }
+
+    function openTopUpModal() {
+      document.getElementById('topupModal').style.display = 'flex';
+    }
+
     function closeTopUpModal() {
-      document.getElementById('topUpModal').classList.remove('active');
+      document.getElementById('topupModal').style.display = 'none';
     }
 
     async function payStars(amount) {
@@ -493,111 +144,33 @@
       try {
         const response = await fetch(`${SERVER_URL}/api/create_invoice`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true'
+          },
           body: JSON.stringify({ amount: amount, user_id: tgUserId })
         });
 
         const data = await response.json();
 
         if (data.status === 'ok' && data.invoice_link) {
+          // Вызов нативной шторки оплаты в Telegram
           tg.openInvoice(data.invoice_link, function(status) {
             if (status === 'paid') {
-              mainBalance += amount;
-              updateUI();
+              fetchBalance(); // Перезапрашиваем баланс с сервера
               alert(`🎉 Успешно! Баланс пополнен на ${amount} ⭐`);
             }
           });
         } else {
-          alert("Ошибка Telegram API: " + (data.message || "Не удалось получить счет"));
+          alert("Ошибка создания счета: " + (data.message || "Неизвестная ошибка"));
         }
       } catch (e) {
-        alert("Ошибка подключения к серверу! Проверь запущен ли main.py и правильный ли SERVER_URL в index.html.\n\nДетали: " + e.message);
+        alert("Ошибка подключения к серверу!\nПроверь запущен ли main.py и правильный ли SERVER_URL в index.html.");
       }
     }
 
-    const possiblePrizes = [
-      { name: "Пусто 💨", stars: 0, weight: 60000 },
-      { name: "5 Stars ⭐", stars: 5, weight: 30000 },
-      { name: "10 Stars ⭐", stars: 10, weight: 8000 },
-      { name: "20 Stars ⭐", stars: 20, weight: 1975 },
-      { name: "100 Stars 💎", stars: 100, weight: 25 }
-    ];
-
-    function getRandomPrize() {
-      let rand = Math.floor(Math.random() * 100000) + 1;
-      let cumulative = 0;
-      for (let prize of possiblePrizes) {
-        cumulative += prize.weight;
-        if (rand <= cumulative) return prize;
-      }
-      return possiblePrizes[0];
-    }
-
-    const tape = document.getElementById('tape');
-    const openBtn = document.getElementById('openBtn');
-    const resultMsg = document.getElementById('resultMsg');
-
-    for (let i = 0; i < 15; i++) {
-      const item = document.createElement('div');
-      item.className = 'item';
-      item.innerText = possiblePrizes[Math.floor(Math.random() * possiblePrizes.length)].name;
-      tape.appendChild(item);
-    }
-
-    function spinCase() {
-      if (mainBalance < 10) {
-        alert("Недостаточно Stars на балансе!");
-        switchTab('profile');
-        return;
-      }
-
-      mainBalance -= 10;
-      updateUI();
-
-      openBtn.disabled = true;
-      resultMsg.innerText = "🌀 Открываем...";
-
-      const wonPrize = getRandomPrize();
-
-      tape.style.transition = "none";
-      tape.style.transform = "translateX(0px)";
-      tape.innerHTML = '';
-
-      const targetIndex = 30;
-
-      for (let i = 0; i < 40; i++) {
-        const item = document.createElement('div');
-        item.className = 'item';
-        if (i === targetIndex) {
-          item.innerText = wonPrize.name;
-        } else {
-          item.innerText = possiblePrizes[Math.floor(Math.random() * possiblePrizes.length)].name;
-        }
-        tape.appendChild(item);
-      }
-
-      const targetShift = (targetIndex * 88) - 120;
-
-      setTimeout(() => {
-        tape.style.transition = "transform 4s cubic-bezier(0.1, 1, 0.1, 1)";
-        tape.style.transform = `translateX(-${targetShift}px)`;
-      }, 50);
-
-      setTimeout(() => {
-        mainBalance += wonPrize.stars;
-        totalWon += wonPrize.stars;
-        updateUI();
-
-        if (wonPrize.stars > 0) {
-          resultMsg.innerHTML = "🎉 Выпало: <b style='color:#f1c40f'>" + wonPrize.name + "</b> (+" + wonPrize.stars + " ⭐)";
-        } else {
-          resultMsg.innerHTML = "💨 Выпало: <b>Пусто</b>";
-        }
-
-        openBtn.innerText = "Крутить еще (10 ⭐)";
-        openBtn.disabled = false;
-      }, 4200);
-    }
+    // Первичная загрузка баланса
+    fetchBalance();
   </script>
 </body>
 </html>
