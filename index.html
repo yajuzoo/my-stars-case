@@ -16,7 +16,6 @@
       padding: 15px;
     }
 
-    /* Верхняя панель с балансом */
     .header {
       display: flex;
       justify-content: space-between;
@@ -109,7 +108,6 @@
 </head>
 <body>
 
-  <!-- Шапка с балансом -->
   <div class="header">
     <span>Мой баланс:</span>
     <div class="balance-box" id="balanceDisplay">0 ⭐</div>
@@ -130,18 +128,32 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
+    // Получаем Telegram User ID из приложения
+    const tgUserId = tg.initDataUnsafe?.user?.id || new URLSearchParams(window.location.search).get('user_id') || "guest";
+
     const urlParams = new URLSearchParams(window.location.search);
     const invoiceUrl = urlParams.get('invoice');
     const winPrize = urlParams.get('prize') || "Пусто 💨";
     const winStars = parseInt(urlParams.get('stars') || "0");
-    let currentBalance = parseInt(urlParams.get('balance') || "0");
+    const paramBalance = parseInt(urlParams.get('balance') || "0");
+
+    // Загружаем сохраненный баланс пользователя из локальной памяти устройства
+    const storageKey = `stars_balance_${tgUserId}`;
+    let currentBalance = localStorage.getItem(storageKey) !== null 
+      ? parseInt(localStorage.getItem(storageKey)) 
+      : paramBalance;
+
+    // Если параметр с сервера больше (например, были зачисления), обновляем
+    if (paramBalance > currentBalance) {
+      currentBalance = paramBalance;
+      localStorage.setItem(storageKey, currentBalance);
+    }
 
     const tape = document.getElementById('tape');
     const openBtn = document.getElementById('openBtn');
     const balanceDisplay = document.getElementById('balanceDisplay');
     const resultMsg = document.getElementById('resultMsg');
 
-    // Отображаем стартовый баланс
     balanceDisplay.innerText = currentBalance + " ⭐";
 
     const possiblePrizes = ["Пусто 💨", "5 Stars ⭐", "10 Stars ⭐", "20 Stars ⭐", "100 Stars 💎"];
@@ -154,7 +166,6 @@
       for (let i = 0; i < 40; i++) {
         const item = document.createElement('div');
         item.className = 'item';
-        // 35-й элемент - выигрыш
         if (i === 34) {
           item.innerText = winPrize;
           item.style.border = "2px solid #f39c12";
@@ -178,21 +189,19 @@
           openBtn.disabled = true;
           resultMsg.innerText = "🌀 Рулетка крутится...";
           
-          // Включаем анимацию
           setTimeout(() => {
             tape.style.transition = "transform 4s cubic-bezier(0.1, 1, 0.1, 1)";
             tape.style.transform = "translateX(-2970px)";
           }, 50);
 
-          // По окончании анимации
           setTimeout(() => {
-            // Обновляем баланс в интерфейсе сайта
+            // Обновляем баланс и сохраняем его локально под ID аккаунта
             currentBalance += winStars;
+            localStorage.setItem(storageKey, currentBalance);
             balanceDisplay.innerText = currentBalance + " ⭐";
             
             resultMsg.innerHTML = "🎉 Выпало: <b style='color:#f1c40f'>" + winPrize + "</b>";
             
-            // Кнопку оставляем активной для повторного открытия (или переоткрытия через меню)
             openBtn.innerText = "Крутить еще!";
             openBtn.disabled = false;
           }, 4200);
