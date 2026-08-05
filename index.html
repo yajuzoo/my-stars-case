@@ -14,8 +14,10 @@
       text-align: center;
       margin: 0;
       padding: 15px;
+      padding-bottom: 80px; /* Отступ для нижнего меню */
     }
 
+    /* Шапка с главным балансом */
     .header {
       display: flex;
       justify-content: space-between;
@@ -32,8 +34,11 @@
       color: #f1c40f;
     }
 
-    h2 { color: #f39c12; margin-top: 5px; }
-    
+    /* Вкладки (Экран Кейсов / Экран Профиля) */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Рулетка */
     .roulette-container {
       position: relative;
       width: 100%;
@@ -91,6 +96,7 @@
       box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
       width: 100%;
       max-width: 350px;
+      margin-top: 10px;
     }
     .btn:disabled {
       background: #555;
@@ -98,115 +104,267 @@
       box-shadow: none;
     }
 
-    .result-msg {
-      margin-top: 15px;
-      font-size: 16px;
+    /* Карточки Личного Кабинета */
+    .profile-card {
+      background: #252538;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 15px;
+      border: 1px solid #3d3d5c;
+      text-align: left;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #f39c12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
       font-weight: bold;
-      min-height: 24px;
+    }
+    .wallet-title {
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 5px;
+    }
+    .wallet-value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #f1c40f;
+    }
+
+    /* Нижняя навигация */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #12121a;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid #2c2c3e;
+      z-index: 100;
+    }
+    .nav-item {
+      color: #777;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-item.active {
+      color: #f39c12;
+      font-weight: bold;
+    }
+    .nav-icon {
+      font-size: 20px;
     }
   </style>
 </head>
 <body>
 
+  <!-- Верхняя шапка -->
   <div class="header">
-    <span>Мой баланс:</span>
-    <div class="balance-box" id="balanceDisplay">0 ⭐</div>
+    <span>Основной Баланс:</span>
+    <div class="balance-box" id="mainBalanceDisplay">0 ⭐</div>
   </div>
 
-  <h2>⭐ Открытие кейса ⭐</h2>
-  <p style="color: #ccc;">Цена: <b style="color: #fff;">10 Stars</b></p>
+  <!-- 1. Вкладка "Кейсы" -->
+  <div id="casesTab" class="tab-content active">
+    <h2>⭐ Кейс за 10 Stars ⭐</h2>
+    
+    <div class="roulette-container">
+      <div class="pointer"></div>
+      <div class="tape" id="tape"></div>
+    </div>
 
-  <div class="roulette-container">
-    <div class="pointer"></div>
-    <div class="tape" id="tape"></div>
+    <button class="btn" id="openBtn" onclick="spinCase()">Открыть за 10 ⭐</button>
+    <div style="margin-top:10px;" id="resultMsg"></div>
   </div>
 
-  <button class="btn" id="openBtn" onclick="buyCase()">Крутить за 10 ⭐</button>
-  <div class="result-msg" id="resultMsg"></div>
+  <!-- 2. Вкладка "Личный кабинет" -->
+  <div id="profileTab" class="tab-content">
+    <div class="profile-card">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">👤</div>
+        <div>
+          <div style="font-size: 18px; font-weight: bold;" id="userName">Пользователь</div>
+          <div style="color: #aaa; font-size: 13px;" id="userHandle">@username</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Кошелек 1 -->
+    <div class="profile-card">
+      <div class="wallet-title">💳 Основной баланс (для покупок):</div>
+      <div class="wallet-value" id="profileMainBalance">0 ⭐</div>
+      <button class="btn" style="font-size: 14px; padding: 10px; margin-top:10px;" onclick="topUpInvoice()">Пополнить баланс</button>
+    </div>
+
+    <!-- Кошелек 2 -->
+    <div class="profile-card">
+      <div class="wallet-title">🎁 Выигранный баланс (Призы):</div>
+      <div class="wallet-value" id="profileWinBalance">0 ⭐</div>
+    </div>
+  </div>
+
+  <!-- Нижнее меню -->
+  <div class="bottom-nav">
+    <div class="nav-item active" id="navCases" onclick="switchTab('cases')">
+      <span class="nav-icon">🎰</span>
+      <span>Кейсы</span>
+    </div>
+    <div class="nav-item" id="navProfile" onclick="switchTab('profile')">
+      <span class="nav-icon">👤</span>
+      <span>Кабинет</span>
+    </div>
+  </div>
 
   <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // Получаем Telegram User ID из приложения
-    const tgUserId = tg.initDataUnsafe?.user?.id || new URLSearchParams(window.location.search).get('user_id') || "guest";
+    // Берем данные юзера из Telegram
+    const tgUser = tg.initDataUnsafe?.user || {};
+    const tgUserId = tgUser.id || "guest";
+
+    // Устанавливаем профиль
+    document.getElementById('userName').innerText = (tgUser.first_name || 'Игрок') + ' ' + (tgUser.last_name || '');
+    document.getElementById('userHandle').innerText = tgUser.username ? '@' + tgUser.username : 'ID: ' + tgUserId;
+    if (tgUser.first_name) {
+      document.getElementById('userAvatar').innerText = tgUser.first_name[0].toUpperCase();
+    }
 
     const urlParams = new URLSearchParams(window.location.search);
     const invoiceUrl = urlParams.get('invoice');
-    const winPrize = urlParams.get('prize') || "Пусто 💨";
-    const winStars = parseInt(urlParams.get('stars') || "0");
-    const paramBalance = parseInt(urlParams.get('balance') || "0");
 
-    // Загружаем сохраненный баланс пользователя из локальной памяти устройства
-    const storageKey = `stars_balance_${tgUserId}`;
-    let currentBalance = localStorage.getItem(storageKey) !== null 
-      ? parseInt(localStorage.getItem(storageKey)) 
-      : paramBalance;
+    // Локальные балансы (Кошелек 1 и Кошелек 2)
+    const mainKey = `main_balance_${tgUserId}`;
+    const winKey = `win_balance_${tgUserId}`;
 
-    // Если параметр с сервера больше (например, были зачисления), обновляем
-    if (paramBalance > currentBalance) {
-      currentBalance = paramBalance;
-      localStorage.setItem(storageKey, currentBalance);
+    let mainBalance = parseInt(localStorage.getItem(mainKey) || "50"); // Даем 50 Stars для теста
+    let winBalance = parseInt(localStorage.getItem(winKey) || "0");
+
+    function updateUI() {
+      document.getElementById('mainBalanceDisplay').innerText = mainBalance + " ⭐";
+      document.getElementById('profileMainBalance').innerText = mainBalance + " ⭐";
+      document.getElementById('profileWinBalance').innerText = winBalance + " ⭐";
+      localStorage.setItem(mainKey, mainBalance);
+      localStorage.setItem(winKey, winBalance);
+    }
+    updateUI();
+
+    // Переключение вкладок меню
+    function switchTab(tabName) {
+      document.getElementById('casesTab').classList.remove('active');
+      document.getElementById('profileTab').classList.remove('active');
+      document.getElementById('navCases').classList.remove('active');
+      document.getElementById('navProfile').classList.remove('active');
+
+      if (tabName === 'cases') {
+        document.getElementById('casesTab').classList.add('active');
+        document.getElementById('navCases').classList.add('active');
+      } else {
+        document.getElementById('profileTab').classList.add('active');
+        document.getElementById('navProfile').classList.add('active');
+      }
+    }
+
+    // Логика подкрутки шансов на стороне клиенте (для мгновенной прокрутки без лишних чеков)
+    const possiblePrizes = [
+      { name: "Пусто 💨", stars: 0, weight: 60000 },
+      { name: "5 Stars ⭐", stars: 5, weight: 30000 },
+      { name: "10 Stars ⭐", stars: 10, weight: 8000 },
+      { name: "20 Stars ⭐", stars: 20, weight: 1975 },
+      { name: "100 Stars 💎", stars: 100, weight: 25 }
+    ];
+
+    function getRandomPrize() {
+      let rand = Math.floor(Math.random() * 100000) + 1;
+      let cumulative = 0;
+      for (let prize of possiblePrizes) {
+        cumulative += prize.weight;
+        if (rand <= cumulative) return prize;
+      }
+      return possiblePrizes[0];
     }
 
     const tape = document.getElementById('tape');
     const openBtn = document.getElementById('openBtn');
-    const balanceDisplay = document.getElementById('balanceDisplay');
     const resultMsg = document.getElementById('resultMsg');
 
-    balanceDisplay.innerText = currentBalance + " ⭐";
+    function spinCase() {
+      // Проверка баланса
+      if (mainBalance < 10) {
+        alert("Недостаточно Stars на основном балансе!");
+        switchTab('profile');
+        return;
+      }
 
-    const possiblePrizes = ["Пусто 💨", "5 Stars ⭐", "10 Stars ⭐", "20 Stars ⭐", "100 Stars 💎"];
-    
-    function initTape() {
+      // Списываем 10 Stars с основного баланса
+      mainBalance -= 10;
+      updateUI();
+
+      openBtn.disabled = true;
+      resultMsg.innerText = "🌀 Открываем...";
+
+      const wonPrize = getRandomPrize();
+
+      // Генерируем ленту
       tape.style.transition = "none";
       tape.style.transform = "translateX(0px)";
       tape.innerHTML = '';
-      
+
       for (let i = 0; i < 40; i++) {
         const item = document.createElement('div');
         item.className = 'item';
         if (i === 34) {
-          item.innerText = winPrize;
+          item.innerText = wonPrize.name;
           item.style.border = "2px solid #f39c12";
           item.style.background = "#3a2e1e";
         } else {
-          item.innerText = possiblePrizes[Math.floor(Math.random() * possiblePrizes.length)];
+          item.innerText = possiblePrizes[Math.floor(Math.random() * possiblePrizes.length)].name;
         }
         tape.appendChild(item);
       }
-    }
-    initTape();
 
-    function buyCase() {
+      setTimeout(() => {
+        tape.style.transition = "transform 4s cubic-bezier(0.1, 1, 0.1, 1)";
+        tape.style.transform = "translateX(-2970px)";
+      }, 50);
+
+      setTimeout(() => {
+        // Начисляем выигрыш на второй кошелек
+        winBalance += wonPrize.stars;
+        updateUI();
+
+        resultMsg.innerHTML = "🎉 Выпало: <b style='color:#f1c40f'>" + wonPrize.name + "</b>";
+        openBtn.innerText = "Крутить еще (10 ⭐)";
+        openBtn.disabled = false;
+      }, 4200);
+    }
+
+    // Пополнение баланса через Telegram Invoice
+    function topUpInvoice() {
       if (!invoiceUrl) {
-        alert("Перезапустите бота через /start");
+        alert("Ошибка ссылки оплаты");
         return;
       }
-
       tg.openInvoice(invoiceUrl, function(status) {
         if (status === 'paid') {
-          openBtn.disabled = true;
-          resultMsg.innerText = "🌀 Рулетка крутится...";
-          
-          setTimeout(() => {
-            tape.style.transition = "transform 4s cubic-bezier(0.1, 1, 0.1, 1)";
-            tape.style.transform = "translateX(-2970px)";
-          }, 50);
-
-          setTimeout(() => {
-            // Обновляем баланс и сохраняем его локально под ID аккаунта
-            currentBalance += winStars;
-            localStorage.setItem(storageKey, currentBalance);
-            balanceDisplay.innerText = currentBalance + " ⭐";
-            
-            resultMsg.innerHTML = "🎉 Выпало: <b style='color:#f1c40f'>" + winPrize + "</b>";
-            
-            openBtn.innerText = "Крутить еще!";
-            openBtn.disabled = false;
-          }, 4200);
-        } else {
-          resultMsg.innerText = "❌ Оплата отменена";
+          mainBalance += 10; // Пополнение 10 Stars
+          updateUI();
+          alert("Баланс пополнен на 10 Stars ⭐!");
         }
       });
     }
