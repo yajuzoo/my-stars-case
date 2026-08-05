@@ -84,9 +84,9 @@
       transition: transform 4.5s cubic-bezier(0.15, 0.9, 0.2, 1);
     }
     .roulette-item {
-      min-width: 90px; height: 100px; margin: 0 5px; background: #181c2b;
-      border: 1px solid #2a3147; border-radius: 10px; display: flex;
-      flex-direction: column; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;
+      min-width: 100px; width: 100px; height: 100px; margin: 0; background: #181c2b;
+      border-right: 1px solid #2a3147; border-top: 1px solid #2a3147; border-bottom: 1px solid #2a3147;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;
     }
     .roulette-item .icon { font-size: 32px; margin-bottom: 4px; }
 
@@ -434,9 +434,9 @@
       children[45].querySelector('.icon').textContent = winItem.icon;
       children[45].children[1].textContent = winItem.name;
 
-      const itemFullWidth = 100; 
+      const itemWidth = 100; 
       const wrapperWidth = document.querySelector('.roulette-wrapper').clientWidth;
-      const targetOffset = -(45 * itemFullWidth - (wrapperWidth / 2) + (itemFullWidth / 2));
+      const targetOffset = -(45 * itemWidth - (wrapperWidth / 2) + (itemWidth / 2));
 
       track.style.transition = 'transform 4.5s cubic-bezier(0.15, 0.9, 0.2, 1)';
       track.style.transform = `translateX(${targetOffset}px)`;
