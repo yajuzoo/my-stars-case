@@ -14,7 +14,7 @@
       text-align: center;
       margin: 0;
       padding: 15px;
-      padding-bottom: 80px; /* Отступ для нижнего меню */
+      padding-bottom: 80px;
     }
 
     /* Шапка с главным балансом */
@@ -29,12 +29,11 @@
       border: 1px solid #3d3d5c;
     }
     .balance-box {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
       color: #f1c40f;
     }
 
-    /* Вкладки (Экран Кейсов / Экран Профиля) */
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
@@ -129,13 +128,29 @@
       font-size: 22px;
       font-weight: bold;
     }
-    .wallet-title {
-      font-size: 13px;
-      color: #aaa;
-      margin-bottom: 5px;
+
+    /* Сетка пополнений */
+    .topup-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
     }
-    .wallet-value {
-      font-size: 20px;
+    .topup-card {
+      background: #1c1c2b;
+      border: 1px solid #3d3d5c;
+      border-radius: 10px;
+      padding: 12px 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .topup-card:hover {
+      border-color: #f39c12;
+      background: #29293d;
+    }
+    .topup-card .amount {
+      font-size: 16px;
       font-weight: bold;
       color: #f1c40f;
     }
@@ -173,9 +188,9 @@
 </head>
 <body>
 
-  <!-- Верхняя шапка -->
+  <!-- Верхняя шапка с единым балансом -->
   <div class="header">
-    <span>Основной Баланс:</span>
+    <span>Мой Баланс:</span>
     <div class="balance-box" id="mainBalanceDisplay">0 ⭐</div>
   </div>
 
@@ -189,7 +204,7 @@
     </div>
 
     <button class="btn" id="openBtn" onclick="spinCase()">Открыть за 10 ⭐</button>
-    <div style="margin-top:10px;" id="resultMsg"></div>
+    <div style="margin-top:15px; font-weight:bold;" id="resultMsg"></div>
   </div>
 
   <!-- 2. Вкладка "Личный кабинет" -->
@@ -204,17 +219,32 @@
       </div>
     </div>
 
-    <!-- Кошелек 1 -->
+    <!-- Баланс и Статистика -->
     <div class="profile-card">
-      <div class="wallet-title">💳 Основной баланс (для покупок):</div>
-      <div class="wallet-value" id="profileMainBalance">0 ⭐</div>
-      <button class="btn" style="font-size: 14px; padding: 10px; margin-top:10px;" onclick="topUpInvoice()">Пополнить баланс</button>
+      <div style="font-size: 13px; color: #aaa;">💳 Основной баланс:</div>
+      <div style="font-size: 24px; font-weight: bold; color: #f1c40f; margin-bottom: 10px;" id="profileMainBalance">0 ⭐</div>
+      
+      <div style="font-size: 13px; color: #888;">📊 Всего выиграно в кейсах: <b style="color: #2ecc71;" id="totalWonDisplay">0 ⭐</b></div>
     </div>
 
-    <!-- Кошелек 2 -->
+    <!-- Пополнение баланса -->
     <div class="profile-card">
-      <div class="wallet-title">🎁 Выигранный баланс (Призы):</div>
-      <div class="wallet-value" id="profileWinBalance">0 ⭐</div>
+      <div style="font-size: 15px; font-weight: bold; color: #fff;">➕ Пополнить баланс</div>
+      <div style="font-size: 12px; color: #aaa; margin-bottom: 10px;">Выберите сумму для пополнения:</div>
+
+      <div class="topup-grid">
+        <div class="topup-card" onclick="topUp(10)"><div class="amount">10 ⭐</div></div>
+        <div class="topup-card" onclick="topUp(50)"><div class="amount">50 ⭐</div></div>
+        <div class="topup-card" onclick="topUp(100)"><div class="amount">100 ⭐</div></div>
+        <div class="topup-card" onclick="topUp(200)"><div class="amount">200 ⭐</div></div>
+        <div class="topup-card" onclick="topUp(300)"><div class="amount">300 ⭐</div></div>
+        <div class="topup-card" onclick="topUp(500)"><div class="amount">500 ⭐</div></div>
+        <div class="topup-card" onclick="topUp(1000)"><div class="amount">1000 ⭐</div></div>
+        <div class="topup-card" onclick="topUp(3000)"><div class="amount">3000 ⭐</div></div>
+        <div class="topup-card" onclick="topUp(6000)"><div class="amount">6000 ⭐</div></div>
+        <div class="topup-card" onclick="topUp(9000)"><div class="amount">9000 ⭐</div></div>
+        <div class="topup-card" style="grid-column: span 2;" onclick="topUp(10000)"><div class="amount">10000 ⭐</div></div>
+      </div>
     </div>
   </div>
 
@@ -234,37 +264,32 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // Берем данные юзера из Telegram
     const tgUser = tg.initDataUnsafe?.user || {};
     const tgUserId = tgUser.id || "guest";
 
-    // Устанавливаем профиль
     document.getElementById('userName').innerText = (tgUser.first_name || 'Игрок') + ' ' + (tgUser.last_name || '');
     document.getElementById('userHandle').innerText = tgUser.username ? '@' + tgUser.username : 'ID: ' + tgUserId;
     if (tgUser.first_name) {
       document.getElementById('userAvatar').innerText = tgUser.first_name[0].toUpperCase();
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const invoiceUrl = urlParams.get('invoice');
-
-    // Локальные балансы (Кошелек 1 и Кошелек 2)
     const mainKey = `main_balance_${tgUserId}`;
-    const winKey = `win_balance_${tgUserId}`;
+    const wonKey = `total_won_${tgUserId}`;
 
-    let mainBalance = parseInt(localStorage.getItem(mainKey) || "50"); // Даем 50 Stars для теста
-    let winBalance = parseInt(localStorage.getItem(winKey) || "0");
+    // Если новый игрок — выдаем стартовые 50 Stars для пробы
+    let mainBalance = parseInt(localStorage.getItem(mainKey) || "50");
+    let totalWon = parseInt(localStorage.getItem(wonKey) || "0");
 
     function updateUI() {
       document.getElementById('mainBalanceDisplay').innerText = mainBalance + " ⭐";
       document.getElementById('profileMainBalance').innerText = mainBalance + " ⭐";
-      document.getElementById('profileWinBalance').innerText = winBalance + " ⭐";
+      document.getElementById('totalWonDisplay').innerText = totalWon + " ⭐";
+      
       localStorage.setItem(mainKey, mainBalance);
-      localStorage.setItem(winKey, winBalance);
+      localStorage.setItem(wonKey, totalWon);
     }
     updateUI();
 
-    // Переключение вкладок меню
     function switchTab(tabName) {
       document.getElementById('casesTab').classList.remove('active');
       document.getElementById('profileTab').classList.remove('active');
@@ -280,7 +305,6 @@
       }
     }
 
-    // Логика подкрутки шансов на стороне клиенте (для мгновенной прокрутки без лишних чеков)
     const possiblePrizes = [
       { name: "Пусто 💨", stars: 0, weight: 60000 },
       { name: "5 Stars ⭐", stars: 5, weight: 30000 },
@@ -304,23 +328,21 @@
     const resultMsg = document.getElementById('resultMsg');
 
     function spinCase() {
-      // Проверка баланса
       if (mainBalance < 10) {
-        alert("Недостаточно Stars на основном балансе!");
+        alert("Недостаточно Stars на балансе! Перейдите в Кабинет для пополнения.");
         switchTab('profile');
         return;
       }
 
-      // Списываем 10 Stars с основного баланса
+      // 1. Списываем 10 Stars за открытие
       mainBalance -= 10;
       updateUI();
 
       openBtn.disabled = true;
-      resultMsg.innerText = "🌀 Открываем...";
+      resultMsg.innerText = "🌀 Открываем кейс...";
 
       const wonPrize = getRandomPrize();
 
-      // Генерируем ленту
       tape.style.transition = "none";
       tape.style.transform = "translateX(0px)";
       tape.innerHTML = '';
@@ -344,29 +366,28 @@
       }, 50);
 
       setTimeout(() => {
-        // Начисляем выигрыш на второй кошелек
-        winBalance += wonPrize.stars;
+        // 2. Выигрыш МГНОВЕННО начисляется прямо на рабочий баланс!
+        mainBalance += wonPrize.stars;
+        totalWon += wonPrize.stars;
         updateUI();
 
-        resultMsg.innerHTML = "🎉 Выпало: <b style='color:#f1c40f'>" + wonPrize.name + "</b>";
+        if (wonPrize.stars > 0) {
+          resultMsg.innerHTML = "🎉 Выпало: <b style='color:#f1c40f'>" + wonPrize.name + "</b> (+" + wonPrize.stars + " ⭐ на баланс!)";
+        } else {
+          resultMsg.innerHTML = "💨 Выпало: <b>Пусто</b>";
+        }
+
         openBtn.innerText = "Крутить еще (10 ⭐)";
         openBtn.disabled = false;
       }, 4200);
     }
 
-    // Пополнение баланса через Telegram Invoice
-    function topUpInvoice() {
-      if (!invoiceUrl) {
-        alert("Ошибка ссылки оплаты");
-        return;
-      }
-      tg.openInvoice(invoiceUrl, function(status) {
-        if (status === 'paid') {
-          mainBalance += 10; // Пополнение 10 Stars
-          updateUI();
-          alert("Баланс пополнен на 10 Stars ⭐!");
-        }
-      });
+    // Имитация / Демо пополнения любой выбранной суммы
+    function topUp(amount) {
+      // При клике на карточку зачисляем выбраную сумму
+      mainBalance += amount;
+      updateUI();
+      alert(`Успешно пополнено на ${amount} Stars ⭐!`);
     }
   </script>
 </body>
