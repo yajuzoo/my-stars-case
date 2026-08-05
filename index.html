@@ -452,27 +452,10 @@
       }
 
       const winItem = getWeightedDrop(currentCase.items);
+
       const track = document.getElementById('rouletteTrack');
-      
-      // Сбрасываем старую позицию и анимацию мгновенно в начало без рывка
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0px)';
-
-      // Заново перегенерируем рандомные элементы для ленты
-      let html = '';
-      for (let i = 0; i < 60; i++) {
-        const item = currentCase.items[Math.floor(Math.random() * currentCase.items.length)];
-        html += `
-          <div class="roulette-item">
-            <div class="icon">${item.icon}</div>
-            <div>${item.name}</div>
-          </div>
-        `;
-      }
-      track.innerHTML = html;
-
-      // Устанавливаем победный элемент на 45-ю позицию
       const children = track.children;
+      
       children[45].querySelector('.icon').textContent = winItem.icon;
       children[45].children[1].textContent = winItem.name;
 
@@ -480,18 +463,15 @@
       const wrapperWidth = document.querySelector('.roulette-wrapper').clientWidth;
       const targetOffset = -(45 * itemWidth - (wrapperWidth / 2) + (itemWidth / 2));
 
-      // Даем браузеру паузу 50мс, чтобы применился сброс, и запускаем плавную прокрутку
-      setTimeout(() => {
-        track.style.transition = 'transform 4.5s cubic-bezier(0.15, 0.9, 0.2, 1)';
-        track.style.transform = `translateX(${targetOffset}px)`;
-      }, 50);
+      track.style.transition = 'transform 4.5s cubic-bezier(0.15, 0.9, 0.2, 1)';
+      track.style.transform = `translateX(${targetOffset}px)`;
 
       setTimeout(() => {
         isSpinning = false;
         inventory.push({ ...winItem, id: Date.now() });
         renderCases();
         alert(`🎉 Выбито: ${winItem.name}! Предмет добавлен в инвентарь (продай его за ⭐).`);
-      }, 4850);
+      }, 4800);
     }
 
     function openProfile() {
