@@ -37,7 +37,7 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Рулетка строго фиксированной ширины (320px) */
+    /* Контейнер рулетки строго фиксированного размера */
     .roulette-container {
       position: relative;
       width: 320px;
@@ -104,7 +104,7 @@
       box-shadow: none;
     }
 
-    /* Блок витрины призов */
+    /* Витрина призов */
     .prizes-showcase {
       margin: 25px auto 0;
       max-width: 320px;
@@ -163,7 +163,7 @@
       font-weight: bold;
     }
 
-    /* Модалка пополнения */
+    /* Модальное окно */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -234,7 +234,7 @@
       color: #f1c40f;
     }
 
-    /* Нижняя навигация */
+    /* Навигация */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -267,13 +267,13 @@
 </head>
 <body>
 
-  <!-- Верхняя шапка -->
+  <!-- Шапка -->
   <div class="header">
     <span>Мой Баланс:</span>
     <div class="balance-box" id="mainBalanceDisplay">0 ⭐</div>
   </div>
 
-  <!-- 1. Кейсы -->
+  <!-- Вкладка Кейсы -->
   <div id="casesTab" class="tab-content active">
     <h2>⭐ Кейс за 10 Stars ⭐</h2>
     
@@ -297,7 +297,7 @@
     </div>
   </div>
 
-  <!-- 2. Личный кабинет -->
+  <!-- Вкладка Кабинет -->
   <div id="profileTab" class="tab-content">
     <div class="profile-card">
       <div class="user-info">
@@ -343,7 +343,7 @@
     </div>
   </div>
 
-  <!-- Нижнее меню -->
+  <!-- Меню -->
   <div class="bottom-nav">
     <div class="nav-item active" id="navCases" onclick="switchTab('cases')">
       <span class="nav-icon">🎰</span>
@@ -371,7 +371,7 @@
     const mainKey = `main_balance_${tgUserId}`;
     const wonKey = `total_won_${tgUserId}`;
 
-    let mainBalance = parseInt(localStorage.getItem(mainKey) || "50");
+    let mainBalance = parseInt(localStorage.getItem(mainKey) || "0");
     let totalWon = parseInt(localStorage.getItem(wonKey) || "0");
 
     function updateUI() {
@@ -406,29 +406,17 @@
       document.getElementById('topUpModal').classList.remove('active');
     }
 
-    // МГНОВЕННЫЙ ВЫЗОВ ОПЛАТЫ ЧЕРЕЗ TELEGRAM INVOICE
+    // ОТПРАВКА ЗАПРОСА ОПЛАТЫ БОТУ В ЧАТ
     function payStars(amount) {
       closeTopUpModal();
       
-      // Запрашиваем ссылку на инвойс с бэкенда/бота
-      fetch(`/create-invoice?amount=${amount}&user_id=${tgUserId}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.invoice_url) {
-            // Открываем нативное окно оплаты Telegram Stars
-            tg.openInvoice(data.invoice_url, function(status) {
-              if (status === 'paid') {
-                mainBalance += amount;
-                updateUI();
-                alert(`Успешно! Баланс пополнен на ${amount} Stars ⭐`);
-              }
-            });
-          }
-        })
-        .catch(() => {
-          // Запасной локальный вариант для тестов, если бэкенд выключен
-          alert(`Создание счета на ${amount} ⭐...`);
-        });
+      // Передаем команду боту сформировать инвойс и закрываем WebApp
+      tg.sendData(JSON.stringify({
+        action: "topup_stars",
+        amount: amount
+      }));
+      
+      tg.close();
     }
 
     const possiblePrizes = [
@@ -472,24 +460,20 @@
       tape.style.transform = "translateX(0px)";
       tape.innerHTML = '';
 
-      // Генерируем 40 элементов
-      const targetIndex = 30; // Целевая позиция остановки
+      const targetIndex = 30; // Элемент остановки
 
       for (let i = 0; i < 40; i++) {
         const item = document.createElement('div');
         item.className = 'item';
         if (i === targetIndex) {
-          item.innerText = wonPrize.name; // Записываем точный выигрыш
+          item.innerText = wonPrize.name;
         } else {
           item.innerText = possiblePrizes[Math.floor(Math.random() * possiblePrizes.length)].name;
         }
         tape.appendChild(item);
       }
 
-      // ТАТЕМАТИЧЕСКИ ТОЧНЫЙ РАСЧЕТ СДВИГА:
-      // Ширина рамки = 320px, Центр = 160px.
-      // Ширина 1 предмета = 80px, Центр 1 предмета = 40px.
-      // Сдвиг = (targetIndex * 80) + 40 - 160 = (targetIndex * 80) - 120
+      // ТАТЕМАТИЧЕСКИ ТОЧНЫЙ РАСЧЕТ СДВИГА ЦЕНТРА
       const targetShift = (targetIndex * 80) - 120;
 
       setTimeout(() => {
