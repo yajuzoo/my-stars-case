@@ -36,13 +36,13 @@
       z-index: 10;
     }
 
-        .brand {
-    font-size: 20px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #38bdf8, #818cf8);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    .brand {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .balance-badge {
@@ -321,6 +321,10 @@
       cursor: pointer;
     }
 
+    .star-opt:hover {
+      border-color: #38bdf8;
+    }
+
     .btn-close {
       width: 100%;
       padding: 12px;
@@ -389,21 +393,26 @@
     </div>
   </nav>
 
+  <!-- Кнопки пополнения (включая 10 000 Stars) -->
   <div id="topUpModal" class="modal-overlay">
     <div class="modal">
       <h3 class="modal-title">Пополнение баланса</h3>
       <div class="stars-options">
         <div class="star-opt" onclick="payStars(10)">10 ⭐</div>
-        <div class="star-opt" onclick="payStars(50)">50 ⭐</div>
         <div class="star-opt" onclick="payStars(100)">100 ⭐</div>
         <div class="star-opt" onclick="payStars(500)">500 ⭐</div>
+        <div class="star-opt" onclick="payStars(1000)">1 000 ⭐</div>
+        <div class="star-opt" onclick="payStars(5000)">5 000 ⭐</div>
+        <div class="star-opt" onclick="payStars(10000)">10 000 ⭐</div>
       </div>
       <button class="btn-close" onclick="closeTopUpModal()">Закрыть</button>
     </div>
   </div>
 
   <script>
-    const SERVER_URL = "http://localhost:8080"; // Если тестируешь на хостинге/VPS, укажи тут свой IP или домен
+    // Если тестируешь локально на телефоне, пробрось ngrok и укажи ссылку сюда.
+    // Пример: const SERVER_URL = "https://xxxx.ngrok-free.app";
+    const SERVER_URL = "http://localhost:8080"; 
 
     const tg = window.Telegram.WebApp;
     tg.expand();
@@ -480,7 +489,6 @@
       document.getElementById('topUpModal').classList.remove('active');
     }
 
-    // Безопасный запрос счета через Python-сервер
     async function payStars(amount) {
       closeTopUpModal();
 
