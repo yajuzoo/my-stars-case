@@ -37,11 +37,10 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Рулетка */
+    /* Рулетка строго фиксированной ширины (320px) */
     .roulette-container {
       position: relative;
-      width: 100%;
-      max-width: 350px;
+      width: 320px;
       height: 90px;
       margin: 20px auto;
       overflow: hidden;
@@ -68,7 +67,9 @@
       top: 5px;
       transition: transform 4s cubic-bezier(0.1, 1, 0.1, 1);
     }
+    /* Ширина элемента ровно 80px */
     .item {
+      width: 80px;
       min-width: 80px;
       height: 80px;
       margin: 0;
@@ -80,6 +81,7 @@
       font-size: 13px;
       font-weight: bold;
       color: #ffffff;
+      user-select: none;
     }
 
     .btn {
@@ -93,7 +95,7 @@
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
       width: 100%;
-      max-width: 350px;
+      max-width: 320px;
       margin-top: 10px;
     }
     .btn:disabled {
@@ -102,10 +104,10 @@
       box-shadow: none;
     }
 
-    /* Блок витрины призов под кейсом */
+    /* Блок витрины призов */
     .prizes-showcase {
       margin: 25px auto 0;
-      max-width: 350px;
+      max-width: 320px;
       background: #252538;
       border-radius: 12px;
       padding: 15px;
@@ -161,7 +163,7 @@
       font-weight: bold;
     }
 
-    /* Модальное окно пополнения */
+    /* Модалка пополнения */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -205,7 +207,7 @@
       cursor: pointer;
     }
 
-    /* Сетка вариантов пополнения */
+    /* Сетка пополнений */
     .topup-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -265,13 +267,13 @@
 </head>
 <body>
 
-  <!-- Верхняя шапка с балансом -->
+  <!-- Верхняя шапка -->
   <div class="header">
     <span>Мой Баланс:</span>
     <div class="balance-box" id="mainBalanceDisplay">0 ⭐</div>
   </div>
 
-  <!-- 1. Вкладка "Кейсы" -->
+  <!-- 1. Кейсы -->
   <div id="casesTab" class="tab-content active">
     <h2>⭐ Кейс за 10 Stars ⭐</h2>
     
@@ -283,7 +285,6 @@
     <button class="btn" id="openBtn" onclick="spinCase()">Открыть за 10 ⭐</button>
     <div style="margin-top:15px; font-weight:bold;" id="resultMsg"></div>
 
-    <!-- Витрина: Содержимое кейса -->
     <div class="prizes-showcase">
       <div class="prizes-showcase-title">Может выпасть из кейса:</div>
       <div class="prizes-grid">
@@ -296,7 +297,7 @@
     </div>
   </div>
 
-  <!-- 2. Вкладка "Личный кабинет" -->
+  <!-- 2. Личный кабинет -->
   <div id="profileTab" class="tab-content">
     <div class="profile-card">
       <div class="user-info">
@@ -308,7 +309,6 @@
       </div>
     </div>
 
-    <!-- Баланс и Кнопка Пополнить -->
     <div class="profile-card">
       <div style="font-size: 13px; color: #aaa;">💳 Основной баланс:</div>
       <div style="font-size: 24px; font-weight: bold; color: #f1c40f; margin-bottom: 12px;" id="profileMainBalance">0 ⭐</div>
@@ -319,7 +319,7 @@
     </div>
   </div>
 
-  <!-- Модальное окно пополнения -->
+  <!-- Модалка пополнения -->
   <div class="modal-overlay" id="topUpModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -371,7 +371,7 @@
     const mainKey = `main_balance_${tgUserId}`;
     const wonKey = `total_won_${tgUserId}`;
 
-    let mainBalance = parseInt(localStorage.getItem(mainKey) || "0");
+    let mainBalance = parseInt(localStorage.getItem(mainKey) || "50");
     let totalWon = parseInt(localStorage.getItem(wonKey) || "0");
 
     function updateUI() {
@@ -406,16 +406,29 @@
       document.getElementById('topUpModal').classList.remove('active');
     }
 
-    // РЕАЛЬНАЯ ОПЛАТА ЧЕРЕЗ TELEGRAM STARS
+    // МГНОВЕННЫЙ ВЫЗОВ ОПЛАТЫ ЧЕРЕЗ TELEGRAM INVOICE
     function payStars(amount) {
       closeTopUpModal();
       
-      // Отправляем запрос боту на получение ссылки инвойса
-      tg.sendData(JSON.stringify({ action: "create_invoice", amount: amount }));
-      
-      // Для мгновенной проверки без взаимодействия с веб-сервером 
-      // можно вызывать окно оплаты через метод openInvoice, если инвойс сгенерирован заранее
-      alert(`Запрос на пополнение ${amount} Stars отправлен! Откройте чат с ботом для завершения оплаты или подтвердите счет.`);
+      // Запрашиваем ссылку на инвойс с бэкенда/бота
+      fetch(`/create-invoice?amount=${amount}&user_id=${tgUserId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.invoice_url) {
+            // Открываем нативное окно оплаты Telegram Stars
+            tg.openInvoice(data.invoice_url, function(status) {
+              if (status === 'paid') {
+                mainBalance += amount;
+                updateUI();
+                alert(`Успешно! Баланс пополнен на ${amount} Stars ⭐`);
+              }
+            });
+          }
+        })
+        .catch(() => {
+          // Запасной локальный вариант для тестов, если бэкенд выключен
+          alert(`Создание счета на ${amount} ⭐...`);
+        });
     }
 
     const possiblePrizes = [
@@ -459,20 +472,29 @@
       tape.style.transform = "translateX(0px)";
       tape.innerHTML = '';
 
+      // Генерируем 40 элементов
+      const targetIndex = 30; // Целевая позиция остановки
+
       for (let i = 0; i < 40; i++) {
         const item = document.createElement('div');
         item.className = 'item';
-        if (i === 34) {
-          item.innerText = wonPrize.name;
+        if (i === targetIndex) {
+          item.innerText = wonPrize.name; // Записываем точный выигрыш
         } else {
           item.innerText = possiblePrizes[Math.floor(Math.random() * possiblePrizes.length)].name;
         }
         tape.appendChild(item);
       }
 
+      // ТАТЕМАТИЧЕСКИ ТОЧНЫЙ РАСЧЕТ СДВИГА:
+      // Ширина рамки = 320px, Центр = 160px.
+      // Ширина 1 предмета = 80px, Центр 1 предмета = 40px.
+      // Сдвиг = (targetIndex * 80) + 40 - 160 = (targetIndex * 80) - 120
+      const targetShift = (targetIndex * 80) - 120;
+
       setTimeout(() => {
         tape.style.transition = "transform 4s cubic-bezier(0.1, 1, 0.1, 1)";
-        tape.style.transform = "translateX(-2880px)";
+        tape.style.transform = `translateX(-${targetShift}px)`;
       }, 50);
 
       setTimeout(() => {
