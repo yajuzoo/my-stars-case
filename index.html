@@ -37,7 +37,7 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Рулетка (без промежутков) */
+    /* Рулетка */
     .roulette-container {
       position: relative;
       width: 100%;
@@ -68,7 +68,6 @@
       top: 5px;
       transition: transform 4s cubic-bezier(0.1, 1, 0.1, 1);
     }
-    /* Элемент рулетки без боковых отступов */
     .item {
       min-width: 80px;
       height: 80px;
@@ -284,7 +283,7 @@
     <button class="btn" id="openBtn" onclick="spinCase()">Открыть за 10 ⭐</button>
     <div style="margin-top:15px; font-weight:bold;" id="resultMsg"></div>
 
-    <!-- Витрина: Содержимое кейса (без шансов) -->
+    <!-- Витрина: Содержимое кейса -->
     <div class="prizes-showcase">
       <div class="prizes-showcase-title">Может выпасть из кейса:</div>
       <div class="prizes-grid">
@@ -329,17 +328,17 @@
       </div>
 
       <div class="topup-grid">
-        <div class="topup-card" onclick="topUp(10)"><div class="amount">10 ⭐</div></div>
-        <div class="topup-card" onclick="topUp(50)"><div class="amount">50 ⭐</div></div>
-        <div class="topup-card" onclick="topUp(100)"><div class="amount">100 ⭐</div></div>
-        <div class="topup-card" onclick="topUp(200)"><div class="amount">200 ⭐</div></div>
-        <div class="topup-card" onclick="topUp(300)"><div class="amount">300 ⭐</div></div>
-        <div class="topup-card" onclick="topUp(500)"><div class="amount">500 ⭐</div></div>
-        <div class="topup-card" onclick="topUp(1000)"><div class="amount">1000 ⭐</div></div>
-        <div class="topup-card" onclick="topUp(3000)"><div class="amount">3000 ⭐</div></div>
-        <div class="topup-card" onclick="topUp(6000)"><div class="amount">6000 ⭐</div></div>
-        <div class="topup-card" onclick="topUp(9000)"><div class="amount">9000 ⭐</div></div>
-        <div class="topup-card" style="grid-column: span 2;" onclick="topUp(10000)"><div class="amount">10000 ⭐</div></div>
+        <div class="topup-card" onclick="payStars(10)"><div class="amount">10 ⭐</div></div>
+        <div class="topup-card" onclick="payStars(50)"><div class="amount">50 ⭐</div></div>
+        <div class="topup-card" onclick="payStars(100)"><div class="amount">100 ⭐</div></div>
+        <div class="topup-card" onclick="payStars(200)"><div class="amount">200 ⭐</div></div>
+        <div class="topup-card" onclick="payStars(300)"><div class="amount">300 ⭐</div></div>
+        <div class="topup-card" onclick="payStars(500)"><div class="amount">500 ⭐</div></div>
+        <div class="topup-card" onclick="payStars(1000)"><div class="amount">1000 ⭐</div></div>
+        <div class="topup-card" onclick="payStars(3000)"><div class="amount">3000 ⭐</div></div>
+        <div class="topup-card" onclick="payStars(6000)"><div class="amount">6000 ⭐</div></div>
+        <div class="topup-card" onclick="payStars(9000)"><div class="amount">9000 ⭐</div></div>
+        <div class="topup-card" style="grid-column: span 2;" onclick="payStars(10000)"><div class="amount">10000 ⭐</div></div>
       </div>
     </div>
   </div>
@@ -372,7 +371,7 @@
     const mainKey = `main_balance_${tgUserId}`;
     const wonKey = `total_won_${tgUserId}`;
 
-    let mainBalance = parseInt(localStorage.getItem(mainKey) || "50");
+    let mainBalance = parseInt(localStorage.getItem(mainKey) || "0");
     let totalWon = parseInt(localStorage.getItem(wonKey) || "0");
 
     function updateUI() {
@@ -400,12 +399,23 @@
       }
     }
 
-    // Управление модальным окном
     function openTopUpModal() {
       document.getElementById('topUpModal').classList.add('active');
     }
     function closeTopUpModal() {
       document.getElementById('topUpModal').classList.remove('active');
+    }
+
+    // РЕАЛЬНАЯ ОПЛАТА ЧЕРЕЗ TELEGRAM STARS
+    function payStars(amount) {
+      closeTopUpModal();
+      
+      // Отправляем запрос боту на получение ссылки инвойса
+      tg.sendData(JSON.stringify({ action: "create_invoice", amount: amount }));
+      
+      // Для мгновенной проверки без взаимодействия с веб-сервером 
+      // можно вызывать окно оплаты через метод openInvoice, если инвойс сгенерирован заранее
+      alert(`Запрос на пополнение ${amount} Stars отправлен! Откройте чат с ботом для завершения оплаты или подтвердите счет.`);
     }
 
     const possiblePrizes = [
@@ -452,7 +462,6 @@
       for (let i = 0; i < 40; i++) {
         const item = document.createElement('div');
         item.className = 'item';
-        // На 34-ю позицию ставим выигрыш БЕЗ всякой подсветки и выделения
         if (i === 34) {
           item.innerText = wonPrize.name;
         } else {
@@ -463,7 +472,6 @@
 
       setTimeout(() => {
         tape.style.transition = "transform 4s cubic-bezier(0.1, 1, 0.1, 1)";
-        // Смещение строго по ширине элементов (80px * 36 - центрирование = -2880px)
         tape.style.transform = "translateX(-2880px)";
       }, 50);
 
@@ -481,13 +489,6 @@
         openBtn.innerText = "Крутить еще (10 ⭐)";
         openBtn.disabled = false;
       }, 4200);
-    }
-
-    function topUp(amount) {
-      closeTopUpModal();
-      mainBalance += amount;
-      updateUI();
-      alert(`Успешно пополнено на ${amount} Stars ⭐!`);
     }
   </script>
 </body>
