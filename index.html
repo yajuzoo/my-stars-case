@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кейсы за Stars</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      background-color: #1a1a24;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 { color: #f39c12; }
+    
+    
+    .roulette-container {
+      position: relative;
+      width: 100%;
+      max-width: 350px;
+      height: 100px;
+      margin: 20px auto;
+      overflow: hidden;
+      border: 3px solid #f39c12;
+      border-radius: 12px;
+      background: #0f0f17;
+    }
+    
+    .pointer {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: #e74c3c;
+      z-index: 10;
+      box-shadow: 0 0 10px #e74c3c;
+    }
+    
+    .tape {
+      display: flex;
+      position: absolute;
+      left: 0;
+      top: 10px;
+      transition: transform 4s cubic-bezier(0.1, 1, 0.1, 1);
+    }
+    .item {
+      min-width: 80px;
+      height: 80px;
+      margin: 0 5px;
+      background: #2c2c3e;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+   
+    .btn {
+      background: #f39c12;
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+    }
+    .btn:disabled { background: #555; }
+  </style>
+</head>
+<body>
+
+  <h2>⭐ Открытие кейса ⭐</h2>
+  <p>Цена: <b>10 Stars</b></p>
+
+  <div class="roulette-container">
+    <div class="pointer"></div>
+    <div class="tape" id="tape"></div>
+  </div>
+
+  <button class="btn" id="openBtn" onclick="openCase()">Крутить за 10 ⭐</button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand(); 
+
+    const prizes = ["10 Stars", "50 Stars", "100 Stars", "Джекпот!", "Пусто", "20 Stars"];
+    const tape = document.getElementById('tape');
+
+    function initTape() {
+      tape.innerHTML = '';
+      for (let i = 0; i < 50; i++) {
+        const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerText = randomPrize;
+        tape.appendChild(div);
+      }
+    }
+    initTape();
+
+    function openCase() {
+      document.getElementById('openBtn').disabled = true;
+      initTape();
+      
+      // Смещаем ленту случайно (имитация кручения)
+      const randomOffset = Math.floor(Math.random() * 3000) + 1000;
+      tape.style.transform = `translateX(-${randomOffset}px)`;
+
+      setTimeout(() => {
+        alert("🎉 Поздравляем! Ты выиграл приз!");
+        document.getElementById('openBtn').disabled = false;
+        tape.style.transform = 'translateX(0px)';
+      }, 4200);
+    }
+  </script>
+</body>
+</html>
