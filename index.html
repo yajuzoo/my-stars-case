@@ -35,28 +35,24 @@
   <button class="btn" onclick="buyCase()">Крутить за 10 ⭐</button>
 
   <script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+  const tg = window.Telegram.WebApp;
+  tg.expand();
 
-    // Достаем ссылку на оплату из URL параметров
-    const urlParams = new URLSearchParams(window.location.search);
-    const invoiceUrl = urlParams.get('invoice');
+  const urlParams = new URLSearchParams(window.location.search);
+  const invoiceUrl = urlParams.get('invoice');
 
-    function buyCase() {
-      if (invoiceUrl) {
-        // Открываем нативное окно оплаты Telegram Stars прямо в WebApp!
-        tg.openInvoice(invoiceUrl, function(status) {
-          if (status === 'paid') {
-            alert('🎉 Оплата прошла! Крутим рулетку...');
-            // Здесь запускается анимация
-          } else {
-            alert('Оплата отменена или закрыта.');
-          }
-        });
-      } else {
-        alert('Ошибка: ссылка на оплату не найдена. Перезапустите бота через /start');
-      }
+  function buyCase() {
+    // Всплывающее окно покажет нам реальный URL инвойса
+    alert("Ссылка на оплату: " + invoiceUrl);
+
+    if (invoiceUrl) {
+      tg.openInvoice(invoiceUrl, function(status) {
+        alert("Статус оплаты: " + status);
+      });
+    } else {
+      alert("Ошибка: Ссылка не пришла из URL!");
     }
-  </script>
+  }
+</script>
 </body>
 </html>
