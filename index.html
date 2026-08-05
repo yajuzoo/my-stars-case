@@ -17,7 +17,6 @@
       padding-bottom: 80px;
     }
 
-    /* Шапка с балансом */
     .header {
       display: flex;
       justify-content: space-between;
@@ -37,7 +36,7 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Контейнер рулетки строго фиксированного размера */
+    /* Рулетка строго 320px */
     .roulette-container {
       position: relative;
       width: 320px;
@@ -67,7 +66,6 @@
       top: 5px;
       transition: transform 4s cubic-bezier(0.1, 1, 0.1, 1);
     }
-    /* Ширина элемента ровно 80px */
     .item {
       width: 80px;
       min-width: 80px;
@@ -104,7 +102,6 @@
       box-shadow: none;
     }
 
-    /* Витрина призов */
     .prizes-showcase {
       margin: 25px auto 0;
       max-width: 320px;
@@ -137,7 +134,6 @@
       color: #f1c40f;
     }
 
-    /* Профиль */
     .profile-card {
       background: #252538;
       border-radius: 16px;
@@ -163,7 +159,6 @@
       font-weight: bold;
     }
 
-    /* Модальное окно */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -207,7 +202,6 @@
       cursor: pointer;
     }
 
-    /* Сетка пополнений */
     .topup-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -234,7 +228,6 @@
       color: #f1c40f;
     }
 
-    /* Навигация */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -267,13 +260,11 @@
 </head>
 <body>
 
-  <!-- Шапка -->
   <div class="header">
     <span>Мой Баланс:</span>
     <div class="balance-box" id="mainBalanceDisplay">0 ⭐</div>
   </div>
 
-  <!-- Вкладка Кейсы -->
   <div id="casesTab" class="tab-content active">
     <h2>⭐ Кейс за 10 Stars ⭐</h2>
     
@@ -297,7 +288,6 @@
     </div>
   </div>
 
-  <!-- Вкладка Кабинет -->
   <div id="profileTab" class="tab-content">
     <div class="profile-card">
       <div class="user-info">
@@ -319,7 +309,6 @@
     </div>
   </div>
 
-  <!-- Модалка пополнения -->
   <div class="modal-overlay" id="topUpModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -343,7 +332,6 @@
     </div>
   </div>
 
-  <!-- Меню -->
   <div class="bottom-nav">
     <div class="nav-item active" id="navCases" onclick="switchTab('cases')">
       <span class="nav-icon">🎰</span>
@@ -406,17 +394,23 @@
       document.getElementById('topUpModal').classList.remove('active');
     }
 
-    // ОТПРАВКА ЗАПРОСА ОПЛАТЫ БОТУ В ЧАТ
+    // НАРИСОВАТЬ ШТОРКУ ОПЛАТЫ ВНУТРИ ПРИЛОЖЕНИЯ (openInvoice)
     function payStars(amount) {
       closeTopUpModal();
-      
-      // Передаем команду боту сформировать инвойс и закрываем WebApp
-      tg.sendData(JSON.stringify({
-        action: "topup_stars",
-        amount: amount
-      }));
-      
-      tg.close();
+
+      // Вызываем бота локально/через сгенерированный инвойс
+      tg.openInvoice(`https://t.me/invoice/${amount}`, function(status) {
+        if (status === 'paid') {
+          mainBalance += amount;
+          updateUI();
+          alert(`Успешно зачислено ${amount} ⭐!`);
+        } else if (status === 'cancelled') {
+          console.log("Оплата отменена");
+        } else {
+          // Запасной тестовый вариант, если открыли просто в браузере
+          alert(`Запрос оплаты на ${amount} ⭐ отправлен.`);
+        }
+      });
     }
 
     const possiblePrizes = [
@@ -443,7 +437,7 @@
 
     function spinCase() {
       if (mainBalance < 10) {
-        alert("Недостаточно Stars на балансе! Перейдите в Кабинет для пополнения.");
+        alert("Недостаточно Stars на балансе!");
         switchTab('profile');
         return;
       }
@@ -460,7 +454,7 @@
       tape.style.transform = "translateX(0px)";
       tape.innerHTML = '';
 
-      const targetIndex = 30; // Элемент остановки
+      const targetIndex = 30;
 
       for (let i = 0; i < 40; i++) {
         const item = document.createElement('div');
@@ -473,7 +467,7 @@
         tape.appendChild(item);
       }
 
-      // ТАТЕМАТИЧЕСКИ ТОЧНЫЙ РАСЧЕТ СДВИГА ЦЕНТРА
+      // ТАТЕМАТИЧЕСКИ ТОЧНЫЙ СДВИГ ПО ЦЕНТРУ
       const targetShift = (targetIndex * 80) - 120;
 
       setTimeout(() => {
