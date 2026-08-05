@@ -113,6 +113,14 @@
       width: 100%; padding: 12px; background: #1a1e2d; border: 1px solid #2e364f;
       border-radius: 8px; color: #fff; font-size: 16px; margin: 10px 0; outline: none;
     }
+    .withdraw-input::-webkit-outer-spin-button,
+    .withdraw-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .withdraw-input[type=number] {
+      -moz-appearance: textfield;
+    }
     .withdraw-input:focus { border-color: #0088cc; }
     .btn-withdraw-main {
       width: 100%; background: #0088cc; color: white; border: none;
@@ -126,6 +134,18 @@
     .modal-box { background: #141722; border: 1px solid #252b3e; border-radius: 18px; padding: 20px; width: 90%; max-width: 380px; text-align: center; }
     .topup-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 14px 0; }
     .star-btn { background: #1d2233; border: 1px solid #2e364f; border-radius: 8px; padding: 10px; font-weight: 700; color: #ffb703; cursor: pointer; }
+    .custom-topup-input {
+      width: 100%; padding: 10px; background: #141722; border: 1px solid #2e364f; border-radius: 8px;
+      color: #fff; font-size: 14px; margin-bottom: 10px; outline: none; text-align: center;
+    }
+    .custom-topup-input::-webkit-outer-spin-button,
+    .custom-topup-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .custom-topup-input[type=number] {
+      -moz-appearance: textfield;
+    }
   </style>
 </head>
 <body>
@@ -204,6 +224,10 @@
         <div class="star-btn" onclick="payStars(5000)">5 000 ⭐</div>
         <div class="star-btn" onclick="payStars(10000)">10 000 ⭐</div>
         <div class="star-btn" onclick="payStars(20000)">20 000 ⭐</div>
+      </div>
+      <div style="margin-top: 10px;">
+        <input type="number" id="customTopupInput" class="custom-topup-input" placeholder="Свое количество ⭐" min="1">
+        <button class="star-btn" style="width:100%; background:#0088cc; color:#fff;" onclick="payCustomStars()">Пополнить на свое число</button>
       </div>
       <button class="btn-back" style="width:100%; margin-top:10px;" onclick="closeModal('topupModal')">Отмена</button>
     </div>
@@ -560,6 +584,15 @@
           });
         }
       } catch (e) { alert("Ошибка подключения!"); }
+    }
+
+    function payCustomStars() {
+      const customAmount = parseInt(document.getElementById('customTopupInput').value);
+      if (!customAmount || customAmount <= 0) {
+        alert("Введите корректное число Звёзд для пополнения!");
+        return;
+      }
+      payStars(customAmount);
     }
 
     renderCases();
