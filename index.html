@@ -16,7 +16,6 @@
     }
     h2 { color: #f39c12; }
     
-    
     .roulette-container {
       position: relative;
       width: 100%;
@@ -28,7 +27,6 @@
       border-radius: 12px;
       background: #0f0f17;
     }
-    
     .pointer {
       position: absolute;
       top: 0;
@@ -40,7 +38,6 @@
       z-index: 10;
       box-shadow: 0 0 10px #e74c3c;
     }
-    
     .tape {
       display: flex;
       position: absolute;
@@ -62,7 +59,6 @@
       font-weight: bold;
     }
     
-   
     .btn {
       background: #f39c12;
       color: #fff;
@@ -74,7 +70,6 @@
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
     }
-    .btn:disabled { background: #555; }
   </style>
 </head>
 <body>
@@ -87,11 +82,11 @@
     <div class="tape" id="tape"></div>
   </div>
 
-  <button class="btn" id="openBtn" onclick="openCase()">Крутить за 10 ⭐</button>
+  <button class="btn" id="openBtn" onclick="buyCase()">Купить кейс за 10 ⭐</button>
 
   <script>
     const tg = window.Telegram.WebApp;
-    tg.expand(); 
+    tg.expand();
 
     const prizes = ["10 Stars", "50 Stars", "100 Stars", "Джекпот!", "Пусто", "20 Stars"];
     const tape = document.getElementById('tape');
@@ -108,19 +103,9 @@
     }
     initTape();
 
-    function openCase() {
-      document.getElementById('openBtn').disabled = true;
-      initTape();
-      
-      // Смещаем ленту случайно (имитация кручения)
-      const randomOffset = Math.floor(Math.random() * 3000) + 1000;
-      tape.style.transform = `translateX(-${randomOffset}px)`;
-
-      setTimeout(() => {
-        alert("🎉 Поздравляем! Ты выиграл приз!");
-        document.getElementById('openBtn').disabled = false;
-        tape.style.transform = 'translateX(0px)';
-      }, 4200);
+    function buyCase() {
+      // Отправляем сигнал боту, что юзер хочет купить кейс
+      tg.sendData(JSON.stringify({ action: "buy_case", price: 10 }));
     }
   </script>
 </body>
