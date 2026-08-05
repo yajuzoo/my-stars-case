@@ -2,357 +2,470 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Кейсы за Stars</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Stars Cases</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    * { box-sizing: border-box; }
-    body {
-      background-color: #1a1a24;
-      color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      text-align: center;
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 15px;
-      padding-bottom: 80px;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Верхняя панель */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #252538;
-      padding: 12px 20px;
-      border-radius: 12px;
+      padding: 16px 20px;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .balance-badge {
+      background: #334155;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 14px;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      border: 1px solid #475569;
+      transition: transform 0.1s ease;
+    }
+
+    .balance-badge:active {
+      transform: scale(0.95);
+    }
+
+    /* Основной контент */
+    .content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 90px;
+    }
+
+    .tab-content {
+      display: none;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .tab-content.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* КЕЙС И РУЛЕТКА */
+    .case-title {
+      font-size: 22px;
+      font-weight: 700;
       margin-bottom: 20px;
-      border: 1px solid #3d3d5c;
-    }
-    .balance-box {
-      font-size: 18px;
-      font-weight: bold;
-      color: #f1c40f;
+      text-align: center;
     }
 
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    /* Рулетка 320px */
     .roulette-container {
+      width: 100%;
+      height: 110px;
+      background: #1e293b;
+      border-radius: 16px;
+      border: 2px solid #38bdf8;
       position: relative;
-      width: 320px;
-      height: 90px;
-      margin: 20px auto;
       overflow: hidden;
-      border: 3px solid #f39c12;
-      border-radius: 12px;
-      background: #0f0f17;
-      box-shadow: 0 0 20px rgba(243, 156, 18, 0.2);
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
     }
+
+    /* Указатель выигрыша */
     .pointer {
       position: absolute;
       top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: #ef4444;
+      transform: translateX(-50%);
+      z-index: 5;
+      box-shadow: 0 0 10px #ef4444;
+    }
+
+    .pointer::before, .pointer::after {
+      content: '';
+      position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      width: 4px;
-      height: 100%;
-      background: #e74c3c;
-      z-index: 10;
-      box-shadow: 0 0 10px #e74c3c;
+      width: 0;
+      height: 0;
+      border-style: solid;
     }
+
+    .pointer::before {
+      top: 0;
+      border-width: 10px 8px 0 8px;
+      border-color: #ef4444 transparent transparent transparent;
+    }
+
+    .pointer::after {
+      bottom: 0;
+      border-width: 0 8px 10px 8px;
+      border-color: transparent transparent #ef4444 transparent;
+    }
+
     .tape {
       display: flex;
       position: absolute;
       left: 0;
-      top: 5px;
-      transition: transform 4s cubic-bezier(0.1, 1, 0.1, 1);
-    }
-    .item {
-      width: 80px;
-      min-width: 80px;
+      top: 15px;
       height: 80px;
-      margin: 0;
-      background: #2c2c3e;
-      border-right: 1px solid #3d3d5c;
+      will-change: transform;
+    }
+
+    .item {
+      min-width: 80px;
+      max-width: 80px;
+      height: 80px;
+      background: #0f172a;
+      margin: 0 4px;
+      border-radius: 12px;
+      border: 1px solid #334155;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 13px;
-      font-weight: bold;
-      color: #ffffff;
-      user-select: none;
+      font-weight: 700;
+      text-align: center;
+      padding: 4px;
+      word-break: break-word;
     }
 
-    .btn {
-      background: linear-gradient(135deg, #f39c12, #d35400);
-      color: #fff;
+    .btn-spin {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      color: white;
       border: none;
-      padding: 16px 32px;
+      border-radius: 14px;
       font-size: 18px;
-      font-weight: bold;
-      border-radius: 12px;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-      width: 100%;
-      max-width: 320px;
-      margin-top: 10px;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s;
     }
-    .btn:disabled {
-      background: #555;
+
+    .btn-spin:active {
+      transform: scale(0.98);
+    }
+
+    .btn-spin:disabled {
+      opacity: 0.5;
       cursor: not-allowed;
-      box-shadow: none;
     }
 
-    .prizes-showcase {
-      margin: 25px auto 0;
-      max-width: 320px;
-      background: #252538;
-      border-radius: 12px;
-      padding: 15px;
-      border: 1px solid #3d3d5c;
-      text-align: left;
-    }
-    .prizes-showcase-title {
-      font-size: 14px;
-      font-weight: bold;
-      color: #aaa;
-      margin-bottom: 10px;
+    .result-msg {
+      margin-top: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      min-height: 24px;
       text-align: center;
     }
-    .prizes-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-    }
-    .prize-chip {
-      background: #1c1c2b;
-      border: 1px solid #3d3d5c;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: bold;
-      color: #f1c40f;
-    }
 
+    /* ПРОФИЛЬ */
     .profile-card {
-      background: #252538;
+      background: #1e293b;
       border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 15px;
-      border: 1px solid #3d3d5c;
-      text-align: left;
-    }
-    .user-info {
+      padding: 24px;
+      width: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 15px;
+      border: 1px solid #334155;
     }
-    .user-avatar {
-      width: 50px;
-      height: 50px;
+
+    .avatar {
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
-      background: #f39c12;
+      background: linear-gradient(135deg, #818cf8, #c084fc);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
-      font-weight: bold;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
     }
 
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.75);
-      z-index: 200;
-      align-items: flex-end;
-      justify-content: center;
-    }
-    .modal-overlay.active {
-      display: flex;
-    }
-    .modal-content {
-      background: #252538;
-      width: 100%;
-      max-width: 450px;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      padding: 20px;
-      border-top: 2px solid #f39c12;
-      animation: slideUp 0.3s ease-out;
-    }
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    .modal-close {
-      background: none;
-      border: none;
-      color: #aaa;
-      font-size: 24px;
-      cursor: pointer;
+    .user-name {
+      font-size: 20px;
+      font-weight: 700;
     }
 
-    .topup-grid {
+    .user-handle {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-bottom: 20px;
+    }
+
+    .stats-grid {
+      width: 100%;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      max-height: 300px;
-      overflow-y: auto;
-      padding-right: 5px;
-    }
-    .topup-card {
-      background: #1c1c2b;
-      border: 1px solid #3d3d5c;
-      border-radius: 10px;
-      padding: 12px 5px;
-      text-align: center;
-      cursor: pointer;
-    }
-    .topup-card:hover {
-      border-color: #f39c12;
-      background: #29293d;
-    }
-    .topup-card .amount {
-      font-size: 15px;
-      font-weight: bold;
-      color: #f1c40f;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
+    .stat-box {
+      background: #0f172a;
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid #334155;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+
+    .stat-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fbbf24;
+    }
+
+    .btn-topup {
+      width: 100%;
+      padding: 14px;
+      background: #22c55e;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* НАВИГАЦИЯ ВНИЗУ */
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
-      width: 100%;
-      background: #12121a;
+      right: 0;
+      background: #1e293b;
+      border-top: 1px solid #334155;
       display: flex;
       justify-content: space-around;
-      padding: 12px 0;
-      border-top: 1px solid #2c2c3e;
-      z-index: 100;
+      padding: 10px 0;
+      z-index: 10;
     }
+
     .nav-item {
-      color: #777;
-      font-size: 12px;
-      cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
       gap: 4px;
     }
+
     .nav-item.active {
-      color: #f39c12;
-      font-weight: bold;
+      color: #38bdf8;
     }
+
     .nav-icon {
       font-size: 20px;
+    }
+
+    /* МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: #1e293b;
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid #334155;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .stars-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .star-opt {
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 700;
+      color: #fbbf24;
+      cursor: pointer;
+    }
+
+    .star-opt:hover {
+      border-color: #38bdf8;
+    }
+
+    .btn-close {
+      width: 100%;
+      padding: 12px;
+      background: #475569;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <span>Мой Баланс:</span>
-    <div class="balance-box" id="mainBalanceDisplay">0 ⭐</div>
-  </div>
-
-  <div id="casesTab" class="tab-content active">
-    <h2>⭐ Кейс за 10 Stars ⭐</h2>
-    
-    <div class="roulette-container">
-      <div class="pointer"></div>
-      <div class="tape" id="tape"></div>
+  <!-- Верхняя панель -->
+  <header class="header">
+    <div class="brand">STARS CASE</div>
+    <div class="balance-badge" onclick="openTopUpModal()">
+      <span id="mainBalanceDisplay">0 ⭐</span>
+      <span style="font-size: 12px; color: #38bdf8;">+</span>
     </div>
+  </header>
 
-    <button class="btn" id="openBtn" onclick="spinCase()">Открыть за 10 ⭐</button>
-    <div style="margin-top:15px; font-weight:bold;" id="resultMsg"></div>
+  <!-- Контент -->
+  <main class="content">
 
-    <div class="prizes-showcase">
-      <div class="prizes-showcase-title">Может выпасть из кейса:</div>
-      <div class="prizes-grid">
-        <div class="prize-chip">100 Stars 💎</div>
-        <div class="prize-chip">20 Stars ⭐</div>
-        <div class="prize-chip">10 Stars ⭐</div>
-        <div class="prize-chip">5 Stars ⭐</div>
-        <div class="prize-chip" style="color:#aaa;">Пусто 💨</div>
+    <!-- Вкладка 1: Кейсы -->
+    <section id="casesTab" class="tab-content active">
+      <h2 class="case-title">Кейс "Звёздный" (10 ⭐)</h2>
+
+      <div class="roulette-container">
+        <div class="pointer"></div>
+        <div class="tape" id="tape"></div>
       </div>
-    </div>
-  </div>
 
-  <div id="profileTab" class="tab-content">
-    <div class="profile-card">
-      <div class="user-info">
-        <div class="user-avatar" id="userAvatar">👤</div>
-        <div>
-          <div style="font-size: 18px; font-weight: bold;" id="userName">Пользователь</div>
-          <div style="color: #aaa; font-size: 13px;" id="userHandle">@username</div>
+      <button id="openBtn" class="btn-spin" onclick="spinCase()">Крутить (10 ⭐)</button>
+      <div id="resultMsg" class="result-msg"></div>
+    </section>
+
+    <!-- Вкладка 2: Профиль -->
+    <section id="profileTab" class="tab-content">
+      <div class="profile-card">
+        <div class="avatar" id="userAvatar">U</div>
+        <div class="user-name" id="userName">Пользователь</div>
+        <div class="user-handle" id="userHandle">@username</div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-label">Баланс</div>
+            <div class="stat-val" id="profileMainBalance">0 ⭐</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Всего выиграно</div>
+            <div class="stat-val" id="totalWonDisplay">0 ⭐</div>
+          </div>
         </div>
+
+        <button class="btn-topup" onclick="openTopUpModal()">Пополнить Stars</button>
       </div>
-    </div>
+    </section>
 
-    <div class="profile-card">
-      <div style="font-size: 13px; color: #aaa;">💳 Основной баланс:</div>
-      <div style="font-size: 24px; font-weight: bold; color: #f1c40f; margin-bottom: 12px;" id="profileMainBalance">0 ⭐</div>
-      
-      <button class="btn" style="font-size: 15px; padding: 12px; margin-top:0;" onclick="openTopUpModal()">➕ Пополнить баланс</button>
-      
-      <div style="font-size: 13px; color: #888; margin-top: 15px;">📊 Всего выиграно: <b style="color: #2ecc71;" id="totalWonDisplay">0 ⭐</b></div>
-    </div>
-  </div>
+  </main>
 
-  <div class="modal-overlay" id="topUpModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <span style="font-size: 16px; font-weight: bold;">Выберите сумму пополнения:</span>
-        <button class="modal-close" onclick="closeTopUpModal()">&times;</button>
-      </div>
-
-      <div class="topup-grid">
-        <div class="topup-card" onclick="payStars(10)"><div class="amount">10 ⭐</div></div>
-        <div class="topup-card" onclick="payStars(50)"><div class="amount">50 ⭐</div></div>
-        <div class="topup-card" onclick="payStars(100)"><div class="amount">100 ⭐</div></div>
-        <div class="topup-card" onclick="payStars(200)"><div class="amount">200 ⭐</div></div>
-        <div class="topup-card" onclick="payStars(300)"><div class="amount">300 ⭐</div></div>
-        <div class="topup-card" onclick="payStars(500)"><div class="amount">500 ⭐</div></div>
-        <div class="topup-card" onclick="payStars(1000)"><div class="amount">1000 ⭐</div></div>
-        <div class="topup-card" onclick="payStars(3000)"><div class="amount">3000 ⭐</div></div>
-        <div class="topup-card" onclick="payStars(6000)"><div class="amount">6000 ⭐</div></div>
-        <div class="topup-card" onclick="payStars(9000)"><div class="amount">9000 ⭐</div></div>
-        <div class="topup-card" style="grid-column: span 2;" onclick="payStars(10000)"><div class="amount">10000 ⭐</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="bottom-nav">
-    <div class="nav-item active" id="navCases" onclick="switchTab('cases')">
+  <!-- Нижнее меню -->
+  <nav class="bottom-nav">
+    <div id="navCases" class="nav-item active" onclick="switchTab('cases')">
       <span class="nav-icon">🎰</span>
       <span>Кейсы</span>
     </div>
-    <div class="nav-item" id="navProfile" onclick="switchTab('profile')">
+    <div id="navProfile" class="nav-item" onclick="switchTab('profile')">
       <span class="nav-icon">👤</span>
-      <span>Кабинет</span>
+      <span>Профиль</span>
+    </div>
+  </nav>
+
+  <!-- Модалка пополнения -->
+  <div id="topUpModal" class="modal-overlay">
+    <div class="modal">
+      <h3 class="modal-title">Пополнение баланса</h3>
+      <div class="stars-options">
+        <div class="star-opt" onclick="payStars(10)">10 ⭐</div>
+        <div class="star-opt" onclick="payStars(50)">50 ⭐</div>
+        <div class="star-opt" onclick="payStars(100)">100 ⭐</div>
+        <div class="star-opt" onclick="payStars(500)">500 ⭐</div>
+      </div>
+      <button class="btn-close" onclick="closeTopUpModal()">Закрыть</button>
     </div>
   </div>
 
   <script>
-    // ⚠️ ВСТАВЬ СЮДА ТОКЕН СВОЕГО БОТА ОТ @BotFather
-    const BOT_TOKEN = "8955669692:AAHVhosC_xLyPxTvjeS1GlKpLCyfYapDIiw";
+    // ⚠️ ВСТАВЬ СЮДА ТОКЕН СВОЕГО БОТА И URL СЕРВЕРА
+    const BOT_TOKEN = "7737271810:AAEE4r34R52-s-O30S6g_x1J0Q6708yJjT4"; // Укажи актуальный токен
+    const SERVER_URL = "http://localhost:8080"; // URL твоего Python-сервера
 
     const tg = window.Telegram.WebApp;
     tg.expand();
 
     const tgUser = tg.initDataUnsafe?.user || {};
-    const tgUserId = tgUser.id || "guest";
+    const tgUserId = tgUser.id ? String(tgUser.id) : "guest";
 
+    // Установка профиля Telegram
     document.getElementById('userName').innerText = (tgUser.first_name || 'Игрок') + ' ' + (tgUser.last_name || '');
     document.getElementById('userHandle').innerText = tgUser.username ? '@' + tgUser.username : 'ID: ' + tgUserId;
     if (tgUser.first_name) {
@@ -365,16 +478,46 @@
     let mainBalance = parseInt(localStorage.getItem(mainKey) || "0");
     let totalWon = parseInt(localStorage.getItem(wonKey) || "0");
 
-    function updateUI() {
+    // Синхронизация баланса с файлом balances.json на Python-сервере
+    async function syncBalanceWithServer() {
+      try {
+        const res = await fetch(`${SERVER_URL}/api/get_balance?user_id=${tgUserId}`);
+        const data = await res.json();
+        if (data.status === 'ok') {
+          mainBalance = data.balance;
+          localStorage.setItem(mainKey, mainBalance);
+          renderUI();
+        }
+      } catch (e) {
+        console.log("Локальный режим: сервер недоступен");
+      }
+    }
+
+    function renderUI() {
       document.getElementById('mainBalanceDisplay').innerText = mainBalance + " ⭐";
       document.getElementById('profileMainBalance').innerText = mainBalance + " ⭐";
       document.getElementById('totalWonDisplay').innerText = totalWon + " ⭐";
-      
+    }
+
+    async function updateUI() {
+      renderUI();
       localStorage.setItem(mainKey, mainBalance);
       localStorage.setItem(wonKey, totalWon);
-    }
-    updateUI();
 
+      // Отправляем обновившийся баланс в balances.json
+      try {
+        await fetch(`${SERVER_URL}/api/update_balance`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: tgUserId, balance: mainBalance })
+        });
+      } catch (e) {}
+    }
+
+    renderUI();
+    syncBalanceWithServer();
+
+    // Переключение вкладок
     function switchTab(tabName) {
       document.getElementById('casesTab').classList.remove('active');
       document.getElementById('profileTab').classList.remove('active');
@@ -390,6 +533,7 @@
       }
     }
 
+    // Модалка
     function openTopUpModal() {
       document.getElementById('topUpModal').classList.add('active');
     }
@@ -397,10 +541,11 @@
       document.getElementById('topUpModal').classList.remove('active');
     }
 
+    // Оплата через Telegram Stars
     async function payStars(amount) {
       closeTopUpModal();
 
-      if (!BOT_TOKEN || BOT_TOKEN === "ТВОЙ_ТОКЕН_ЗДЕСЬ") {
+      if (!BOT_TOKEN || BOT_TOKEN === "8955669692:AAHVhosC_xLyPxTvjeS1GlKpLCyfYapDIiw") {
         alert("Ошибка: Укажи BOT_TOKEN в коде index.html!");
         return;
       }
@@ -437,6 +582,7 @@
       }
     }
 
+    // Настройка призов и рулетки
     const possiblePrizes = [
       { name: "Пусто 💨", stars: 0, weight: 60000 },
       { name: "5 Stars ⭐", stars: 5, weight: 30000 },
@@ -458,6 +604,14 @@
     const tape = document.getElementById('tape');
     const openBtn = document.getElementById('openBtn');
     const resultMsg = document.getElementById('resultMsg');
+
+    // Предзаполнение ленты при старте
+    for (let i = 0; i < 15; i++) {
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.innerText = possiblePrizes[Math.floor(Math.random() * possiblePrizes.length)].name;
+      tape.appendChild(item);
+    }
 
     function spinCase() {
       if (mainBalance < 10) {
@@ -491,7 +645,7 @@
         tape.appendChild(item);
       }
 
-      const targetShift = (targetIndex * 80) - 120;
+      const targetShift = (targetIndex * 88) - 120;
 
       setTimeout(() => {
         tape.style.transition = "transform 4s cubic-bezier(0.1, 1, 0.1, 1)";
@@ -515,4 +669,4 @@
     }
   </script>
 </body>
-</html> 
+</html>
