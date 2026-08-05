@@ -148,7 +148,6 @@
     <div class="section-title">NFT Кейсы</div>
     <div class="cases-grid" id="casesGrid"></div>
   </div>
-
   <div class="overlay" id="caseOverlay">
     <div class="overlay-header">
       <button class="btn-back" onclick="closeOverlay('caseOverlay')">← Назад</button>
@@ -181,7 +180,6 @@
         <p style="font-size:12px; color:#717a8c;">Текущий баланс</p>
       </div>
 
-      <!-- Вывод Звёзд -->
       <div class="withdraw-box">
         <div style="font-size:14px; font-weight:700;">Вывести ⭐ на аккаунт</div>
         <p style="font-size:11px; color:#717a8c; margin-top:2px;">Минимальный вывод: 250 ⭐</p>
@@ -225,7 +223,7 @@
     let currentCase = null;
     let isSpinning = false;
 
-    // ВСЕ КЕЙСЫ НА МЕСТЕ
+    // КЕЙСЫ ДО 15,000 ЗВЁЗД
     const casesData = [
       { id: 1, name: "Бесплатный (1ч)", price: 0, icon: "📦", items: [
         { name: "0.1 Stars", value: 0.1, icon: "✨", weight: 9000 },
@@ -274,6 +272,36 @@
         { name: "150 Stars", value: 150, icon: "⭐", weight: 2500 },
         { name: "800 Stars", value: 800, icon: "💎", weight: 499 },
         { name: "Blue Diamond", value: 20000, icon: "💎", weight: 1 }
+      ]},
+      { id: 9, name: "Магнат", price: 1000, icon: "🏛️", items: [
+        { name: "100 Stars", value: 100, icon: "⭐", weight: 7000 },
+        { name: "300 Stars", value: 300, icon: "⭐", weight: 2500 },
+        { name: "1,800 Stars", value: 1800, icon: "🏛️", weight: 499 },
+        { name: "Golden Bank", value: 35000, icon: "🏆", weight: 1 }
+      ]},
+      { id: 10, name: "Властелин", price: 2500, icon: "👑", items: [
+        { name: "250 Stars", value: 250, icon: "⭐", weight: 7000 },
+        { name: "800 Stars", value: 800, icon: "⭐", weight: 2500 },
+        { name: "4,500 Stars", value: 4500, icon: "👑", weight: 499 },
+        { name: "Crown of Kings", value: 80000, icon: "💎", weight: 1 }
+      ]},
+      { id: 11, name: "Киберпанк", price: 5000, icon: "🦾", items: [
+        { name: "500 Stars", value: 500, icon: "⭐", weight: 7000 },
+        { name: "1,600 Stars", value: 1600, icon: "⭐", weight: 2500 },
+        { name: "9,000 Stars", value: 9000, icon: "🦾", weight: 499 },
+        { name: "Cyber Matrix", value: 150000, icon: "🌐", weight: 1 }
+      ]},
+      { id: 12, name: "Драконий", price: 10000, icon: "🐉", items: [
+        { name: "1,000 Stars", value: 1000, icon: "⭐", weight: 7000 },
+        { name: "3,500 Stars", value: 3500, icon: "⭐", weight: 2500 },
+        { name: "18,000 Stars", value: 18000, icon: "🐉", weight: 499 },
+        { name: "Dragon Soul", value: 300000, icon: "🔥", weight: 1 }
+      ]},
+      { id: 13, name: "Космический", price: 15000, icon: "🚀", items: [
+        { name: "1,500 Stars", value: 1500, icon: "⭐", weight: 7000 },
+        { name: "5,000 Stars", value: 5000, icon: "⭐", weight: 2500 },
+        { name: "28,000 Stars", value: 28000, icon: "🚀", weight: 499 },
+        { name: "Supernova NFT", value: 500000, icon: "🌌", weight: 1 }
       ]}
     ];
 
@@ -293,7 +321,7 @@
           ${c.id === 1 && freeCd > 0 ? `<div class="cooldown-badge">⏳ ${freeCd} мин</div>` : ''}
           <div class="case-icon">${c.icon}</div>
           <div class="case-title">${c.name}</div>
-          <div class="case-price">${c.price > 0 ? c.price + ' ⭐' : 'БЕСПЛАТНО'}</div>
+          <div class="case-price">${c.price > 0 ? c.price.toLocaleString() + ' ⭐' : 'БЕСПЛАТНО'}</div>
         </div>
       `).join('');
     }
@@ -316,7 +344,7 @@
         <div class="item-card">
           <div class="icon">${it.icon}</div>
           <div class="name">${it.name}</div>
-          <div class="value">${it.value} ⭐</div>
+          <div class="value">${it.value.toLocaleString()} ⭐</div>
         </div>
       `).join('');
 
@@ -398,7 +426,7 @@
     }
 
     function openProfile() {
-      document.getElementById('invBalance').textContent = `${balance} ⭐`;
+      document.getElementById('invBalance').textContent = `${balance.toLocaleString()} ⭐`;
       renderInventory();
       document.getElementById('profileOverlay').style.display = 'flex';
     }
@@ -415,10 +443,10 @@
             <div style="font-size:26px;">${item.icon}</div>
             <div>
               <div style="font-weight:700; font-size:13px;">${item.name}</div>
-              <div style="font-size:11px; color:#ffb703;">${item.value} ⭐</div>
+              <div style="font-size:11px; color:#ffb703;">${item.value.toLocaleString()} ⭐</div>
             </div>
           </div>
-          <button class="btn-sell" onclick="sellItem(${item.id})">Продать за ${item.value} ⭐</button>
+          <button class="btn-sell" onclick="sellItem(${item.id})">Продать за ${item.value.toLocaleString()} ⭐</button>
         </div>
       `).join('');
     }
@@ -430,7 +458,7 @@
         balance += item.value;
         inventory.splice(idx, 1);
         updateBalanceDisplay();
-        document.getElementById('invBalance').textContent = `${balance} ⭐`;
+        document.getElementById('invBalance').textContent = `${balance.toLocaleString()} ⭐`;
         renderInventory();
       }
     }
@@ -461,9 +489,9 @@
         if (data.status === 'ok') {
           balance -= amount;
           updateBalanceDisplay();
-          document.getElementById('invBalance').textContent = `${balance} ⭐`;
+          document.getElementById('invBalance').textContent = `${balance.toLocaleString()} ⭐`;
           document.getElementById('withdrawAmount').value = '';
-          alert(`✅ Заявка на вывод ${amount} ⭐ принята! Уведомление отправлено администратору.`);
+          alert(`✅ Заявка на вывод ${amount.toLocaleString()} ⭐ принята! Уведомление отправлено администратору.`);
         } else {
           alert("Ошибка отправки заявки.");
         }
@@ -486,7 +514,7 @@
     }
 
     function updateBalanceDisplay() {
-      document.getElementById('balanceDisplay').textContent = `${balance} ⭐`;
+      document.getElementById('balanceDisplay').textContent = `${balance.toLocaleString()} ⭐`;
     }
 
     function openTopUpModal() { document.getElementById('topupModal').style.display = 'flex'; }
