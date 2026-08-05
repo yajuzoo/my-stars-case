@@ -106,6 +106,7 @@
     function buyCase() {
       // Отправляем сигнал боту, что юзер хочет купить кейс
       tg.sendData(JSON.stringify({ action: "buy_case", price: 10 }));
+      tg.close();
     }
   </script>
 </body>
