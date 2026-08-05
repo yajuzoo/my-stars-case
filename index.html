@@ -3,101 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Кейсы от Александра</title>
+  <title>NFT Cases Stars</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      padding: 20px;
-      background-color: #121318;
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #0f1015;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    .balance-card {
-      background: #1c1e24;
+    
+    /* Шапка баланса */
+    .header {
+      background: #181920;
+      border: 1px solid #282932;
       border-radius: 16px;
-      padding: 20px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      padding: 16px 24px;
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
-    .balance-title {
-      font-size: 14px;
-      color: #8e8e93;
-      margin-bottom: 8px;
-    }
-    .balance-value {
-      font-size: 32px;
-      font-weight: bold;
-      margin-bottom: 16px;
-      color: #ffb703;
-    }
-    .btn {
-      background-color: #0088cc;
+    .balance-info { display: flex; flex-direction: column; }
+    .balance-label { font-size: 12px; color: #8e8e93; text-transform: uppercase; }
+    .balance-val { font-size: 24px; font-weight: bold; color: #ffb703; }
+    .btn-topup {
+      background: #0088cc;
       color: white;
       border: none;
-      border-radius: 12px;
-      padding: 12px 24px;
-      font-size: 16px;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 14px;
       font-weight: 600;
       cursor: pointer;
+    }
+
+    /* Сеть Кейсов */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
       width: 100%;
-      transition: background-color 0.2s;
+      max-width: 500px;
+      margin-bottom: 30px;
     }
-    .btn:active {
-      background-color: #006699;
+    .case-card {
+      background: #181920;
+      border: 1px solid #282932;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    /* Модальное окно */
+    .case-icon { font-size: 40px; margin-bottom: 8px; }
+    .case-title { font-size: 14px; font-weight: bold; margin-bottom: 4px; }
+    .case-price { font-size: 13px; color: #ffb703; font-weight: 600; margin-bottom: 10px; }
+    .btn-open {
+      background: #2b2d3a;
+      color: #fff;
+      border: 1px solid #3f4255;
+      border-radius: 8px;
+      padding: 8px;
+      width: 100%;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Модалки */
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.85);
       align-items: center;
       justify-content: center;
+      z-index: 1000;
     }
-    .modal-content {
-      background: #1c1e24;
-      padding: 24px;
+    .modal-box {
+      background: #181920;
+      border: 1px solid #282932;
       border-radius: 20px;
-      width: 80%;
-      max-width: 320px;
+      padding: 20px;
+      width: 85%;
+      max-width: 360px;
       text-align: center;
     }
-    .star-option {
-      background: #2c2d35;
+    .star-btn {
+      background: #252732;
       margin: 8px 0;
       padding: 12px;
       border-radius: 10px;
-      cursor: pointer;
       font-weight: bold;
+      cursor: pointer;
+      border: 1px solid #333646;
     }
-    .star-option:hover {
-      background: #3a3b45;
-    }
+    .drop-result { font-size: 48px; margin: 15px 0; }
   </style>
 </head>
 <body>
 
-  <div class="balance-card">
-    <div class="balance-title">Ваш баланс</div>
-    <div class="balance-value" id="balanceDisplay">0 ⭐</div>
-    <button class="btn" onclick="openTopUpModal()">Пополнить</button>
+  <div class="header">
+    <div class="balance-info">
+      <span class="balance-label">Твой Баланс</span>
+      <span class="balance-val" id="balanceDisplay">0 ⭐</span>
+    </div>
+    <button class="btn-topup" onclick="openModal('topupModal')">Пополнить</button>
   </div>
 
-  <!-- Модальное окно пополнения -->
+  <div class="cases-grid" id="casesGrid"></div>
+
+  <!-- Модалка пополнения -->
   <div class="modal" id="topupModal">
-    <div class="modal-content">
-      <h3>Выберите сумму</h3>
-      <div class="star-option" onclick="payStars(10)">10 ⭐</div>
-      <div class="star-option" onclick="payStars(50)">50 ⭐</div>
-      <div class="star-option" onclick="payStars(100)">100 ⭐</div>
-      <div class="star-option" onclick="payStars(500)">500 ⭐</div>
-      <button class="btn" style="background: #3a3b45; margin-top: 12px;" onclick="closeTopUpModal()">Отмена</button>
+    <div class="modal-box">
+      <h3>Пополнение ⭐</h3>
+      <div style="margin: 15px 0;">
+        <div class="star-btn" onclick="payStars(10)">10 ⭐</div>
+        <div class="star-btn" onclick="payStars(50)">50 ⭐</div>
+        <div class="star-btn" onclick="payStars(100)">100 ⭐</div>
+        <div class="star-btn" onclick="payStars(500)">500 ⭐</div>
+        <div class="star-btn" onclick="payStars(1000)">1000 ⭐</div>
+      </div>
+      <button class="btn-topup" style="background:#333; width:100%" onclick="closeModal('topupModal')">Закрыть</button>
+    </div>
+  </div>
+
+  <!-- Модалка открытия кейса -->
+  <div class="modal" id="winModal">
+    <div class="modal-box">
+      <h3 id="winTitle">Вам выпало!</h3>
+      <div class="drop-result" id="winIcon">🎁</div>
+      <p style="font-size: 20px; font-weight: bold; color:#ffb703;" id="winText">10 ⭐</p>
+      <button class="btn-topup" style="width:100%; margin-top:20px;" onclick="closeModal('winModal')">Забрать</button>
     </div>
   </div>
 
@@ -105,11 +149,50 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // ⚠️ УКАЖИ СВОЮ СВЕЖУЮ ССЫЛКУ ИЗ NGROK / LOCALTUNNEL ⚠️
+    // =====================================================================
+    // ⚙️ ССЫЛКА НА ТВОЙ NGROK / LOCALTUNNEL (МЕНЯТЬ ЗДЕСЬ)
+    // =====================================================================
     const SERVER_URL = "https://9f1e-2a03-32c0-7000-cc88-d588-9b53-e53-54a2.ngrok-free.app";
+    // =====================================================================
 
     const tgUserId = tg.initDataUnsafe?.user?.id || 8712421526;
-    let mainBalance = 0;
+    let balance = 0;
+
+    // 20 NFT Кейсов с жестким шансом
+    const casesData = [
+      { id: 1, name: "Free NFT", price: 0, icon: "📦", min: 1, max: 5 },
+      { id: 2, name: "Новичок NFT", price: 5, icon: "👾", min: 1, max: 10 },
+      { id: 3, name: "Квадробер NFT", price: 10, icon: "🐱", min: 1, max: 20 },
+      { id: 4, name: "Аркановый", price: 15, icon: "🔮", min: 2, max: 30 },
+      { id: 5, name: "Пепе Секрет", price: 25, icon: "🐸", min: 5, max: 50 },
+      { id: 6, name: "Киберпанк", price: 40, icon: "🤖", min: 10, max: 80 },
+      { id: 7, name: "Мажор NFT", price: 50, icon: "🎩", min: 10, max: 100 },
+      { id: 8, name: "Алмазный", price: 75, icon: "💎", min: 15, max: 150 },
+      { id: 9, name: "Золотая Жила", price: 100, icon: "🏆", min: 20, max: 200 },
+      { id: 10, name: "Илон Маск", price: 150, icon: "🚀", min: 30, max: 300 },
+      { id: 11, name: "Дуров Секрет", price: 200, icon: "✈️", min: 40, max: 400 },
+      { id: 12, name: "Крипто Барон", price: 300, icon: "💰", min: 50, max: 600 },
+      { id: 13, name: "NFT Обезьяна", price: 500, icon: "🐵", min: 100, max: 1000 },
+      { id: 14, name: "Дракон NFT", price: 750, icon: "🐉", min: 150, max: 1500 },
+      { id: 15, name: "Абсолют", price: 1000, icon: "⚡", min: 200, max: 2000 },
+      { id: 16, name: "Космос NFT", price: 1500, icon: "🌌", min: 300, max: 3000 },
+      { id: 17, name: "Властелин", price: 2000, icon: "👑", min: 400, max: 4000 },
+      { id: 18, name: "Олимп NFT", price: 3000, icon: "🏛️", min: 500, max: 6000 },
+      { id: 19, name: "Вселенная", price: 5000, icon: "🪐", min: 1000, max: 10000 },
+      { id: 20, name: "Godlike NFT", price: 10000, icon: "🌌", min: 2000, max: 50000 }
+    ];
+
+    function renderCases() {
+      const grid = document.getElementById('casesGrid');
+      grid.innerHTML = casesData.map(c => `
+        <div class="case-card">
+          <div class="case-icon">${c.icon}</div>
+          <div class="case-title">${c.name}</div>
+          <div class="case-price">${c.price > 0 ? c.price + ' ⭐' : 'БЕСПЛАТНО'}</div>
+          <button class="btn-open" onclick="openCase(${c.id})">Открыть</button>
+        </div>
+      `).join('');
+    }
 
     async function fetchBalance() {
       try {
@@ -118,58 +201,56 @@
         });
         const data = await res.json();
         if (data.status === 'ok') {
-          mainBalance = data.balance;
-          updateUI();
+          balance = data.balance;
+          document.getElementById('balanceDisplay').textContent = `${balance} ⭐`;
         }
-      } catch (e) {
-        console.error("Ошибка загрузки баланса:", e);
-      }
-    }
-
-    function updateUI() {
-      document.getElementById('balanceDisplay').textContent = `${mainBalance} ⭐`;
-    }
-
-    function openTopUpModal() {
-      document.getElementById('topupModal').style.display = 'flex';
-    }
-
-    function closeTopUpModal() {
-      document.getElementById('topupModal').style.display = 'none';
+      } catch (e) { console.error(e); }
     }
 
     async function payStars(amount) {
-      closeTopUpModal();
-
+      closeModal('topupModal');
       try {
         const response = await fetch(`${SERVER_URL}/api/create_invoice`, {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': 'true'
-          },
+          headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
           body: JSON.stringify({ amount: amount, user_id: tgUserId })
         });
-
         const data = await response.json();
-
         if (data.status === 'ok' && data.invoice_link) {
-          // Вызов нативной шторки оплаты в Telegram
           tg.openInvoice(data.invoice_link, function(status) {
-            if (status === 'paid') {
-              fetchBalance(); // Перезапрашиваем баланс с сервера
-              alert(`🎉 Успешно! Баланс пополнен на ${amount} ⭐`);
-            }
+            if (status === 'paid') setTimeout(fetchBalance, 1000);
           });
-        } else {
-          alert("Ошибка создания счета: " + (data.message || "Неизвестная ошибка"));
         }
-      } catch (e) {
-        alert("Ошибка подключения к серверу!\nПроверь запущен ли main.py и правильный ли SERVER_URL в index.html.");
-      }
+      } catch (e) { alert("Ошибка подключения к серверу!"); }
     }
 
-    // Первичная загрузка баланса
+    function openCase(id) {
+      const c = casesData.find(x => x.id === id);
+      if (balance < c.price) {
+        alert("Недостаточно Звёзд на балансе!");
+        openModal('topupModal');
+        return;
+      }
+
+      balance -= c.price;
+      document.getElementById('balanceDisplay').textContent = `${balance} ⭐`;
+
+      // Расчет шанса: 0.00001% на супер-джекпот, иначе минимальный дроп
+      const isJackpot = Math.random() < 0.0000001; // 0.00001%
+      let winAmount = isJackpot ? c.max : Math.floor(Math.random() * (c.min * 1.5 - c.min + 1)) + c.min;
+
+      balance += winAmount;
+      document.getElementById('balanceDisplay').textContent = `${balance} ⭐`;
+
+      document.getElementById('winIcon').textContent = c.icon;
+      document.getElementById('winText').textContent = `+${winAmount} ⭐`;
+      openModal('winModal');
+    }
+
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    renderCases();
     fetchBalance();
   </script>
 </body>
