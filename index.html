@@ -36,7 +36,7 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Рулетка строго 320px */
+    /* Рулетка 320px */
     .roulette-container {
       position: relative;
       width: 320px;
@@ -344,6 +344,9 @@
   </div>
 
   <script>
+    // ⚠️ ВСТАВЬ СЮДА ТОКЕН СВОЕГО БОТА ОТ @BotFather
+    const BOT_TOKEN = "8955669692:AAHVhosC_xLyPxTvjeS1GlKpLCyfYapDIiw";
+
     const tg = window.Telegram.WebApp;
     tg.expand();
 
@@ -394,23 +397,44 @@
       document.getElementById('topUpModal').classList.remove('active');
     }
 
-    // НАРИСОВАТЬ ШТОРКУ ОПЛАТЫ ВНУТРИ ПРИЛОЖЕНИЯ (openInvoice)
-    function payStars(amount) {
+    async function payStars(amount) {
       closeTopUpModal();
 
-      // Вызываем бота локально/через сгенерированный инвойс
-      tg.openInvoice(`https://t.me/invoice/${amount}`, function(status) {
-        if (status === 'paid') {
-          mainBalance += amount;
-          updateUI();
-          alert(`Успешно зачислено ${amount} ⭐!`);
-        } else if (status === 'cancelled') {
-          console.log("Оплата отменена");
+      if (!BOT_TOKEN || BOT_TOKEN === "ТВОЙ_ТОКЕН_ЗДЕСЬ") {
+        alert("Ошибка: Укажи BOT_TOKEN в коде index.html!");
+        return;
+      }
+
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/createInvoiceLink`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: `Пополнение ${amount} Stars`,
+            description: `Пополнение баланса на ${amount} ⭐`,
+            payload: `topup_${amount}_${tgUserId}`,
+            provider_token: "",
+            currency: "XTR",
+            prices: [{ label: `${amount} Stars`, amount: amount }]
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.ok && data.result) {
+          tg.openInvoice(data.result, function(status) {
+            if (status === 'paid') {
+              mainBalance += amount;
+              updateUI();
+              alert(`Успешно! Баланс пополнен на ${amount} ⭐`);
+            }
+          });
         } else {
-          // Запасной тестовый вариант, если открыли просто в браузере
-          alert(`Запрос оплаты на ${amount} ⭐ отправлен.`);
+          alert("Ошибка генерации счета: " + (data.description || "Неизвестно"));
         }
-      });
+      } catch (e) {
+        alert("Ошибка сети: " + e.message);
+      }
     }
 
     const possiblePrizes = [
@@ -467,7 +491,6 @@
         tape.appendChild(item);
       }
 
-      // ТАТЕМАТИЧЕСКИ ТОЧНЫЙ СДВИГ ПО ЦЕНТРУ
       const targetShift = (targetIndex * 80) - 120;
 
       setTimeout(() => {
@@ -492,4 +515,4 @@
     }
   </script>
 </body>
-</html>
+</html> 
