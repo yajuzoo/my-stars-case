@@ -110,12 +110,13 @@
       background: #141724; border: 1px solid #22283b; border-radius: 14px; padding: 16px; margin-bottom: 20px;
     }
     .withdraw-input {
-      width: 100%; padding: 10px; background: #1a1e2d; border: 1px solid #2e364f;
-      border-radius: 8px; color: #fff; font-size: 14px; margin: 10px 0;
+      width: 100%; padding: 12px; background: #1a1e2d; border: 1px solid #2e364f;
+      border-radius: 8px; color: #fff; font-size: 16px; margin: 10px 0; outline: none;
     }
+    .withdraw-input:focus { border-color: #0088cc; }
     .btn-withdraw-main {
       width: 100%; background: #0088cc; color: white; border: none;
-      padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer;
+      padding: 12px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer;
     }
 
     .modal {
@@ -184,7 +185,7 @@
       <div class="withdraw-box">
         <div style="font-size:14px; font-weight:700;">Вывести ⭐ на аккаунт</div>
         <p style="font-size:11px; color:#717a8c; margin-top:2px;">Минимальный вывод: 250 ⭐</p>
-        <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Количество ⭐ (мин. 250)">
+        <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Введите сумму (от 250)" min="250">
         <button class="btn-withdraw-main" onclick="requestWithdraw()">Запросить вывод</button>
       </div>
 
@@ -214,7 +215,6 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // ВСТАВЬ СВОЙ НОВОСТИ/NGROK URL НИЖЕ
     const SERVER_URL = "https://9f1e-2a03-32c0-7000-cc88-d588-9b53-e53-54a2.ngrok-free.app";
     const tgUserId = tg.initDataUnsafe?.user?.id || 8712421526;
     
@@ -225,6 +225,7 @@
     let currentCase = null;
     let isSpinning = false;
 
+    // ВСЕ КЕЙСЫ НА МЕСТЕ
     const casesData = [
       { id: 1, name: "Бесплатный (1ч)", price: 0, icon: "📦", items: [
         { name: "0.1 Stars", value: 0.1, icon: "✨", weight: 9000 },
@@ -255,6 +256,18 @@
         { name: "30 Stars", value: 30, icon: "⭐", weight: 2500 },
         { name: "150 Stars", value: 150, icon: "🐸", weight: 499 },
         { name: "Rare Pepe", value: 4000, icon: "👑", weight: 1 }
+      ]},
+      { id: 6, name: "Топчик", price: 200, icon: "🔥", items: [
+        { name: "20 Stars", value: 20, icon: "⭐", weight: 7000 },
+        { name: "60 Stars", value: 60, icon: "⭐", weight: 2500 },
+        { name: "300 Stars", value: 300, icon: "🔥", weight: 499 },
+        { name: "Fire Crown", value: 8000, icon: "👑", weight: 1 }
+      ]},
+      { id: 7, name: "Элита", price: 300, icon: "⚡", items: [
+        { name: "30 Stars", value: 30, icon: "⭐", weight: 7000 },
+        { name: "90 Stars", value: 90, icon: "⭐", weight: 2500 },
+        { name: "500 Stars", value: 500, icon: "⚡", weight: 499 },
+        { name: "Lightning NFT", value: 12000, icon: "⚡", weight: 1 }
       ]},
       { id: 8, name: "Алмазный", price: 500, icon: "💎", items: [
         { name: "50 Stars", value: 50, icon: "⭐", weight: 7000 },
@@ -499,7 +512,7 @@
 
     renderCases();
     fetchBalance();
-    setInterval(renderCases, 30000); // авто-обновление таймеров
+    setInterval(renderCases, 30000);
   </script>
 </body>
 </html>
