@@ -247,108 +247,109 @@
     let currentCase = null;
     let isSpinning = false;
 
+    // Сбалансированные кейсы (RTP ~93-94%, редкий крупный джекпот при 20-30 открытиях)
     const casesData = [
       { id: 1, name: "Бесплатный (1ч)", price: 0, icon: "📦", items: [
-        { name: "0.1 Stars", value: 0.1, icon: "✨", weight: 9000 },
-        { name: "1 Star", value: 1, icon: "⭐", weight: 990 },
-        { name: "10 Stars", value: 10, icon: "💎", weight: 9.9 },
-        { name: "Telegram Premium", value: 300, icon: "🌟", weight: 0.1 }
+        { name: "0.1 Stars", value: 0.1, icon: "✨", weight: 8500 },
+        { name: "1 Star", value: 1, icon: "⭐", weight: 1400 },
+        { name: "5 Stars", value: 5, icon: "💎", weight: 95 },
+        { name: "Telegram Premium", value: 300, icon: "🌟", weight: 5 }
       ]},
       { id: 2, name: "Новичок", price: 10, icon: "👾", items: [
-        { name: "1 Star", value: 1, icon: "⭐", weight: 7000 },
-        { name: "3 Stars", value: 3, icon: "⭐", weight: 2500 },
-        { name: "15 Stars", value: 15, icon: "💎", weight: 499 },
-        { name: "Doge Card", value: 500, icon: "🐕", weight: 1 }
+        { name: "5 Stars", value: 5, icon: "⭐", weight: 8200 },
+        { name: "10 Stars", value: 10, icon: "⭐", weight: 1500 },
+        { name: "35 Stars", value: 35, icon: "💎", weight: 295 },
+        { name: "Doge Card", value: 300, icon: "🐕", weight: 5 }
       ]},
       { id: 3, name: "Квадробер", price: 25, icon: "🐱", items: [
-        { name: "3 Stars", value: 3, icon: "⭐", weight: 7500 },
-        { name: "8 Stars", value: 8, icon: "⭐", weight: 2000 },
-        { name: "40 Stars", value: 40, icon: "🐱", weight: 499 },
-        { name: "Cat Lord", value: 1000, icon: "👑", weight: 1 }
+        { name: "12 Stars", value: 12, icon: "⭐", weight: 8100 },
+        { name: "25 Stars", value: 25, icon: "⭐", weight: 1600 },
+        { name: "90 Stars", value: 90, icon: "🐱", weight: 295 },
+        { name: "Cat Lord", value: 750, icon: "👑", weight: 5 }
       ]},
       { id: 4, name: "Аркановый", price: 50, icon: "🔮", items: [
-        { name: "5 Stars", value: 5, icon: "⭐", weight: 7000 },
-        { name: "15 Stars", value: 15, icon: "⭐", weight: 2500 },
-        { name: "80 Stars", value: 80, icon: "🔮", weight: 499 },
-        { name: "Arcana Gem", value: 2000, icon: "💠", weight: 1 }
+        { name: "25 Stars", value: 25, icon: "⭐", weight: 8100 },
+        { name: "50 Stars", value: 50, icon: "⭐", weight: 1600 },
+        { name: "180 Stars", value: 180, icon: "🔮", weight: 295 },
+        { name: "Arcana Gem", value: 1500, icon: "💠", weight: 5 }
       ]},
       { id: 5, name: "Пепе Секрет", price: 100, icon: "🐸", items: [
-        { name: "10 Stars", value: 10, icon: "⭐", weight: 7000 },
-        { name: "30 Stars", value: 30, icon: "⭐", weight: 2500 },
-        { name: "150 Stars", value: 150, icon: "🐸", weight: 499 },
-        { name: "Rare Pepe", value: 4000, icon: "👑", weight: 1 }
+        { name: "50 Stars", value: 50, icon: "⭐", weight: 8100 },
+        { name: "100 Stars", value: 100, icon: "⭐", weight: 1600 },
+        { name: "360 Stars", value: 360, icon: "🐸", weight: 295 },
+        { name: "Rare Pepe", value: 3000, icon: "👑", weight: 5 }
       ]},
       { id: 6, name: "Топчик", price: 200, icon: "🔥", items: [
-        { name: "20 Stars", value: 20, icon: "⭐", weight: 7000 },
-        { name: "60 Stars", value: 60, icon: "⭐", weight: 2500 },
-        { name: "300 Stars", value: 300, icon: "🔥", weight: 499 },
-        { name: "Fire Crown", value: 8000, icon: "👑", weight: 1 }
+        { name: "100 Stars", value: 100, icon: "⭐", weight: 8100 },
+        { name: "200 Stars", value: 200, icon: "⭐", weight: 1600 },
+        { name: "720 Stars", value: 720, icon: "🔥", weight: 295 },
+        { name: "Fire Crown", value: 6000, icon: "👑", weight: 5 }
       ]},
       { id: 7, name: "Элита", price: 300, icon: "⚡", items: [
-        { name: "30 Stars", value: 30, icon: "⭐", weight: 7000 },
-        { name: "90 Stars", value: 90, icon: "⭐", weight: 2500 },
-        { name: "500 Stars", value: 500, icon: "⚡", weight: 499 },
-        { name: "Lightning NFT", value: 12000, icon: "⚡", weight: 1 }
+        { name: "150 Stars", value: 150, icon: "⭐", weight: 8100 },
+        { name: "300 Stars", value: 300, icon: "⭐", weight: 1600 },
+        { name: "1,100 Stars", value: 1100, icon: "⚡", weight: 295 },
+        { name: "Lightning NFT", value: 9000, icon: "⚡", weight: 5 }
       ]},
       { id: 8, name: "Алмазный", price: 500, icon: "💎", items: [
-        { name: "50 Stars", value: 50, icon: "⭐", weight: 7000 },
-        { name: "150 Stars", value: 150, icon: "⭐", weight: 2500 },
-        { name: "800 Stars", value: 800, icon: "💎", weight: 499 },
-        { name: "Blue Diamond", value: 20000, icon: "💎", weight: 1 }
+        { name: "250 Stars", value: 250, icon: "⭐", weight: 8100 },
+        { name: "500 Stars", value: 500, icon: "⭐", weight: 1600 },
+        { name: "1,800 Stars", value: 1800, icon: "💎", weight: 295 },
+        { name: "Blue Diamond", value: 15000, icon: "💎", weight: 5 }
       ]},
       { id: 9, name: "Магнат", price: 1000, icon: "🏛️", items: [
-        { name: "100 Stars", value: 100, icon: "⭐", weight: 7000 },
-        { name: "300 Stars", value: 300, icon: "⭐", weight: 2500 },
-        { name: "1,800 Stars", value: 1800, icon: "🏛️", weight: 499 },
-        { name: "Golden Bank", value: 35000, icon: "🏆", weight: 1 }
+        { name: "500 Stars", value: 500, icon: "⭐", weight: 8100 },
+        { name: "1,000 Stars", value: 1000, icon: "⭐", weight: 1600 },
+        { name: "3,600 Stars", value: 3600, icon: "🏛️", weight: 295 },
+        { name: "Golden Bank", value: 30000, icon: "🏆", weight: 5 }
       ]},
       { id: 10, name: "Властелин", price: 2500, icon: "👑", items: [
-        { name: "250 Stars", value: 250, icon: "⭐", weight: 7000 },
-        { name: "800 Stars", value: 800, icon: "⭐", weight: 2500 },
-        { name: "4,500 Stars", value: 4500, icon: "👑", weight: 499 },
-        { name: "Crown of Kings", value: 80000, icon: "💎", weight: 1 }
+        { name: "1,250 Stars", value: 1250, icon: "⭐", weight: 8100 },
+        { name: "2,500 Stars", value: 2500, icon: "⭐", weight: 1600 },
+        { name: "9,000 Stars", value: 9000, icon: "👑", weight: 295 },
+        { name: "Crown of Kings", value: 75000, icon: "💎", weight: 5 }
       ]},
       { id: 11, name: "Киберпанк", price: 5000, icon: "🦾", items: [
-        { name: "500 Stars", value: 500, icon: "⭐", weight: 7000 },
-        { name: "1,600 Stars", value: 1600, icon: "⭐", weight: 2500 },
-        { name: "9,000 Stars", value: 9000, icon: "🦾", weight: 499 },
-        { name: "Cyber Matrix", value: 150000, icon: "🌐", weight: 1 }
+        { name: "2,500 Stars", value: 2500, icon: "⭐", weight: 8100 },
+        { name: "5,000 Stars", value: 5000, icon: "⭐", weight: 1600 },
+        { name: "18,000 Stars", value: 18000, icon: "🦾", weight: 295 },
+        { name: "Cyber Matrix", value: 150000, icon: "🌐", weight: 5 }
       ]},
       { id: 12, name: "Драконий", price: 10000, icon: "🐉", items: [
-        { name: "1,000 Stars", value: 1000, icon: "⭐", weight: 7000 },
-        { name: "3,500 Stars", value: 3500, icon: "⭐", weight: 2500 },
-        { name: "18,000 Stars", value: 18000, icon: "🐉", weight: 499 },
-        { name: "Dragon Soul", value: 300000, icon: "🔥", weight: 1 }
+        { name: "5,000 Stars", value: 5000, icon: "⭐", weight: 8100 },
+        { name: "10,000 Stars", value: 10000, icon: "⭐", weight: 1600 },
+        { name: "36,000 Stars", value: 36000, icon: "🐉", weight: 295 },
+        { name: "Dragon Soul", value: 300000, icon: "🔥", weight: 5 }
       ]},
       { id: 13, name: "Космический", price: 15000, icon: "🚀", items: [
-        { name: "1,500 Stars", value: 1500, icon: "⭐", weight: 7000 },
-        { name: "5,000 Stars", value: 5000, icon: "⭐", weight: 2500 },
-        { name: "28,000 Stars", value: 28000, icon: "🚀", weight: 499 },
-        { name: "Supernova NFT", value: 500000, icon: "🌌", weight: 1 }
+        { name: "7,500 Stars", value: 7500, icon: "⭐", weight: 8100 },
+        { name: "15,000 Stars", value: 15000, icon: "⭐", weight: 1600 },
+        { name: "54,000 Stars", value: 54000, icon: "🚀", weight: 295 },
+        { name: "Supernova NFT", value: 450000, icon: "🌌", weight: 5 }
       ]},
       { id: 14, name: "Квантовый", price: 25000, icon: "⚛️", items: [
-        { name: "2,500 Stars", value: 2500, icon: "⭐", weight: 7000 },
-        { name: "8,500 Stars", value: 8500, icon: "⭐", weight: 2500 },
-        { name: "48,000 Stars", value: 48000, icon: "⚛️", weight: 499 },
-        { name: "Quantum Core", value: 850000, icon: "🌀", weight: 1 }
+        { name: "12,500 Stars", value: 12500, icon: "⭐", weight: 8100 },
+        { name: "25,000 Stars", value: 25000, icon: "⭐", weight: 1600 },
+        { name: "90,000 Stars", value: 90000, icon: "⚛️", weight: 295 },
+        { name: "Quantum Core", value: 750000, icon: "🌀", weight: 5 }
       ]},
       { id: 15, name: "Легендарный", price: 40000, icon: "🛡️", items: [
-        { name: "4,000 Stars", value: 4000, icon: "⭐", weight: 7000 },
-        { name: "14,000 Stars", value: 14000, icon: "⭐", weight: 2500 },
-        { name: "75,000 Stars", value: 75000, icon: "🛡️", weight: 499 },
-        { name: "Aegis Shield", value: 1300000, icon: "⚔️", weight: 1 }
+        { name: "20,000 Stars", value: 20000, icon: "⭐", weight: 8100 },
+        { name: "40,000 Stars", value: 40000, icon: "⭐", weight: 1600 },
+        { name: "145,000 Stars", value: 145000, icon: "🛡️", weight: 295 },
+        { name: "Aegis Shield", value: 1200000, icon: "⚔️", weight: 5 }
       ]},
       { id: 16, name: "Божественный", price: 70000, icon: "👼", items: [
-        { name: "7,000 Stars", value: 7000, icon: "⭐", weight: 7000 },
-        { name: "24,000 Stars", value: 24000, icon: "⭐", weight: 2500 },
-        { name: "130,000 Stars", value: 130000, icon: "👼", weight: 499 },
-        { name: "Divinity Halo", value: 2200000, icon: "☀️", weight: 1 }
+        { name: "35,000 Stars", value: 35000, icon: "⭐", weight: 8100 },
+        { name: "70,000 Stars", value: 70000, icon: "⭐", weight: 1600 },
+        { name: "255,000 Stars", value: 255000, icon: "👼", weight: 295 },
+        { name: "Divinity Halo", value: 2100000, icon: "☀️", weight: 5 }
       ]},
       { id: 17, name: "Вселенский", price: 100000, icon: "🌌", items: [
-        { name: "10,000 Stars", value: 10000, icon: "⭐", weight: 7000 },
-        { name: "35,000 Stars", value: 35000, icon: "⭐", weight: 2500 },
-        { name: "200,000 Stars", value: 200000, icon: "🌌", weight: 499 },
-        { name: "Universe Singularity", value: 3500000, icon: "✨", weight: 1 }
+        { name: "50,000 Stars", value: 50000, icon: "⭐", weight: 8100 },
+        { name: "100,000 Stars", value: 100000, icon: "⭐", weight: 1600 },
+        { name: "360,000 Stars", value: 360000, icon: "🌌", weight: 295 },
+        { name: "Universe Singularity", value: 3000000, icon: "✨", weight: 5 }
       ]}
     ];
 
