@@ -223,7 +223,6 @@
     let currentCase = null;
     let isSpinning = false;
 
-    // ПОЛНЫЙ СПИСОК КЕЙСОВ (ВКЛЮЧАЯ 4 НОВЫХ УЛЬТРА-КЕЙСА)
     const casesData = [
       { id: 1, name: "Бесплатный (1ч)", price: 0, icon: "📦", items: [
         { name: "0.1 Stars", value: 0.1, icon: "✨", weight: 9000 },
@@ -303,7 +302,6 @@
         { name: "28,000 Stars", value: 28000, icon: "🚀", weight: 499 },
         { name: "Supernova NFT", value: 500000, icon: "🌌", weight: 1 }
       ]},
-      // --- 4 НОВЫХ КЕЙСА ---
       { id: 14, name: "Квантовый", price: 25000, icon: "⚛️", items: [
         { name: "2,500 Stars", value: 2500, icon: "⭐", weight: 7000 },
         { name: "8,500 Stars", value: 8500, icon: "⭐", weight: 2500 },
@@ -436,8 +434,9 @@
       children[45].querySelector('.icon').textContent = winItem.icon;
       children[45].children[1].textContent = winItem.name;
 
-      const itemWidth = 100;
-      const targetOffset = -(45 * itemWidth - (window.innerWidth / 2) + 50);
+      const itemFullWidth = 100; 
+      const wrapperWidth = document.querySelector('.roulette-wrapper').clientWidth;
+      const targetOffset = -(45 * itemFullWidth - (wrapperWidth / 2) + (itemFullWidth / 2));
 
       track.style.transition = 'transform 4.5s cubic-bezier(0.15, 0.9, 0.2, 1)';
       track.style.transform = `translateX(${targetOffset}px)`;
