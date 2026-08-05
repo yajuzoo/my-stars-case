@@ -17,7 +17,7 @@
       padding-bottom: 80px;
     }
 
-    /* Шапка с главным балансом */
+    /* Шапка с балансом */
     .header {
       display: flex;
       justify-content: space-between;
@@ -37,13 +37,13 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Рулетка */
+    /* Рулетка (без промежутков) */
     .roulette-container {
       position: relative;
       width: 100%;
       max-width: 350px;
-      height: 100px;
-      margin: 25px auto;
+      height: 90px;
+      margin: 20px auto;
       overflow: hidden;
       border: 3px solid #f39c12;
       border-radius: 12px;
@@ -65,22 +65,22 @@
       display: flex;
       position: absolute;
       left: 0;
-      top: 10px;
+      top: 5px;
       transition: transform 4s cubic-bezier(0.1, 1, 0.1, 1);
     }
+    /* Элемент рулетки без боковых отступов */
     .item {
       min-width: 80px;
       height: 80px;
-      margin: 0 5px;
+      margin: 0;
       background: #2c2c3e;
-      border-radius: 8px;
+      border-right: 1px solid #3d3d5c;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 13px;
       font-weight: bold;
       color: #ffffff;
-      border: 1px solid #3d3d5c;
     }
 
     .btn {
@@ -103,7 +103,40 @@
       box-shadow: none;
     }
 
-    /* Карточки Личного Кабинета */
+    /* Блок витрины призов под кейсом */
+    .prizes-showcase {
+      margin: 25px auto 0;
+      max-width: 350px;
+      background: #252538;
+      border-radius: 12px;
+      padding: 15px;
+      border: 1px solid #3d3d5c;
+      text-align: left;
+    }
+    .prizes-showcase-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #aaa;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .prizes-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .prize-chip {
+      background: #1c1c2b;
+      border: 1px solid #3d3d5c;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #f1c40f;
+    }
+
+    /* Профиль */
     .profile-card {
       background: #252538;
       border-radius: 16px;
@@ -129,12 +162,58 @@
       font-weight: bold;
     }
 
-    /* Сетка пополнений */
+    /* Модальное окно пополнения */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 200;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: #252538;
+      width: 100%;
+      max-width: 450px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding: 20px;
+      border-top: 2px solid #f39c12;
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Сетка вариантов пополнения */
     .topup-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-top: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 5px;
     }
     .topup-card {
       background: #1c1c2b;
@@ -143,14 +222,13 @@
       padding: 12px 5px;
       text-align: center;
       cursor: pointer;
-      transition: 0.2s;
     }
     .topup-card:hover {
       border-color: #f39c12;
       background: #29293d;
     }
     .topup-card .amount {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
       color: #f1c40f;
     }
@@ -188,7 +266,7 @@
 </head>
 <body>
 
-  <!-- Верхняя шапка с единым балансом -->
+  <!-- Верхняя шапка с балансом -->
   <div class="header">
     <span>Мой Баланс:</span>
     <div class="balance-box" id="mainBalanceDisplay">0 ⭐</div>
@@ -205,6 +283,18 @@
 
     <button class="btn" id="openBtn" onclick="spinCase()">Открыть за 10 ⭐</button>
     <div style="margin-top:15px; font-weight:bold;" id="resultMsg"></div>
+
+    <!-- Витрина: Содержимое кейса (без шансов) -->
+    <div class="prizes-showcase">
+      <div class="prizes-showcase-title">Может выпасть из кейса:</div>
+      <div class="prizes-grid">
+        <div class="prize-chip">100 Stars 💎</div>
+        <div class="prize-chip">20 Stars ⭐</div>
+        <div class="prize-chip">10 Stars ⭐</div>
+        <div class="prize-chip">5 Stars ⭐</div>
+        <div class="prize-chip" style="color:#aaa;">Пусто 💨</div>
+      </div>
+    </div>
   </div>
 
   <!-- 2. Вкладка "Личный кабинет" -->
@@ -219,18 +309,24 @@
       </div>
     </div>
 
-    <!-- Баланс и Статистика -->
+    <!-- Баланс и Кнопка Пополнить -->
     <div class="profile-card">
       <div style="font-size: 13px; color: #aaa;">💳 Основной баланс:</div>
-      <div style="font-size: 24px; font-weight: bold; color: #f1c40f; margin-bottom: 10px;" id="profileMainBalance">0 ⭐</div>
+      <div style="font-size: 24px; font-weight: bold; color: #f1c40f; margin-bottom: 12px;" id="profileMainBalance">0 ⭐</div>
       
-      <div style="font-size: 13px; color: #888;">📊 Всего выиграно в кейсах: <b style="color: #2ecc71;" id="totalWonDisplay">0 ⭐</b></div>
+      <button class="btn" style="font-size: 15px; padding: 12px; margin-top:0;" onclick="openTopUpModal()">➕ Пополнить баланс</button>
+      
+      <div style="font-size: 13px; color: #888; margin-top: 15px;">📊 Всего выиграно: <b style="color: #2ecc71;" id="totalWonDisplay">0 ⭐</b></div>
     </div>
+  </div>
 
-    <!-- Пополнение баланса -->
-    <div class="profile-card">
-      <div style="font-size: 15px; font-weight: bold; color: #fff;">➕ Пополнить баланс</div>
-      <div style="font-size: 12px; color: #aaa; margin-bottom: 10px;">Выберите сумму для пополнения:</div>
+  <!-- Модальное окно пополнения -->
+  <div class="modal-overlay" id="topUpModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span style="font-size: 16px; font-weight: bold;">Выберите сумму пополнения:</span>
+        <button class="modal-close" onclick="closeTopUpModal()">&times;</button>
+      </div>
 
       <div class="topup-grid">
         <div class="topup-card" onclick="topUp(10)"><div class="amount">10 ⭐</div></div>
@@ -276,7 +372,6 @@
     const mainKey = `main_balance_${tgUserId}`;
     const wonKey = `total_won_${tgUserId}`;
 
-    // Если новый игрок — выдаем стартовые 50 Stars для пробы
     let mainBalance = parseInt(localStorage.getItem(mainKey) || "50");
     let totalWon = parseInt(localStorage.getItem(wonKey) || "0");
 
@@ -303,6 +398,14 @@
         document.getElementById('profileTab').classList.add('active');
         document.getElementById('navProfile').classList.add('active');
       }
+    }
+
+    // Управление модальным окном
+    function openTopUpModal() {
+      document.getElementById('topUpModal').classList.add('active');
+    }
+    function closeTopUpModal() {
+      document.getElementById('topUpModal').classList.remove('active');
     }
 
     const possiblePrizes = [
@@ -334,12 +437,11 @@
         return;
       }
 
-      // 1. Списываем 10 Stars за открытие
       mainBalance -= 10;
       updateUI();
 
       openBtn.disabled = true;
-      resultMsg.innerText = "🌀 Открываем кейс...";
+      resultMsg.innerText = "🌀 Открываем...";
 
       const wonPrize = getRandomPrize();
 
@@ -350,10 +452,9 @@
       for (let i = 0; i < 40; i++) {
         const item = document.createElement('div');
         item.className = 'item';
+        // На 34-ю позицию ставим выигрыш БЕЗ всякой подсветки и выделения
         if (i === 34) {
           item.innerText = wonPrize.name;
-          item.style.border = "2px solid #f39c12";
-          item.style.background = "#3a2e1e";
         } else {
           item.innerText = possiblePrizes[Math.floor(Math.random() * possiblePrizes.length)].name;
         }
@@ -362,17 +463,17 @@
 
       setTimeout(() => {
         tape.style.transition = "transform 4s cubic-bezier(0.1, 1, 0.1, 1)";
-        tape.style.transform = "translateX(-2970px)";
+        // Смещение строго по ширине элементов (80px * 36 - центрирование = -2880px)
+        tape.style.transform = "translateX(-2880px)";
       }, 50);
 
       setTimeout(() => {
-        // 2. Выигрыш МГНОВЕННО начисляется прямо на рабочий баланс!
         mainBalance += wonPrize.stars;
         totalWon += wonPrize.stars;
         updateUI();
 
         if (wonPrize.stars > 0) {
-          resultMsg.innerHTML = "🎉 Выпало: <b style='color:#f1c40f'>" + wonPrize.name + "</b> (+" + wonPrize.stars + " ⭐ на баланс!)";
+          resultMsg.innerHTML = "🎉 Выпало: <b style='color:#f1c40f'>" + wonPrize.name + "</b> (+" + wonPrize.stars + " ⭐)";
         } else {
           resultMsg.innerHTML = "💨 Выпало: <b>Пусто</b>";
         }
@@ -382,9 +483,8 @@
       }, 4200);
     }
 
-    // Имитация / Демо пополнения любой выбранной суммы
     function topUp(amount) {
-      // При клике на карточку зачисляем выбраную сумму
+      closeTopUpModal();
       mainBalance += amount;
       updateUI();
       alert(`Успешно пополнено на ${amount} Stars ⭐!`);
