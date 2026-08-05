@@ -13,9 +13,27 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       text-align: center;
       margin: 0;
-      padding: 20px;
+      padding: 15px;
     }
-    h2 { color: #f39c12; margin-top: 10px; }
+
+    /* Верхняя панель с балансом */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #252538;
+      padding: 12px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #3d3d5c;
+    }
+    .balance-box {
+      font-size: 16px;
+      font-weight: bold;
+      color: #f1c40f;
+    }
+
+    h2 { color: #f39c12; margin-top: 5px; }
     
     .roulette-container {
       position: relative;
@@ -61,6 +79,7 @@
       color: #ffffff;
       border: 1px solid #3d3d5c;
     }
+
     .btn {
       background: linear-gradient(135deg, #f39c12, #d35400);
       color: #fff;
@@ -71,15 +90,30 @@
       border-radius: 12px;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+      width: 100%;
+      max-width: 350px;
     }
     .btn:disabled {
       background: #555;
       cursor: not-allowed;
       box-shadow: none;
     }
+
+    .result-msg {
+      margin-top: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      min-height: 24px;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Шапка с балансом -->
+  <div class="header">
+    <span>Мой баланс:</span>
+    <div class="balance-box" id="balanceDisplay">0 ⭐</div>
+  </div>
 
   <h2>⭐ Открытие кейса ⭐</h2>
   <p style="color: #ccc;">Цена: <b style="color: #fff;">10 Stars</b></p>
@@ -90,6 +124,7 @@
   </div>
 
   <button class="btn" id="openBtn" onclick="buyCase()">Крутить за 10 ⭐</button>
+  <div class="result-msg" id="resultMsg"></div>
 
   <script>
     const tg = window.Telegram.WebApp;
@@ -98,18 +133,28 @@
     const urlParams = new URLSearchParams(window.location.search);
     const invoiceUrl = urlParams.get('invoice');
     const winPrize = urlParams.get('prize') || "Пусто 💨";
+    const winStars = parseInt(urlParams.get('stars') || "0");
+    let currentBalance = parseInt(urlParams.get('balance') || "0");
 
     const tape = document.getElementById('tape');
     const openBtn = document.getElementById('openBtn');
+    const balanceDisplay = document.getElementById('balanceDisplay');
+    const resultMsg = document.getElementById('resultMsg');
 
-    // Генерируем ленту рулетки
+    // Отображаем стартовый баланс
+    balanceDisplay.innerText = currentBalance + " ⭐";
+
     const possiblePrizes = ["Пусто 💨", "5 Stars ⭐", "10 Stars ⭐", "20 Stars ⭐", "100 Stars 💎"];
+    
     function initTape() {
+      tape.style.transition = "none";
+      tape.style.transform = "translateX(0px)";
       tape.innerHTML = '';
+      
       for (let i = 0; i < 40; i++) {
         const item = document.createElement('div');
         item.className = 'item';
-        // 35-й элемент сделаем именно тем призом, который выпал!
+        // 35-й элемент - выигрыш
         if (i === 34) {
           item.innerText = winPrize;
           item.style.border = "2px solid #f39c12";
@@ -124,23 +169,35 @@
 
     function buyCase() {
       if (!invoiceUrl) {
-        alert("Ошибка: Ссылка на оплату не найдена. Перезапустите бота через /start");
+        alert("Перезапустите бота через /start");
         return;
       }
 
-      // Открываем окно оплаты Stars
       tg.openInvoice(invoiceUrl, function(status) {
         if (status === 'paid') {
           openBtn.disabled = true;
-          // Крутим рулетку к 35-му элементу (примерно -2970px)
-          tape.style.transform = "translateX(-2970px)";
+          resultMsg.innerText = "🌀 Рулетка крутится...";
           
+          // Включаем анимацию
           setTimeout(() => {
-            alert("🎉 Поздравляем! Ваш выигрыш: " + winPrize);
-            tg.close(); // Закрываем WebApp после выигрыша
+            tape.style.transition = "transform 4s cubic-bezier(0.1, 1, 0.1, 1)";
+            tape.style.transform = "translateX(-2970px)";
+          }, 50);
+
+          // По окончании анимации
+          setTimeout(() => {
+            // Обновляем баланс в интерфейсе сайта
+            currentBalance += winStars;
+            balanceDisplay.innerText = currentBalance + " ⭐";
+            
+            resultMsg.innerHTML = "🎉 Выпало: <b style='color:#f1c40f'>" + winPrize + "</b>";
+            
+            // Кнопку оставляем активной для повторного открытия (или переоткрытия через меню)
+            openBtn.innerText = "Крутить еще!";
+            openBtn.disabled = false;
           }, 4200);
         } else {
-          alert("Оплата не была завершена.");
+          resultMsg.innerText = "❌ Оплата отменена";
         }
       });
     }
