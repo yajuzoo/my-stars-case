@@ -393,7 +393,6 @@
     </div>
   </nav>
 
-  <!-- Кнопки пополнения (включая 10 000 Stars) -->
   <div id="topUpModal" class="modal-overlay">
     <div class="modal">
       <h3 class="modal-title">Пополнение баланса</h3>
@@ -410,8 +409,7 @@
   </div>
 
   <script>
-    // Если тестируешь локально на телефоне, пробрось ngrok и укажи ссылку сюда.
-    // Пример: const SERVER_URL = "https://xxxx.ngrok-free.app";
+    // ⚠️ ВАЖНО: Укажи ссылку на твой ngrok или сервер (например "https://xxxx.ngrok-free.app")
     const SERVER_URL = "http://localhost:8080"; 
 
     const tg = window.Telegram.WebApp;
@@ -506,14 +504,14 @@
             if (status === 'paid') {
               mainBalance += amount;
               updateUI();
-              alert(`Успешно! Баланс пополнен на ${amount} ⭐`);
+              alert(`🎉 Успешно! Баланс пополнен на ${amount} ⭐`);
             }
           });
         } else {
-          alert("Ошибка генерации счета: " + (data.message || "Неизвестно"));
+          alert("Ошибка Telegram API: " + (data.message || "Не удалось получить счет"));
         }
       } catch (e) {
-        alert("Ошибка связи с сервером: " + e.message);
+        alert("Ошибка подключения к серверу! Проверь запущен ли main.py и правильный ли SERVER_URL в index.html.\n\nДетали: " + e.message);
       }
     }
 
