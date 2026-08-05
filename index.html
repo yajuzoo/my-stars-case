@@ -14,7 +14,6 @@
       padding-bottom: 40px;
     }
 
-    /* Top Bar */
     .navbar {
       background: #12141d;
       border-bottom: 1px solid #1f2330;
@@ -26,258 +25,116 @@
       top: 0;
       z-index: 100;
     }
-    .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-    }
+    .user-profile { display: flex; align-items: center; gap: 10px; cursor: pointer; }
     .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #202433;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      border: 1px solid #0088cc;
+      width: 38px; height: 38px; border-radius: 50%; background: #202433;
+      display: flex; align-items: center; justify-content: center; font-size: 18px; border: 1px solid #0088cc;
     }
-    .user-info { display: flex; flex-direction: column; }
     .username { font-size: 13px; font-weight: 600; }
     .profile-btn-label { font-size: 10px; color: #0088cc; text-transform: uppercase; font-weight: 700; }
 
     .balance-box {
-      background: #181b26;
-      border: 1px solid #282d3f;
-      border-radius: 10px;
-      padding: 6px 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      background: #181b26; border: 1px solid #282d3f; border-radius: 10px;
+      padding: 6px 12px; display: flex; align-items: center; gap: 8px;
     }
     .balance-val { font-size: 16px; font-weight: 800; color: #ffb703; }
     .btn-add {
-      background: #0088cc;
-      color: white;
-      border: none;
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
+      background: #0088cc; color: white; border: none; width: 24px; height: 24px;
+      border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;
     }
 
-    /* Cases Grid */
     .container { padding: 16px; max-width: 600px; margin: 0 auto; }
     .section-title { font-size: 14px; color: #717a8c; text-transform: uppercase; margin-bottom: 12px; font-weight: 700; }
 
-    .cases-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
+    .cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .case-card {
-      background: #141722;
-      border: 1px solid #202536;
-      border-radius: 14px;
-      padding: 14px;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.1s;
+      background: #141722; border: 1px solid #202536; border-radius: 14px;
+      padding: 14px; text-align: center; cursor: pointer; position: relative;
     }
-    .case-card:active { transform: scale(0.97); }
     .case-icon { font-size: 44px; margin-bottom: 6px; }
     .case-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
     .case-price { font-size: 13px; color: #ffb703; font-weight: 700; }
+    .cooldown-badge {
+      position: absolute; top: 6px; right: 6px; background: #e63946;
+      color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px;
+    }
 
-    /* Modal / Overlay Views */
     .overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #0b0c10;
-      z-index: 200;
-      flex-direction: column;
-      overflow-y: auto;
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: #0b0c10; z-index: 200; flex-direction: column; overflow-y: auto;
     }
     .overlay-header {
-      padding: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #1c202e;
+      padding: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1c202e;
     }
     .btn-back {
-      background: #191d2b;
-      color: #fff;
-      border: 1px solid #2a3147;
-      border-radius: 8px;
-      padding: 6px 14px;
-      font-weight: 600;
-      cursor: pointer;
+      background: #191d2b; color: #fff; border: 1px solid #2a3147;
+      border-radius: 8px; padding: 6px 14px; font-weight: 600; cursor: pointer;
     }
 
-    /* Roulette Section */
-        .roulette-wrapper {
-    position: relative;
-    width: 100%;
-    height: 120px;
-    background: #121520;
-    border-top: 2px solid #282e44;
-    border-bottom: 2px solid #282e44;
-    margin: 30px 0;
-    overflow: hidden;
+    .roulette-wrapper {
+      position: relative; width: 100%; height: 120px; background: #121520;
+      border-top: 2px solid #282e44; border-bottom: 2px solid #282e44; margin: 30px 0; overflow: hidden;
     }
     .pointer {
-      position: absolute;
-      top: 0; bottom: 0;
-      left: 50%;
-      width: 4px;
-      background: #ffb703;
-      z-index: 10;
-      transform: translateX(-50%);
-      box-shadow: 0 0 10px #ffb703;
+      position: absolute; top: 0; bottom: 0; left: 50%; width: 4px;
+      background: #ffb703; z-index: 10; transform: translateX(-50%); box-shadow: 0 0 10px #ffb703;
     }
     .roulette-track {
-      display: flex;
-      position: absolute;
-      top: 10px;
-      left: 0;
-      height: 100px;
-      transition: transform 5s cubic-bezier(0.1, 1, 0.1, 1);
+      display: flex; position: absolute; top: 10px; left: 0; height: 100px;
+      transition: transform 4.5s cubic-bezier(0.15, 0.9, 0.2, 1);
     }
     .roulette-item {
-      min-width: 90px;
-      height: 100px;
-      margin: 0 5px;
-      background: #181c2b;
-      border: 1px solid #2a3147;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: bold;
+      min-width: 90px; height: 100px; margin: 0 5px; background: #181c2b;
+      border: 1px solid #2a3147; border-radius: 10px; display: flex;
+      flex-direction: column; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;
     }
     .roulette-item .icon { font-size: 32px; margin-bottom: 4px; }
 
-    /* Drop Items Grid in Case Details */
-    .drop-items-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 16px;
-    }
-    .item-card {
-      background: #141724;
-      border: 1px solid #22283b;
-      border-radius: 10px;
-      padding: 10px;
-      text-align: center;
-    }
+    .drop-items-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+    .item-card { background: #141724; border: 1px solid #22283b; border-radius: 10px; padding: 10px; text-align: center; }
     .item-card .icon { font-size: 30px; }
     .item-card .name { font-size: 11px; margin-top: 4px; color: #a0a7b8; }
     .item-card .value { font-size: 11px; color: #ffb703; font-weight: 700; margin-top: 2px; }
 
-    /* Inventory Items */
-    .inventory-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 16px;
-    }
+    .inventory-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
     .inv-item {
-      background: #141724;
-      border: 1px solid #22283b;
-      border-radius: 12px;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      background: #141724; border: 1px solid #22283b; border-radius: 12px;
+      padding: 12px; display: flex; align-items: center; justify-content: space-between;
     }
-    .inv-info { display: flex; align-items: center; gap: 12px; }
-    .inv-icon { font-size: 32px; }
-    .inv-actions { display: flex; gap: 8px; }
     .btn-sell {
-      background: #282e42;
-      color: #ffb703;
-      border: 1px solid #3d4663;
-      border-radius: 6px;
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .btn-withdraw {
-      background: #0088cc;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
+      background: #282e42; color: #ffb703; border: 1px solid #3d4663;
+      border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer;
     }
 
-    /* Modal Topup */
+    .withdraw-box {
+      background: #141724; border: 1px solid #22283b; border-radius: 14px; padding: 16px; margin-bottom: 20px;
+    }
+    .withdraw-input {
+      width: 100%; padding: 10px; background: #1a1e2d; border: 1px solid #2e364f;
+      border-radius: 8px; color: #fff; font-size: 14px; margin: 10px 0;
+    }
+    .btn-withdraw-main {
+      width: 100%; background: #0088cc; color: white; border: none;
+      padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer;
+    }
+
     .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.85);
-      align-items: center;
-      justify-content: center;
-      z-index: 300;
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 300;
     }
-    .modal-box {
-      background: #141722;
-      border: 1px solid #252b3e;
-      border-radius: 18px;
-      padding: 20px;
-      width: 90%;
-      max-width: 380px;
-      text-align: center;
-    }
-    .topup-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin: 14px 0;
-    }
-    .star-btn {
-      background: #1d2233;
-      border: 1px solid #2e364f;
-      border-radius: 8px;
-      padding: 10px;
-      font-weight: 700;
-      color: #ffb703;
-      cursor: pointer;
-    }
-    .custom-input {
-      width: 100%;
-      padding: 10px;
-      background: #1a1e2d;
-      border: 1px solid #2e364f;
-      border-radius: 8px;
-      color: #fff;
-      text-align: center;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
+    .modal-box { background: #141722; border: 1px solid #252b3e; border-radius: 18px; padding: 20px; width: 90%; max-width: 380px; text-align: center; }
+    .topup-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 14px 0; }
+    .star-btn { background: #1d2233; border: 1px solid #2e364f; border-radius: 8px; padding: 10px; font-weight: 700; color: #ffb703; cursor: pointer; }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
   <div class="navbar">
     <div class="user-profile" onclick="openProfile()">
       <div class="avatar">👤</div>
       <div class="user-info">
         <span class="username" id="profileName">Пользователь</span>
-        <span class="profile-btn-label">Профиль & Инвентарь 📦</span>
+        <span class="profile-btn-label">Профиль & Вывод 📦</span>
       </div>
     </div>
     <div class="balance-box">
@@ -286,13 +143,11 @@
     </div>
   </div>
 
-  <!-- Main Cases Store View -->
   <div class="container">
     <div class="section-title">NFT Кейсы</div>
     <div class="cases-grid" id="casesGrid"></div>
   </div>
 
-  <!-- Case Open View (Roulette + Loot table) -->
   <div class="overlay" id="caseOverlay">
     <div class="overlay-header">
       <button class="btn-back" onclick="closeOverlay('caseOverlay')">← Назад</button>
@@ -313,7 +168,6 @@
     </div>
   </div>
 
-  <!-- Profile & Inventory View -->
   <div class="overlay" id="profileOverlay">
     <div class="overlay-header">
       <button class="btn-back" onclick="closeOverlay('profileOverlay')">← Назад</button>
@@ -321,17 +175,24 @@
       <div style="width:50px;"></div>
     </div>
     <div class="container">
-      <div style="background:#141724; border:1px solid #22283b; border-radius:14px; padding:16px; margin-bottom:20px; text-align:center;">
+      <div style="background:#141724; border:1px solid #22283b; border-radius:14px; padding:16px; margin-bottom:16px; text-align:center;">
         <h2 id="invBalance" style="color:#ffb703; margin-bottom:4px;">0 ⭐</h2>
-        <p style="font-size:12px; color:#717a8c;">Ваш текущий баланс</p>
+        <p style="font-size:12px; color:#717a8c;">Текущий баланс</p>
       </div>
 
-      <div class="section-title">Ваш Инвентарь (NFT / Награды)</div>
+      <!-- Вывод Звёзд -->
+      <div class="withdraw-box">
+        <div style="font-size:14px; font-weight:700;">Вывести ⭐ на аккаунт</div>
+        <p style="font-size:11px; color:#717a8c; margin-top:2px;">Минимальный вывод: 250 ⭐</p>
+        <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Количество ⭐ (мин. 250)">
+        <button class="btn-withdraw-main" onclick="requestWithdraw()">Запросить вывод</button>
+      </div>
+
+      <div class="section-title">Выбитые предметы (Продажа в ⭐)</div>
       <div class="inventory-list" id="inventoryList"></div>
     </div>
   </div>
 
-  <!-- Modal: Top Up -->
   <div class="modal" id="topupModal">
     <div class="modal-box">
       <h3>Пополнение баланса ⭐</h3>
@@ -345,9 +206,7 @@
         <div class="star-btn" onclick="payStars(10000)">10 000 ⭐</div>
         <div class="star-btn" onclick="payStars(20000)">20 000 ⭐</div>
       </div>
-      <input type="number" id="customAmount" class="custom-input" placeholder="Другая сумма ⭐">
-      <button class="btn-add" style="width:100%; height:40px; margin-bottom:8px; border-radius:8px;" onclick="payCustom()">Сформировать счет</button>
-      <button class="btn-back" style="width:100%;" onclick="closeModal('topupModal')">Отмена</button>
+      <button class="btn-back" style="width:100%; margin-top:10px;" onclick="closeModal('topupModal')">Отмена</button>
     </div>
   </div>
 
@@ -355,7 +214,7 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // SERVER URL - ТВОЙ NGROK ЛИНК
+    // ВСТАВЬ СВОЙ НОВОСТИ/NGROK URL НИЖЕ
     const SERVER_URL = "https://9f1e-2a03-32c0-7000-cc88-d588-9b53-e53-54a2.ngrok-free.app";
     const tgUserId = tg.initDataUnsafe?.user?.id || 8712421526;
     
@@ -366,134 +225,59 @@
     let currentCase = null;
     let isSpinning = false;
 
-    // 20 NFT Кейсов с заложенной 70% маржой казино (House Edge ~70%, RTP ~30%)
     const casesData = [
-      { id: 1, name: "Бесплатный", price: 0, icon: "📦", items: [
+      { id: 1, name: "Бесплатный (1ч)", price: 0, icon: "📦", items: [
         { name: "0.1 Stars", value: 0.1, icon: "✨", weight: 9000 },
         { name: "1 Star", value: 1, icon: "⭐", weight: 990 },
-        { name: "10 Stars NFT", value: 10, icon: "💎", weight: 9.9 },
-        { name: "Telegram Premium 1 мес", value: 300, icon: "🌟", weight: 0.1 }
+        { name: "10 Stars", value: 10, icon: "💎", weight: 9.9 },
+        { name: "Telegram Premium", value: 300, icon: "🌟", weight: 0.1 }
       ]},
-      { id: 2, name: "Новичок NFT", price: 10, icon: "👾", items: [
+      { id: 2, name: "Новичок", price: 10, icon: "👾", items: [
         { name: "1 Star", value: 1, icon: "⭐", weight: 7000 },
         { name: "3 Stars", value: 3, icon: "⭐", weight: 2500 },
-        { name: "15 Stars NFT", value: 15, icon: "💎", weight: 499 },
-        { name: "NFT Doge Card", value: 500, icon: "🐕", weight: 1 }
+        { name: "15 Stars", value: 15, icon: "💎", weight: 499 },
+        { name: "Doge Card", value: 500, icon: "🐕", weight: 1 }
       ]},
-      { id: 3, name: "Квадробер NFT", price: 25, icon: "🐱", items: [
+      { id: 3, name: "Квадробер", price: 25, icon: "🐱", items: [
         { name: "3 Stars", value: 3, icon: "⭐", weight: 7500 },
         { name: "8 Stars", value: 8, icon: "⭐", weight: 2000 },
-        { name: "40 Stars NFT", value: 40, icon: "🐱", weight: 499 },
-        { name: "Cat Lord NFT", value: 1000, icon: "👑", weight: 1 }
+        { name: "40 Stars", value: 40, icon: "🐱", weight: 499 },
+        { name: "Cat Lord", value: 1000, icon: "👑", weight: 1 }
       ]},
       { id: 4, name: "Аркановый", price: 50, icon: "🔮", items: [
         { name: "5 Stars", value: 5, icon: "⭐", weight: 7000 },
         { name: "15 Stars", value: 15, icon: "⭐", weight: 2500 },
-        { name: "80 Stars NFT", value: 80, icon: "🔮", weight: 499 },
-        { name: "Arcana Gem NFT", value: 2000, icon: "💠", weight: 1 }
+        { name: "80 Stars", value: 80, icon: "🔮", weight: 499 },
+        { name: "Arcana Gem", value: 2000, icon: "💠", weight: 1 }
       ]},
       { id: 5, name: "Пепе Секрет", price: 100, icon: "🐸", items: [
         { name: "10 Stars", value: 10, icon: "⭐", weight: 7000 },
         { name: "30 Stars", value: 30, icon: "⭐", weight: 2500 },
-        { name: "150 Stars NFT", value: 150, icon: "🐸", weight: 499 },
-        { name: "Rare Pepe NFT", value: 4000, icon: "👑", weight: 1 }
-      ]},
-      { id: 6, name: "Киберпанк", price: 200, icon: "🤖", items: [
-        { name: "20 Stars", value: 20, icon: "⭐", weight: 7000 },
-        { name: "60 Stars", value: 60, icon: "⭐", weight: 2500 },
-        { name: "300 Stars NFT", value: 300, icon: "🤖", weight: 499 },
-        { name: "Cyber Skull NFT", value: 8000, icon: "☠️", weight: 1 }
-      ]},
-      { id: 7, name: "Мажор NFT", price: 300, icon: "🎩", items: [
-        { name: "30 Stars", value: 30, icon: "⭐", weight: 7000 },
-        { name: "90 Stars", value: 90, icon: "⭐", weight: 2500 },
-        { name: "450 Stars NFT", value: 450, icon: "🎩", weight: 499 },
-        { name: "Gold TopHat NFT", value: 12000, icon: "👑", weight: 1 }
+        { name: "150 Stars", value: 150, icon: "🐸", weight: 499 },
+        { name: "Rare Pepe", value: 4000, icon: "👑", weight: 1 }
       ]},
       { id: 8, name: "Алмазный", price: 500, icon: "💎", items: [
         { name: "50 Stars", value: 50, icon: "⭐", weight: 7000 },
         { name: "150 Stars", value: 150, icon: "⭐", weight: 2500 },
-        { name: "800 Stars NFT", value: 800, icon: "💎", weight: 499 },
-        { name: "Blue Diamond NFT", value: 20000, icon: "💎", weight: 1 }
-      ]},
-      { id: 9, name: "Золотая Жила", price: 750, icon: "🏆", items: [
-        { name: "75 Stars", value: 75, icon: "⭐", weight: 7000 },
-        { name: "200 Stars", value: 200, icon: "⭐", weight: 2500 },
-        { name: "1100 Stars NFT", value: 1100, icon: "🏆", weight: 499 },
-        { name: "Golden Trophy NFT", value: 30000, icon: "🥇", weight: 1 }
-      ]},
-      { id: 10, name: "Илон Маск", price: 1000, icon: "🚀", items: [
-        { name: "100 Stars", value: 100, icon: "⭐", weight: 7000 },
-        { name: "300 Stars", value: 300, icon: "⭐", weight: 2500 },
-        { name: "1500 Stars NFT", value: 1500, icon: "🚀", weight: 499 },
-        { name: "Starship NFT", value: 45000, icon: "🌌", weight: 1 }
-      ]},
-      { id: 11, name: "Павел Дуров", price: 1500, icon: "✈️", items: [
-        { name: "150 Stars", value: 150, icon: "⭐", weight: 7000 },
-        { name: "450 Stars", value: 450, icon: "⭐", weight: 2500 },
-        { name: "2200 Stars NFT", value: 2200, icon: "✈️", weight: 499 },
-        { name: "Black Cap NFT", value: 65000, icon: "🎩", weight: 1 }
-      ]},
-      { id: 12, name: "Крипто Барон", price: 2000, icon: "💰", items: [
-        { name: "200 Stars", value: 200, icon: "⭐", weight: 7000 },
-        { name: "600 Stars", value: 600, icon: "⭐", weight: 2500 },
-        { name: "3000 Stars NFT", value: 3000, icon: "💰", weight: 499 },
-        { name: "1 BTC NFT", value: 90000, icon: "🪙", weight: 1 }
-      ]},
-      { id: 13, name: "BAYC Ape", price: 3000, icon: "🐵", items: [
-        { name: "300 Stars", value: 300, icon: "⭐", weight: 7000 },
-        { name: "900 Stars", value: 900, icon: "⭐", weight: 2500 },
-        { name: "4500 Stars NFT", value: 4500, icon: "🐵", weight: 499 },
-        { name: "Gold Ape NFT", value: 130000, icon: "👑", weight: 1 }
-      ]},
-      { id: 14, name: "Дракон NFT", price: 4000, icon: "🐉", items: [
-        { name: "400 Stars", value: 400, icon: "⭐", weight: 7000 },
-        { name: "1200 Stars", value: 1200, icon: "⭐", weight: 2500 },
-        { name: "6000 Stars NFT", value: 6000, icon: "🐉", weight: 499 },
-        { name: "Ancient Dragon NFT", value: 180000, icon: "🔥", weight: 1 }
-      ]},
-      { id: 15, name: "Абсолют", price: 5000, icon: "⚡", items: [
-        { name: "500 Stars", value: 500, icon: "⭐", weight: 7000 },
-        { name: "1500 Stars", value: 1500, icon: "⭐", weight: 2500 },
-        { name: "8000 Stars NFT", value: 8000, icon: "⚡", weight: 499 },
-        { name: "Zeus Lightning NFT", value: 220000, icon: "⚡", weight: 1 }
-      ]},
-      { id: 16, name: "Космос NFT", price: 7500, icon: "🌌", items: [
-        { name: "750 Stars", value: 750, icon: "⭐", weight: 7000 },
-        { name: "2200 Stars", value: 2200, icon: "⭐", weight: 2500 },
-        { name: "11000 Stars NFT", value: 11000, icon: "🌌", weight: 499 },
-        { name: "Galaxy Core NFT", value: 300000, icon: "🪐", weight: 1 }
-      ]},
-      { id: 17, name: "Властелин", price: 10000, icon: "👑", items: [
-        { name: "1000 Stars", value: 1000, icon: "⭐", weight: 7000 },
-        { name: "3000 Stars", value: 3000, icon: "⭐", weight: 2500 },
-        { name: "15000 Stars NFT", value: 15000, icon: "👑", weight: 499 },
-        { name: "Imperial Crown NFT", value: 450000, icon: "👑", weight: 1 }
-      ]},
-      { id: 18, name: "Олимп NFT", price: 12500, icon: "🏛️", items: [
-        { name: "1250 Stars", value: 1250, icon: "⭐", weight: 7000 },
-        { name: "3700 Stars", value: 3700, icon: "⭐", weight: 2500 },
-        { name: "18000 Stars NFT", value: 18000, icon: "🏛️", weight: 499 },
-        { name: "Olympus Throne NFT", value: 550000, icon: "🔱", weight: 1 }
-      ]},
-      { id: 19, name: "Вселенная", price: 15000, icon: "🪐", items: [
-        { name: "1500 Stars", value: 1500, icon: "⭐", weight: 7000 },
-        { name: "4500 Stars", value: 4500, icon: "⭐", weight: 2500 },
-        { name: "22000 Stars NFT", value: 22000, icon: "🪐", weight: 499 },
-        { name: "Big Bang NFT", value: 700000, icon: "💥", weight: 1 }
-      ]},
-      { id: 20, name: "Godlike NFT", price: 20000, icon: "👑", items: [
-        { name: "2000 Stars", value: 2000, icon: "⭐", weight: 7000 },
-        { name: "6000 Stars", value: 6000, icon: "⭐", weight: 2500 },
-        { name: "30000 Stars NFT", value: 30000, icon: "🌟", weight: 499 },
-        { name: "GODMODE NFT Card", value: 1000000, icon: "👑", weight: 1 }
+        { name: "800 Stars", value: 800, icon: "💎", weight: 499 },
+        { name: "Blue Diamond", value: 20000, icon: "💎", weight: 1 }
       ]}
     ];
 
+    function checkFreeCooldown() {
+      const lastOpen = localStorage.getItem('lastFreeCaseOpen');
+      if (!lastOpen) return 0;
+      const passed = Date.now() - parseInt(lastOpen);
+      const remaining = (3600 * 1000) - passed;
+      return remaining > 0 ? Math.ceil(remaining / (60 * 1000)) : 0;
+    }
+
     function renderCases() {
+      const freeCd = checkFreeCooldown();
       const grid = document.getElementById('casesGrid');
       grid.innerHTML = casesData.map(c => `
         <div class="case-card" onclick="openCaseDetails(${c.id})">
+          ${c.id === 1 && freeCd > 0 ? `<div class="cooldown-badge">⏳ ${freeCd} мин</div>` : ''}
           <div class="case-icon">${c.icon}</div>
           <div class="case-title">${c.name}</div>
           <div class="case-price">${c.price > 0 ? c.price + ' ⭐' : 'БЕСПЛАТНО'}</div>
@@ -503,9 +287,17 @@
 
     function openCaseDetails(id) {
       currentCase = casesData.find(x => x.id === id);
+      
+      if (currentCase.id === 1) {
+        const cd = checkFreeCooldown();
+        if (cd > 0) {
+          alert(`⏱ Бесплатный кейс доступен раз в час! Подождите ещё ${cd} мин.`);
+          return;
+        }
+      }
+
       document.getElementById('overlayCaseTitle').textContent = currentCase.name;
 
-      // Render items preview grid
       const grid = document.getElementById('dropItemsGrid');
       grid.innerHTML = currentCase.items.map(it => `
         <div class="item-card">
@@ -549,28 +341,35 @@
 
     function spinRoulette() {
       if (isSpinning) return;
-      if (balance < currentCase.price) {
+      
+      if (currentCase.id === 1) {
+        const cd = checkFreeCooldown();
+        if (cd > 0) {
+          alert(`⏱ Задержка! Осталось ${cd} мин.`);
+          return;
+        }
+      } else if (balance < currentCase.price) {
         alert("Недостаточно Звёзд на балансе!");
         openTopUpModal();
         return;
       }
 
       isSpinning = true;
-      balance -= currentCase.price;
-      updateBalanceDisplay();
+      if (currentCase.price > 0) {
+        balance -= currentCase.price;
+        updateBalanceDisplay();
+      } else {
+        localStorage.setItem('lastFreeCaseOpen', Date.now().toString());
+      }
 
       const winItem = getWeightedDrop(currentCase.items);
 
-      // Re-populate track making item at index 45 the exact winning item
       const track = document.getElementById('rouletteTrack');
       const children = track.children;
       
-      // Inject winning item into item slot 45
       children[45].querySelector('.icon').textContent = winItem.icon;
       children[45].children[1].textContent = winItem.name;
 
-      // Calculate shift to center item 45 under pointer
-      // item width = 90 + 10 margin = 100px.
       const itemWidth = 100;
       const targetOffset = -(45 * itemWidth - (window.innerWidth / 2) + 50);
 
@@ -580,7 +379,8 @@
       setTimeout(() => {
         isSpinning = false;
         inventory.push({ ...winItem, id: Date.now() });
-        alert(`🎉 Вам выпало: ${winItem.name} (${winItem.value} ⭐)!`);
+        renderCases();
+        alert(`🎉 Выбито: ${winItem.name}! Предмет добавлен в инвентарь (продай его за ⭐).`);
       }, 4800);
     }
 
@@ -593,22 +393,19 @@
     function renderInventory() {
       const list = document.getElementById('inventoryList');
       if (inventory.length === 0) {
-        list.innerHTML = `<p style="text-align:center; color:#717a8c; padding:20px;">Инвентарь пуст. Открывайте кейсы!</p>`;
+        list.innerHTML = `<p style="text-align:center; color:#717a8c; padding:10px;">Инвентарь пуст.</p>`;
         return;
       }
       list.innerHTML = inventory.map(item => `
         <div class="inv-item">
-          <div class="inv-info">
-            <div class="inv-icon">${item.icon}</div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="font-size:26px;">${item.icon}</div>
             <div>
-              <div style="font-weight:700; font-size:14px;">${item.name}</div>
-              <div style="font-size:12px; color:#ffb703;">${item.value} ⭐</div>
+              <div style="font-weight:700; font-size:13px;">${item.name}</div>
+              <div style="font-size:11px; color:#ffb703;">${item.value} ⭐</div>
             </div>
           </div>
-          <div class="inv-actions">
-            <button class="btn-sell" onclick="sellItem(${item.id})">Продать</button>
-            <button class="btn-withdraw" onclick="withdrawItem('${item.name}')">Вывести</button>
-          </div>
+          <button class="btn-sell" onclick="sellItem(${item.id})">Продать за ${item.value} ⭐</button>
         </div>
       `).join('');
     }
@@ -625,8 +422,41 @@
       }
     }
 
-    function withdrawItem(itemName) {
-      alert(`🚀 Заявка на вывод предмета "${itemName}" отправлена администратору бота!`);
+    async function requestWithdraw() {
+      const amount = parseInt(document.getElementById('withdrawAmount').value);
+      if (!amount || amount < 250) {
+        alert("Минимальная сумма вывода — 250 ⭐!");
+        return;
+      }
+      if (amount > balance) {
+        alert("У вас недостаточно звёзд на балансе!");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${SERVER_URL}/api/withdraw`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
+          body: JSON.stringify({
+            user_id: tgUserId,
+            username: tg.initDataUnsafe?.user?.username || 'Без юзернейма',
+            first_name: tg.initDataUnsafe?.user?.first_name || 'Игрок',
+            amount: amount
+          })
+        });
+        const data = await response.json();
+        if (data.status === 'ok') {
+          balance -= amount;
+          updateBalanceDisplay();
+          document.getElementById('invBalance').textContent = `${balance} ⭐`;
+          document.getElementById('withdrawAmount').value = '';
+          alert(`✅ Заявка на вывод ${amount} ⭐ принята! Уведомление отправлено администратору.`);
+        } else {
+          alert("Ошибка отправки заявки.");
+        }
+      } catch (e) {
+        alert("Ошибка сервера!");
+      }
     }
 
     async function fetchBalance() {
@@ -639,7 +469,7 @@
           balance = data.balance;
           updateBalanceDisplay();
         }
-      } catch (e) { console.error(e); }
+      } catch (e) {}
     }
 
     function updateBalanceDisplay() {
@@ -648,9 +478,7 @@
 
     function openTopUpModal() { document.getElementById('topupModal').style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    function closeOverlay(id) { 
-      if (!isSpinning) document.getElementById(id).style.display = 'none'; 
-    }
+    function closeOverlay(id) { if (!isSpinning) document.getElementById(id).style.display = 'none'; }
 
     async function payStars(amount) {
       closeModal('topupModal');
@@ -666,16 +494,12 @@
             if (status === 'paid') setTimeout(fetchBalance, 1000);
           });
         }
-      } catch (e) { alert("Ошибка подключения к серверу!"); }
-    }
-
-    function payCustom() {
-      const val = parseInt(document.getElementById('customAmount').value);
-      if (val && val > 0) payStars(val);
+      } catch (e) { alert("Ошибка подключения!"); }
     }
 
     renderCases();
     fetchBalance();
+    setInterval(renderCases, 30000); // авто-обновление таймеров
   </script>
 </body>
 </html>
