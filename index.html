@@ -24,7 +24,6 @@
       overflow-x: hidden;
     }
 
-    /* Верхняя панель */
     .header {
       display: flex;
       justify-content: space-between;
@@ -37,12 +36,13 @@
       z-index: 10;
     }
 
-    .brand {
-      font-size: 20px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #38bdf8, #818cf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+        .brand {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     }
 
     .balance-badge {
@@ -57,14 +57,8 @@
       gap: 6px;
       cursor: pointer;
       border: 1px solid #475569;
-      transition: transform 0.1s ease;
     }
 
-    .balance-badge:active {
-      transform: scale(0.95);
-    }
-
-    /* Основной контент */
     .content {
       flex: 1;
       padding: 20px;
@@ -86,7 +80,6 @@
       align-items: center;
     }
 
-    /* КЕЙС И РУЛЕТКА */
     .case-title {
       font-size: 22px;
       font-weight: 700;
@@ -106,7 +99,6 @@
       box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
     }
 
-    /* Указатель выигрыша */
     .pointer {
       position: absolute;
       top: 0;
@@ -117,28 +109,6 @@
       transform: translateX(-50%);
       z-index: 5;
       box-shadow: 0 0 10px #ef4444;
-    }
-
-    .pointer::before, .pointer::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-style: solid;
-    }
-
-    .pointer::before {
-      top: 0;
-      border-width: 10px 8px 0 8px;
-      border-color: #ef4444 transparent transparent transparent;
-    }
-
-    .pointer::after {
-      bottom: 0;
-      border-width: 0 8px 10px 8px;
-      border-color: transparent transparent #ef4444 transparent;
     }
 
     .tape {
@@ -165,7 +135,6 @@
       font-weight: 700;
       text-align: center;
       padding: 4px;
-      word-break: break-word;
     }
 
     .btn-spin {
@@ -178,12 +147,6 @@
       font-size: 18px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-      transition: all 0.2s;
-    }
-
-    .btn-spin:active {
-      transform: scale(0.98);
     }
 
     .btn-spin:disabled {
@@ -199,7 +162,6 @@
       text-align: center;
     }
 
-    /* ПРОФИЛЬ */
     .profile-card {
       background: #1e293b;
       border-radius: 16px;
@@ -275,7 +237,6 @@
       cursor: pointer;
     }
 
-    /* НАВИГАЦИЯ ВНИЗУ */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -308,7 +269,6 @@
       font-size: 20px;
     }
 
-    /* МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -361,10 +321,6 @@
       cursor: pointer;
     }
 
-    .star-opt:hover {
-      border-color: #38bdf8;
-    }
-
     .btn-close {
       width: 100%;
       padding: 12px;
@@ -379,7 +335,6 @@
 </head>
 <body>
 
-  <!-- Верхняя панель -->
   <header class="header">
     <div class="brand">STARS CASE</div>
     <div class="balance-badge" onclick="openTopUpModal()">
@@ -388,23 +343,18 @@
     </div>
   </header>
 
-  <!-- Контент -->
   <main class="content">
 
-    <!-- Вкладка 1: Кейсы -->
     <section id="casesTab" class="tab-content active">
       <h2 class="case-title">Кейс "Звёздный" (10 ⭐)</h2>
-
       <div class="roulette-container">
         <div class="pointer"></div>
         <div class="tape" id="tape"></div>
       </div>
-
       <button id="openBtn" class="btn-spin" onclick="spinCase()">Крутить (10 ⭐)</button>
       <div id="resultMsg" class="result-msg"></div>
     </section>
 
-    <!-- Вкладка 2: Профиль -->
     <section id="profileTab" class="tab-content">
       <div class="profile-card">
         <div class="avatar" id="userAvatar">U</div>
@@ -428,7 +378,6 @@
 
   </main>
 
-  <!-- Нижнее меню -->
   <nav class="bottom-nav">
     <div id="navCases" class="nav-item active" onclick="switchTab('cases')">
       <span class="nav-icon">🎰</span>
@@ -440,7 +389,6 @@
     </div>
   </nav>
 
-  <!-- Модалка пополнения -->
   <div id="topUpModal" class="modal-overlay">
     <div class="modal">
       <h3 class="modal-title">Пополнение баланса</h3>
@@ -455,9 +403,7 @@
   </div>
 
   <script>
-    // ⚠️ ВСТАВЬ СЮДА ТОКЕН СВОЕГО БОТА И URL СЕРВЕРА
-    const BOT_TOKEN = "7737271810:AAEE4r34R52-s-O30S6g_x1J0Q6708yJjT4"; // Укажи актуальный токен
-    const SERVER_URL = "http://localhost:8080"; // URL твоего Python-сервера
+    const SERVER_URL = "http://localhost:8080"; // Если тестируешь на хостинге/VPS, укажи тут свой IP или домен
 
     const tg = window.Telegram.WebApp;
     tg.expand();
@@ -465,7 +411,6 @@
     const tgUser = tg.initDataUnsafe?.user || {};
     const tgUserId = tgUser.id ? String(tgUser.id) : "guest";
 
-    // Установка профиля Telegram
     document.getElementById('userName').innerText = (tgUser.first_name || 'Игрок') + ' ' + (tgUser.last_name || '');
     document.getElementById('userHandle').innerText = tgUser.username ? '@' + tgUser.username : 'ID: ' + tgUserId;
     if (tgUser.first_name) {
@@ -478,7 +423,12 @@
     let mainBalance = parseInt(localStorage.getItem(mainKey) || "0");
     let totalWon = parseInt(localStorage.getItem(wonKey) || "0");
 
-    // Синхронизация баланса с файлом balances.json на Python-сервере
+    function renderUI() {
+      document.getElementById('mainBalanceDisplay').innerText = mainBalance + " ⭐";
+      document.getElementById('profileMainBalance').innerText = mainBalance + " ⭐";
+      document.getElementById('totalWonDisplay').innerText = totalWon + " ⭐";
+    }
+
     async function syncBalanceWithServer() {
       try {
         const res = await fetch(`${SERVER_URL}/api/get_balance?user_id=${tgUserId}`);
@@ -488,15 +438,7 @@
           localStorage.setItem(mainKey, mainBalance);
           renderUI();
         }
-      } catch (e) {
-        console.log("Локальный режим: сервер недоступен");
-      }
-    }
-
-    function renderUI() {
-      document.getElementById('mainBalanceDisplay').innerText = mainBalance + " ⭐";
-      document.getElementById('profileMainBalance').innerText = mainBalance + " ⭐";
-      document.getElementById('totalWonDisplay').innerText = totalWon + " ⭐";
+      } catch (e) {}
     }
 
     async function updateUI() {
@@ -504,7 +446,6 @@
       localStorage.setItem(mainKey, mainBalance);
       localStorage.setItem(wonKey, totalWon);
 
-      // Отправляем обновившийся баланс в balances.json
       try {
         await fetch(`${SERVER_URL}/api/update_balance`, {
           method: 'POST',
@@ -517,7 +458,6 @@
     renderUI();
     syncBalanceWithServer();
 
-    // Переключение вкладок
     function switchTab(tabName) {
       document.getElementById('casesTab').classList.remove('active');
       document.getElementById('profileTab').classList.remove('active');
@@ -533,7 +473,6 @@
       }
     }
 
-    // Модалка
     function openTopUpModal() {
       document.getElementById('topUpModal').classList.add('active');
     }
@@ -541,33 +480,21 @@
       document.getElementById('topUpModal').classList.remove('active');
     }
 
-    // Оплата через Telegram Stars
+    // Безопасный запрос счета через Python-сервер
     async function payStars(amount) {
       closeTopUpModal();
 
-      if (!BOT_TOKEN || BOT_TOKEN === "8955669692:AAHVhosC_xLyPxTvjeS1GlKpLCyfYapDIiw") {
-        alert("Ошибка: Укажи BOT_TOKEN в коде index.html!");
-        return;
-      }
-
       try {
-        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/createInvoiceLink`, {
+        const response = await fetch(`${SERVER_URL}/api/create_invoice`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: `Пополнение ${amount} Stars`,
-            description: `Пополнение баланса на ${amount} ⭐`,
-            payload: `topup_${amount}_${tgUserId}`,
-            provider_token: "",
-            currency: "XTR",
-            prices: [{ label: `${amount} Stars`, amount: amount }]
-          })
+          body: JSON.stringify({ amount: amount, user_id: tgUserId })
         });
 
         const data = await response.json();
 
-        if (data.ok && data.result) {
-          tg.openInvoice(data.result, function(status) {
+        if (data.status === 'ok' && data.invoice_link) {
+          tg.openInvoice(data.invoice_link, function(status) {
             if (status === 'paid') {
               mainBalance += amount;
               updateUI();
@@ -575,14 +502,13 @@
             }
           });
         } else {
-          alert("Ошибка генерации счета: " + (data.description || "Неизвестно"));
+          alert("Ошибка генерации счета: " + (data.message || "Неизвестно"));
         }
       } catch (e) {
-        alert("Ошибка сети: " + e.message);
+        alert("Ошибка связи с сервером: " + e.message);
       }
     }
 
-    // Настройка призов и рулетки
     const possiblePrizes = [
       { name: "Пусто 💨", stars: 0, weight: 60000 },
       { name: "5 Stars ⭐", stars: 5, weight: 30000 },
@@ -605,7 +531,6 @@
     const openBtn = document.getElementById('openBtn');
     const resultMsg = document.getElementById('resultMsg');
 
-    // Предзаполнение ленты при старте
     for (let i = 0; i < 15; i++) {
       const item = document.createElement('div');
       item.className = 'item';
