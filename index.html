@@ -224,7 +224,12 @@
     // Инициализация приложения: запрашиваем данные у сервера
     async function initApp() {
       try {
-        const res = await fetch(`${SERVER_URL}/api/init?user_id=${tgUserId}`, { headers: { 'ngrok-skip-browser-warning': 'true' } });
+        const res = await fetch(`${SERVER_URL}/api/init?user_id=${tgUserId}&t=${Date.now()}`, { 
+  headers: { 
+    'ngrok-skip-browser-warning': 'true',
+    'Cache-Control': 'no-cache'
+  } 
+});
         const data = await res.json();
         if (data.status === 'ok') {
           balance = data.balance;
