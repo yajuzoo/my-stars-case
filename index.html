@@ -13,17 +13,10 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       padding-bottom: 40px;
     }
-
     .navbar {
-      background: #12141d;
-      border-bottom: 1px solid #1f2330;
-      padding: 12px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      background: #12141d; border-bottom: 1px solid #1f2330; padding: 12px 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; z-index: 100;
     }
     .user-profile { display: flex; align-items: center; gap: 10px; cursor: pointer; }
     .avatar {
@@ -32,7 +25,6 @@
     }
     .username { font-size: 13px; font-weight: 600; }
     .profile-btn-label { font-size: 10px; color: #0088cc; text-transform: uppercase; font-weight: 700; }
-
     .balance-box {
       background: #181b26; border: 1px solid #282d3f; border-radius: 10px;
       padding: 6px 12px; display: flex; align-items: center; gap: 8px;
@@ -42,10 +34,8 @@
       background: #0088cc; color: white; border: none; width: 24px; height: 24px;
       border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;
     }
-
     .container { padding: 16px; max-width: 600px; margin: 0 auto; }
     .section-title { font-size: 14px; color: #717a8c; text-transform: uppercase; margin-bottom: 12px; font-weight: 700; }
-
     .cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .case-card {
       background: #141722; border: 1px solid #202536; border-radius: 14px;
@@ -58,7 +48,6 @@
       position: absolute; top: 6px; right: 6px; background: #e63946;
       color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px;
     }
-
     .overlay {
       display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: #0b0c10; z-index: 200; flex-direction: column; overflow-y: auto;
@@ -70,7 +59,6 @@
       background: #191d2b; color: #fff; border: 1px solid #2a3147;
       border-radius: 8px; padding: 6px 14px; font-weight: 600; cursor: pointer;
     }
-
     .roulette-wrapper {
       position: relative; width: 100%; height: 120px; background: #121520;
       border-top: 2px solid #282e44; border-bottom: 2px solid #282e44; margin: 30px 0; overflow: hidden;
@@ -89,13 +77,11 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;
     }
     .roulette-item .icon { font-size: 32px; margin-bottom: 4px; }
-
     .drop-items-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
     .item-card { background: #141724; border: 1px solid #22283b; border-radius: 10px; padding: 10px; text-align: center; }
     .item-card .icon { font-size: 30px; }
     .item-card .name { font-size: 11px; margin-top: 4px; color: #a0a7b8; }
     .item-card .value { font-size: 11px; color: #ffb703; font-weight: 700; margin-top: 2px; }
-
     .inventory-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
     .inv-item {
       background: #141724; border: 1px solid #22283b; border-radius: 12px;
@@ -105,28 +91,18 @@
       background: #282e42; color: #ffb703; border: 1px solid #3d4663;
       border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer;
     }
-
-    .withdraw-box {
-      background: #141724; border: 1px solid #22283b; border-radius: 14px; padding: 16px; margin-bottom: 20px;
-    }
+    .withdraw-box { background: #141724; border: 1px solid #22283b; border-radius: 14px; padding: 16px; margin-bottom: 20px; }
     .withdraw-input {
       width: 100%; padding: 12px; background: #1a1e2d; border: 1px solid #2e364f;
       border-radius: 8px; color: #fff; font-size: 16px; margin: 10px 0; outline: none;
     }
-    .withdraw-input::-webkit-outer-spin-button,
-    .withdraw-input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    .withdraw-input[type=number] {
-      -moz-appearance: textfield;
-    }
+    .withdraw-input::-webkit-outer-spin-button, .withdraw-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .withdraw-input[type=number] { -moz-appearance: textfield; }
     .withdraw-input:focus { border-color: #0088cc; }
     .btn-withdraw-main {
       width: 100%; background: #0088cc; color: white; border: none;
       padding: 12px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer;
     }
-
     .modal {
       display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 300;
@@ -137,14 +113,6 @@
     .custom-topup-input {
       width: 100%; padding: 10px; background: #141722; border: 1px solid #2e364f; border-radius: 8px;
       color: #fff; font-size: 14px; margin-bottom: 10px; outline: none; text-align: center;
-    }
-    .custom-topup-input::-webkit-outer-spin-button,
-    .custom-topup-input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    .custom-topup-input[type=number] {
-      -moz-appearance: textfield;
     }
   </style>
 </head>
@@ -159,15 +127,17 @@
       </div>
     </div>
     <div class="balance-box">
-      <span class="balance-val" id="balanceDisplay">0 ⭐</span>
+      <span class="balance-val" id="balanceDisplay">... ⭐</span>
       <button class="btn-add" onclick="openTopUpModal()">+</button>
     </div>
   </div>
 
   <div class="container">
     <div class="section-title">NFT Кейсы</div>
-    <div class="cases-grid" id="casesGrid"></div>
+    <div class="cases-grid" id="casesGrid">Загрузка...</div>
   </div>
+
+  <!-- Оверлей кейса -->
   <div class="overlay" id="caseOverlay">
     <div class="overlay-header">
       <button class="btn-back" onclick="closeOverlay('caseOverlay')">← Назад</button>
@@ -188,6 +158,7 @@
     </div>
   </div>
 
+  <!-- Профиль / Инвентарь -->
   <div class="overlay" id="profileOverlay">
     <div class="overlay-header">
       <button class="btn-back" onclick="closeOverlay('profileOverlay')">← Назад</button>
@@ -207,11 +178,12 @@
         <button class="btn-withdraw-main" onclick="requestWithdraw()">Запросить вывод</button>
       </div>
 
-      <div class="section-title">Выбитые предметы (Продажа в ⭐)</div>
+      <div class="section-title">Выбитые предметы</div>
       <div class="inventory-list" id="inventoryList"></div>
     </div>
   </div>
 
+  <!-- Модалка пополнения -->
   <div class="modal" id="topupModal">
     <div class="modal-box">
       <h3>Пополнение баланса ⭐</h3>
@@ -236,152 +208,64 @@
   <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
-
     const SERVER_URL = "https://006b-2a03-32c0-7000-cc88-d588-9b53-e53-54a2.ngrok-free.app";
     const tgUserId = tg.initDataUnsafe?.user?.id || 8712421526;
     
-    // Динамический список админов (первичный + сохраняется в localStorage)
-    let adminIds = JSON.parse(localStorage.getItem('customAdminIds') || `[${tgUserId}, 8712421526]`);
-    function isAdmin(id) { return adminIds.includes(Number(id)); }
-
     document.getElementById('profileName').textContent = tg.initDataUnsafe?.user?.first_name || "Игрок";
 
     let balance = 0;
     let inventory = [];
+    let casesData = [];
+    let lastFreeOpen = 0;
     let currentCase = null;
     let isSpinning = false;
+    let isAdmin = false;
 
-    // Проверяем права администратора для отрисовки кнопки
-    if (isAdmin(tgUserId)) {
-      const balanceBlock = document.getElementById('balanceDisplay').parentNode;
-      if (!document.getElementById('adminPanelBtn')) {
+    // Инициализация приложения: запрашиваем данные у сервера
+    async function initApp() {
+      try {
+        const res = await fetch(`${SERVER_URL}/api/init?user_id=${tgUserId}`, { headers: { 'ngrok-skip-browser-warning': 'true' } });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          balance = data.balance;
+          inventory = data.inventory;
+          casesData = data.cases;
+          lastFreeOpen = data.last_free_open;
+          isAdmin = data.is_admin;
+          
+          updateBalanceDisplay();
+          renderCases();
+          checkAdminBtn();
+        }
+      } catch (e) {
+        console.error("Ошибка загрузки данных", e);
+      }
+    }
+
+    function checkAdminBtn() {
+      if (isAdmin && !document.getElementById('adminPanelBtn')) {
+        const balanceBlock = document.getElementById('balanceDisplay').parentNode;
         const adminBtn = document.createElement('button');
         adminBtn.id = 'adminPanelBtn';
-        adminBtn.className = 'btn-topup';
+        adminBtn.className = 'btn-add';
         adminBtn.style.background = '#e63946';
         adminBtn.style.marginRight = '8px';
-        adminBtn.innerHTML = '🛠 Админка';
+        adminBtn.style.width = 'auto';
+        adminBtn.style.padding = '0 10px';
+        adminBtn.innerHTML = '🛠';
         adminBtn.onclick = openAdminPanel;
         balanceBlock.parentNode.insertBefore(adminBtn, balanceBlock);
       }
     }
 
-    // Сбалансированные кейсы
-    const casesData = [
-      { id: 1, name: "Бесплатный (1ч)", price: 0, icon: "📦", items: [
-        { name: "0.1 Stars", value: 0.1, icon: "✨", weight: 8500 },
-        { name: "1 Star", value: 1, icon: "⭐", weight: 1400 },
-        { name: "5 Stars", value: 5, icon: "💎", weight: 95 },
-        { name: "Telegram Premium", value: 300, icon: "🌟", weight: 5 }
-      ]},
-      { id: 2, name: "Новичок", price: 10, icon: "👾", items: [
-        { name: "5 Stars", value: 5, icon: "⭐", weight: 8200 },
-        { name: "10 Stars", value: 10, icon: "⭐", weight: 1500 },
-        { name: "35 Stars", value: 35, icon: "💎", weight: 295 },
-        { name: "Doge Card", value: 300, icon: "🐕", weight: 5 }
-      ]},
-      { id: 3, name: "Квадробер", price: 25, icon: "🐱", items: [
-        { name: "12 Stars", value: 12, icon: "⭐", weight: 8100 },
-        { name: "25 Stars", value: 25, icon: "⭐", weight: 1600 },
-        { name: "90 Stars", value: 90, icon: "🐱", weight: 295 },
-        { name: "Cat Lord", value: 750, icon: "👑", weight: 5 }
-      ]},
-      { id: 4, name: "Аркановый", price: 50, icon: "🔮", items: [
-        { name: "25 Stars", value: 25, icon: "⭐", weight: 8100 },
-        { name: "50 Stars", value: 50, icon: "⭐", weight: 1600 },
-        { name: "180 Stars", value: 180, icon: "🔮", weight: 295 },
-        { name: "Arcana Gem", value: 1500, icon: "💠", weight: 5 }
-      ]},
-      { id: 5, name: "Пепе Секрет", price: 100, icon: "🐸", items: [
-        { name: "50 Stars", value: 50, icon: "⭐", weight: 8100 },
-        { name: "100 Stars", value: 100, icon: "⭐", weight: 1600 },
-        { name: "360 Stars", value: 360, icon: "🐸", weight: 295 },
-        { name: "Rare Pepe", value: 3000, icon: "👑", weight: 5 }
-      ]},
-      { id: 6, name: "Топчик", price: 200, icon: "🔥", items: [
-        { name: "100 Stars", value: 100, icon: "⭐", weight: 8100 },
-        { name: "200 Stars", value: 200, icon: "⭐", weight: 1600 },
-        { name: "720 Stars", value: 720, icon: "🔥", weight: 295 },
-        { name: "Fire Crown", value: 6000, icon: "👑", weight: 5 }
-      ]},
-      { id: 7, name: "Элита", price: 300, icon: "⚡", items: [
-        { name: "150 Stars", value: 150, icon: "⭐", weight: 8100 },
-        { name: "300 Stars", value: 300, icon: "⭐", weight: 1600 },
-        { name: "1,100 Stars", value: 1100, icon: "⚡", weight: 295 },
-        { name: "Lightning NFT", value: 9000, icon: "⚡", weight: 5 }
-      ]},
-      { id: 8, name: "Алмазный", price: 500, icon: "💎", items: [
-        { name: "250 Stars", value: 250, icon: "⭐", weight: 8100 },
-        { name: "500 Stars", value: 500, icon: "⭐", weight: 1600 },
-        { name: "1,800 Stars", value: 1800, icon: "💎", weight: 295 },
-        { name: "Blue Diamond", value: 15000, icon: "💎", weight: 5 }
-      ]},
-      { id: 9, name: "Магнат", price: 1000, icon: "🏛️", items: [
-        { name: "500 Stars", value: 500, icon: "⭐", weight: 8100 },
-        { name: "1,000 Stars", value: 1000, icon: "⭐", weight: 1600 },
-        { name: "3,600 Stars", value: 3600, icon: "🏛️", weight: 295 },
-        { name: "Golden Bank", value: 30000, icon: "🏆", weight: 5 }
-      ]},
-      { id: 10, name: "Властелин", price: 2500, icon: "👑", items: [
-        { name: "1,250 Stars", value: 1250, icon: "⭐", weight: 8100 },
-        { name: "2,500 Stars", value: 2500, icon: "⭐", weight: 1600 },
-        { name: "9,000 Stars", value: 9000, icon: "👑", weight: 295 },
-        { name: "Crown of Kings", value: 75000, icon: "💎", weight: 5 }
-      ]},
-      { id: 11, name: "Киберпанк", price: 5000, icon: "🦾", items: [
-        { name: "2,500 Stars", value: 2500, icon: "⭐", weight: 8100 },
-        { name: "5,000 Stars", value: 5000, icon: "⭐", weight: 1600 },
-        { name: "18,000 Stars", value: 18000, icon: "🦾", weight: 295 },
-        { name: "Cyber Matrix", value: 150000, icon: "🌐", weight: 5 }
-      ]},
-      { id: 12, name: "Драконий", price: 10000, icon: "🐉", items: [
-        { name: "5,000 Stars", value: 5000, icon: "⭐", weight: 8100 },
-        { name: "10,000 Stars", value: 10000, icon: "⭐", weight: 1600 },
-        { name: "36,000 Stars", value: 36000, icon: "🐉", weight: 295 },
-        { name: "Dragon Soul", value: 300000, icon: "🔥", weight: 5 }
-      ]},
-      { id: 13, name: "Космический", price: 15000, icon: "🚀", items: [
-        { name: "7,500 Stars", value: 7500, icon: "⭐", weight: 8100 },
-        { name: "15,000 Stars", value: 15000, icon: "⭐", weight: 1600 },
-        { name: "54,000 Stars", value: 54000, icon: "🚀", weight: 295 },
-        { name: "Supernova NFT", value: 450000, icon: "🌌", weight: 5 }
-      ]},
-      { id: 14, name: "Квантовый", price: 25000, icon: "⚛️", items: [
-        { name: "12,500 Stars", value: 12500, icon: "⭐", weight: 8100 },
-        { name: "25,000 Stars", value: 25000, icon: "⭐", weight: 1600 },
-        { name: "90,000 Stars", value: 90000, icon: "⚛️", weight: 295 },
-        { name: "Quantum Core", value: 750000, icon: "🌀", weight: 5 }
-      ]},
-      { id: 15, name: "Легендарный", price: 40000, icon: "🛡️", items: [
-        { name: "20,000 Stars", value: 20000, icon: "⭐", weight: 8100 },
-        { name: "40,000 Stars", value: 40000, icon: "⭐", weight: 1600 },
-        { name: "145,000 Stars", value: 145000, icon: "🛡️", weight: 295 },
-        { name: "Aegis Shield", value: 1200000, icon: "⚔️", weight: 5 }
-      ]},
-      { id: 16, name: "Божественный", price: 70000, icon: "👼", items: [
-        { name: "35,000 Stars", value: 35000, icon: "⭐", weight: 8100 },
-        { name: "70,000 Stars", value: 70000, icon: "⭐", weight: 1600 },
-        { name: "255,000 Stars", value: 255000, icon: "👼", weight: 295 },
-        { name: "Divinity Halo", value: 2100000, icon: "☀️", weight: 5 }
-      ]},
-      { id: 17, name: "Вселенский", price: 100000, icon: "🌌", items: [
-        { name: "50,000 Stars", value: 50000, icon: "⭐", weight: 8100 },
-        { name: "100,000 Stars", value: 100000, icon: "⭐", weight: 1600 },
-        { name: "360,000 Stars", value: 360000, icon: "🌌", weight: 295 },
-        { name: "Universe Singularity", value: 3000000, icon: "✨", weight: 5 }
-      ]}
-    ];
-
-    function checkFreeCooldown() {
-      const lastOpen = localStorage.getItem('lastFreeCaseOpen');
-      if (!lastOpen) return 0;
-      const passed = Date.now() - parseInt(lastOpen);
+    function getFreeCooldownStr() {
+      const passed = Date.now() - lastFreeOpen;
       const remaining = (3600 * 1000) - passed;
       return remaining > 0 ? Math.ceil(remaining / (60 * 1000)) : 0;
     }
 
     function renderCases() {
-      const freeCd = checkFreeCooldown();
+      const freeCd = getFreeCooldownStr();
       const grid = document.getElementById('casesGrid');
       grid.innerHTML = casesData.map(c => `
         <div class="case-card" onclick="openCaseDetails(${c.id})">
@@ -395,19 +279,13 @@
 
     function openCaseDetails(id) {
       currentCase = casesData.find(x => x.id === id);
-      
-      if (currentCase.id === 1) {
-        const cd = checkFreeCooldown();
-        if (cd > 0) {
-          alert(`⏱ Бесплатный кейс доступен раз в час! Подождите ещё ${cd} мин.`);
-          return;
-        }
+      if (currentCase.id === 1 && getFreeCooldownStr() > 0) {
+        alert(`⏱ Бесплатный кейс будет доступен через ${getFreeCooldownStr()} мин.`);
+        return;
       }
 
       document.getElementById('overlayCaseTitle').textContent = currentCase.name;
-
-      const grid = document.getElementById('dropItemsGrid');
-      grid.innerHTML = currentCase.items.map(it => `
+      document.getElementById('dropItemsGrid').innerHTML = currentCase.items.map(it => `
         <div class="item-card">
           <div class="icon">${it.icon}</div>
           <div class="name">${it.name}</div>
@@ -415,114 +293,84 @@
         </div>
       `).join('');
 
-      buildRouletteTrack();
+      buildVisualTrack();
       document.getElementById('caseOverlay').style.display = 'flex';
     }
 
-    function buildRouletteTrack() {
+    function buildVisualTrack() {
       const track = document.getElementById('rouletteTrack');
       track.style.transition = 'none';
       track.style.transform = 'translateX(0px)';
-      
       let html = '';
       for (let i = 0; i < 60; i++) {
         const item = currentCase.items[Math.floor(Math.random() * currentCase.items.length)];
-        html += `
-          <div class="roulette-item">
-            <div class="icon">${item.icon}</div>
-            <div>${item.name}</div>
-          </div>
-        `;
+        html += `<div class="roulette-item"><div class="icon">${item.icon}</div><div>${item.name}</div></div>`;
       }
       track.innerHTML = html;
     }
 
-    // Персональный расчет выпадения с учетом повышенного шанса окупа
-    function getWeightedDrop(items) {
-      const customRtpData = JSON.parse(localStorage.getItem('customUserRtp') || '{}');
-      const userCustomWinRate = customRtpData[tgUserId];
-
-      let modifiedItems = [...items];
-
-      if (userCustomWinRate && currentCase.price > 0) {
-        modifiedItems = items.map(it => {
-          let newItem = { ...it };
-          if (newItem.value >= currentCase.price) {
-            newItem.weight *= (userCustomWinRate * 15);
-          }
-          return newItem;
-        });
-      }
-
-      const totalWeight = modifiedItems.reduce((sum, item) => sum + item.weight, 0);
-      let rand = Math.random() * totalWeight;
-      for (let item of modifiedItems) {
-        if (rand < item.weight) return item;
-        rand -= item.weight;
-      }
-      return modifiedItems[0];
-    }
-
-    function spinRoulette() {
+    async function spinRoulette() {
       if (isSpinning) return;
-      
-      if (currentCase.id === 1) {
-        const cd = checkFreeCooldown();
-        if (cd > 0) {
-          alert(`⏱ Задержка! Осталось ${cd} мин.`);
-          return;
-        }
-      } else if (balance < currentCase.price) {
-        alert("Недостаточно Звёзд на балансе!");
+      if (currentCase.id === 1 && getFreeCooldownStr() > 0) {
+        alert("⏱ Задержка бесплатного кейса!");
+        return;
+      }
+      if (currentCase.price > 0 && balance < currentCase.price) {
+        alert("Недостаточно Звёзд!");
         openTopUpModal();
         return;
       }
 
       isSpinning = true;
-      if (currentCase.price > 0) {
-        balance -= currentCase.price;
-        updateBalanceDisplay();
-      } else {
-        localStorage.setItem('lastFreeCaseOpen', Date.now().toString());
-      }
-
-      const winItem = getWeightedDrop(currentCase.items);
-      const track = document.getElementById('rouletteTrack');
       
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0px)';
+      // Отправляем запрос на сервер для честного рандома
+      try {
+        const res = await fetch(`${SERVER_URL}/api/open_case`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
+          body: JSON.stringify({ user_id: tgUserId, case_id: currentCase.id })
+        });
+        const data = await res.json();
+        
+        if (data.status !== 'ok') {
+          alert(data.message);
+          isSpinning = false;
+          return;
+        }
 
-      let html = '';
-      for (let i = 0; i < 60; i++) {
-        const item = currentCase.items[Math.floor(Math.random() * currentCase.items.length)];
-        html += `
-          <div class="roulette-item">
-            <div class="icon">${item.icon}</div>
-            <div>${item.name}</div>
-          </div>
-        `;
-      }
-      track.innerHTML = html;
+        // Обновляем баланс сразу же, чтобы юзер видел списание
+        balance = data.balance;
+        if(currentCase.id === 1) lastFreeOpen = Date.now();
+        updateBalanceDisplay();
 
-      const children = track.children;
-      children[45].querySelector('.icon').textContent = winItem.icon;
-      children[45].children[1].textContent = winItem.name;
+        const winItem = data.item;
+        const track = document.getElementById('rouletteTrack');
+        
+        // Вставляем победный предмет на 45 позицию
+        const children = track.children;
+        children[45].querySelector('.icon').textContent = winItem.icon;
+        children[45].children[1].textContent = winItem.name;
 
-      const itemWidth = 100; 
-      const wrapperWidth = document.querySelector('.roulette-wrapper').clientWidth;
-      const targetOffset = -(45 * itemWidth - (wrapperWidth / 2) + (itemWidth / 2));
+        const itemWidth = 100; 
+        const wrapperWidth = document.querySelector('.roulette-wrapper').clientWidth;
+        const targetOffset = -(45 * itemWidth - (wrapperWidth / 2) + (itemWidth / 2));
 
-      setTimeout(() => {
-        track.style.transition = 'transform 4.5s cubic-bezier(0.15, 0.9, 0.2, 1)';
-        track.style.transform = `translateX(${targetOffset}px)`;
-      }, 50);
+        setTimeout(() => {
+          track.style.transition = 'transform 4.5s cubic-bezier(0.15, 0.9, 0.2, 1)';
+          track.style.transform = `translateX(${targetOffset}px)`;
+        }, 50);
 
-      setTimeout(() => {
+        setTimeout(() => {
+          isSpinning = false;
+          inventory.push(winItem); // Добавляем в инвентарь на клиенте
+          renderCases();
+          alert(`🎉 Выбито: ${winItem.name}!`);
+        }, 4850);
+
+      } catch (e) {
+        alert("Ошибка связи с сервером");
         isSpinning = false;
-        inventory.push({ ...winItem, id: Date.now() });
-        renderCases();
-        alert(`🎉 Выбито: ${winItem.name}!`);
-      }, 4850);
+      }
     }
 
     function openProfile() {
@@ -546,43 +394,46 @@
               <div style="font-size:11px; color:#ffb703;">${item.value.toLocaleString()} ⭐</div>
             </div>
           </div>
-          <button class="btn-sell" onclick="sellItem(${item.id})">Продать за ${item.value.toLocaleString()} ⭐</button>
+          <button class="btn-sell" onclick="sellItem(${item.id})">Продать</button>
         </div>
       `).join('');
     }
 
-    function sellItem(id) {
-      const idx = inventory.findIndex(x => x.id === id);
-      if (idx !== -1) {
-        const item = inventory[idx];
-        balance += item.value;
-        inventory.splice(idx, 1);
-        updateBalanceDisplay();
-        document.getElementById('invBalance').textContent = `${balance.toLocaleString()} ⭐`;
-        renderInventory();
+    async function sellItem(itemId) {
+      try {
+        const res = await fetch(`${SERVER_URL}/api/sell_item`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
+          body: JSON.stringify({ user_id: tgUserId, item_id: itemId })
+        });
+        const data = await res.json();
+        
+        if (data.status === 'ok') {
+          balance = data.balance;
+          inventory = inventory.filter(x => x.id !== itemId);
+          updateBalanceDisplay();
+          document.getElementById('invBalance').textContent = `${balance.toLocaleString()} ⭐`;
+          renderInventory();
+        } else {
+          alert(data.message);
+        }
+      } catch (e) {
+        alert("Ошибка продажи");
       }
     }
 
     async function requestWithdraw() {
       const amount = parseInt(document.getElementById('withdrawAmount').value);
-      if (!amount || amount < 250) {
-        alert("Минимальная сумма вывода — 250 ⭐!");
-        return;
-      }
-      if (amount > balance) {
-        alert("У вас недостаточно звёзд!");
-        return;
-      }
-
+      if (!amount || amount < 250) return alert("Минимальная сумма — 250 ⭐!");
+      if (amount > balance) return alert("У вас недостаточно звёзд!");
+      
       try {
         const response = await fetch(`${SERVER_URL}/api/withdraw`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
           body: JSON.stringify({
-            user_id: tgUserId,
-            username: tg.initDataUnsafe?.user?.username || 'Без юзернейма',
-            first_name: tg.initDataUnsafe?.user?.first_name || 'Игрок',
-            amount: amount
+            user_id: tgUserId, username: tg.initDataUnsafe?.user?.username || '',
+            first_name: tg.initDataUnsafe?.user?.first_name || 'Игрок', amount: amount
           })
         });
         const data = await response.json();
@@ -592,14 +443,12 @@
           document.getElementById('invBalance').textContent = `${balance.toLocaleString()} ⭐`;
           document.getElementById('withdrawAmount').value = '';
           alert(`✅ Заявка на вывод принята!`);
-        }
+        } else alert(data.message);
       } catch (e) { alert("Ошибка сервера!"); }
     }
 
-    // --- РАСШИРЕННАЯ АДМИН-ПАНЕЛЬ ---
+    // --- БЕЗОПАСНАЯ АДМИН-ПАНЕЛЬ ---
     async function openAdminPanel() {
-      if (!isAdmin(tgUserId)) return;
-      
       let adminModal = document.getElementById('adminModal');
       if (!adminModal) {
         adminModal = document.createElement('div');
@@ -613,172 +462,67 @@
             </div>
             
             <div style="background:#13161f; padding:10px; border-radius:10px; margin-bottom:10px;">
-              <div style="font-size:12px; color:#717a8c;">Баланс бота в Telegram:</div>
-              <div id="adminBotBalance" style="font-size:16px; font-weight:bold; color:#ffb703;">Проверка...</div>
-            </div>
-
-            <div style="background:#13161f; padding:10px; border-radius:10px; margin-bottom:10px;">
               <div style="font-weight:600; margin-bottom:6px; font-size:12px;">Выдать ⭐ игроку</div>
-              <input type="number" id="adminTargetId" placeholder="Telegram ID игрока" style="width:100%; padding:6px; background:#1e222d; border:1px solid #2a2f3d; color:#fff; border-radius:6px; margin-bottom:6px; box-sizing:border-box;">
-              <input type="number" id="adminStarsAmount" placeholder="Количество звезд (+/-)" style="width:100%; padding:6px; background:#1e222d; border:1px solid #2a2f3d; color:#fff; border-radius:6px; margin-bottom:6px; box-sizing:border-box;">
-              <button class="btn-topup" style="width:100%; background:#4361ee; padding:8px; border:none; color:#fff; border-radius:6px; cursor:pointer; font-weight:bold;" onclick="adminGiveStars()">Изменить баланс</button>
+              <input type="number" id="adminTargetId" placeholder="ID игрока" style="width:100%; padding:6px; background:#1e222d; border:1px solid #2a2f3d; color:#fff; border-radius:6px; margin-bottom:6px;">
+              <input type="number" id="adminStarsAmount" placeholder="Количество звезд (+/-)" style="width:100%; padding:6px; background:#1e222d; border:1px solid #2a2f3d; color:#fff; border-radius:6px; margin-bottom:6px;">
+              <button class="btn-add" style="width:100%; height:auto; padding:8px; border-radius:6px;" onclick="adminAction('give_stars')">Изменить баланс</button>
             </div>
 
             <div style="background:#13161f; padding:10px; border-radius:10px; margin-bottom:10px;">
-              <div style="font-weight:600; margin-bottom:6px; font-size:12px;">Настроить шанс окупа для игрока</div>
-              <input type="number" id="adminRtpId" placeholder="Telegram ID игрока" style="width:100%; padding:6px; background:#1e222d; border:1px solid #2a2f3d; color:#fff; border-radius:6px; margin-bottom:6px; box-sizing:border-box;">
-              <input type="number" id="adminRtpVal" placeholder="Шанс окупа в % (например: 70)" style="width:100%; padding:6px; background:#1e222d; border:1px solid #2a2f3d; color:#fff; border-radius:6px; margin-bottom:6px; box-sizing:border-box;">
-              <button class="btn-topup" style="width:100%; background:#7209b7; padding:8px; border:none; color:#fff; border-radius:6px; cursor:pointer; font-weight:bold;" onclick="adminSetRtp()">Установить шанс</button>
-            </div>
-
-            <div style="background:#13161f; padding:10px; border-radius:10px; margin-bottom:10px;">
-              <div style="font-weight:600; margin-bottom:6px; font-size:12px;">Управление администраторами</div>
-              <input type="number" id="newAdminId" placeholder="Telegram ID друга" style="width:100%; padding:6px; background:#1e222d; border:1px solid #2a2f3d; color:#fff; border-radius:6px; margin-bottom:6px; box-sizing:border-box;">
-              <button class="btn-topup" style="width:100%; background:#f77f00; padding:8px; border:none; color:#fff; border-radius:6px; cursor:pointer; font-weight:bold; margin-bottom: 8px;" onclick="adminAddAdmin()">Добавить админа</button>
-              
-              <div style="font-size:11px; color:#717a8c; margin-bottom:4px;">Текущие админы:</div>
-              <div id="adminListContainer" style="max-height: 90px; overflow-y: auto; background:#1e222d; padding:6px; border-radius:6px; font-size:11px;">
-                <!-- Динамический список админов -->
-              </div>
-            </div>
-
-            <div style="font-weight:600; margin-bottom:4px; font-size:12px;">Игроки в базе данных:</div>
-            <div id="adminUsersList" style="max-height: 100px; overflow-y: auto; background:#13161f; padding:8px; border-radius:8px; font-size:11px; color:#bbb;">
-              Загрузка списка...
+              <div style="font-weight:600; margin-bottom:6px; font-size:12px;">Установить шанс окупа</div>
+              <input type="number" id="adminRtpId" placeholder="ID игрока" style="width:100%; padding:6px; background:#1e222d; border:1px solid #2a2f3d; color:#fff; border-radius:6px; margin-bottom:6px;">
+              <input type="number" id="adminRtpVal" placeholder="Шанс окупа в % (например: 70)" style="width:100%; padding:6px; background:#1e222d; border:1px solid #2a2f3d; color:#fff; border-radius:6px; margin-bottom:6px;">
+              <button class="btn-add" style="width:100%; height:auto; padding:8px; border-radius:6px; background:#7209b7;" onclick="adminAction('set_rtp')">Сохранить шанс</button>
             </div>
             
-            <button class="btn-back" style="width:100%; margin-top:15px;" onclick="closeModal('adminModal')">Закрыть админку</button>
+            <div style="background:#13161f; padding:10px; border-radius:10px; margin-bottom:10px;">
+              <div style="font-weight:600; margin-bottom:6px; font-size:12px;">Админы</div>
+              <input type="number" id="newAdminId" placeholder="ID друга" style="width:100%; padding:6px; background:#1e222d; border:1px solid #2a2f3d; color:#fff; border-radius:6px; margin-bottom:6px;">
+              <button class="btn-add" style="width:100%; height:auto; padding:8px; border-radius:6px; background:#f77f00; margin-bottom: 8px;" onclick="adminAction('add_admin')">Добавить</button>
+              <div id="adminListContainer" style="font-size:11px;"></div>
+            </div>
+
+            <div style="font-weight:600; margin-bottom:4px; font-size:12px;">Игроки:</div>
+            <div id="adminUsersList" style="max-height: 100px; overflow-y: auto; background:#13161f; padding:8px; border-radius:8px; font-size:11px;"></div>
           </div>
         `;
         document.body.appendChild(adminModal);
       }
       
       adminModal.style.display = 'flex';
-      renderAdminList();
       loadAdminData();
-    }
-
-    function renderAdminList() {
-      const container = document.getElementById('adminListContainer');
-      if (!container) return;
-      
-      container.innerHTML = adminIds.map(id => `
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid #2a2f3d;">
-          <span>ID: ${id} ${Number(id) === 8712421526 ? '(Главный)' : ''}</span>
-          ${Number(id) !== 8712421526 ? `<button onclick="adminRemoveAdmin(${id})" style="background:#e63946; border:none; color:#fff; padding:2px 6px; border-radius:4px; cursor:pointer; font-size:10px;">Удалить</button>` : ''}
-        </div>
-      `).join('');
     }
 
     async function loadAdminData() {
       try {
-        const resBal = await fetch(`${SERVER_URL}/api/bot_balance?user_id=${tgUserId}`, {
-          headers: { 'ngrok-skip-browser-warning': 'true' }
-        });
-        const dataBal = await resBal.json();
-        if (dataBal.status === 'ok') {
-          document.getElementById('adminBotBalance').textContent = `${dataBal.balance.toLocaleString()} ⭐`;
-        } else {
-          document.getElementById('adminBotBalance').textContent = "Недоступно (ошибка бэкенда)";
-        }
-      } catch (e) {
-        document.getElementById('adminBotBalance').textContent = "Бэкенд не отвечает";
-      }
-
-      try {
-        const resUsers = await fetch(`${SERVER_URL}/api/admin/users?user_id=${tgUserId}`, {
-          headers: { 'ngrok-skip-browser-warning': 'true' }
-        });
-        const dataUsers = await resUsers.json();
-        if (dataUsers.status === 'ok') {
-          const listDiv = document.getElementById('adminUsersList');
-          listDiv.innerHTML = dataUsers.users.map(u => `
-            <div style="display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px solid #1e222d;">
-              <span>ID: ${u.user_id} (${u.first_name})</span>
-              <span style="color:#ffb703;">${u.balance} ⭐</span>
-            </div>
-          `).join('');
-        }
-      } catch (e) {
-        document.getElementById('adminUsersList').innerHTML = "Список игроков пуст или нет связи с сервером";
-      }
-    }
-
-    async function adminGiveStars() {
-      const targetId = document.getElementById('adminTargetId').value;
-      const amount = document.getElementById('adminStarsAmount').value;
-      if (!targetId || !amount) return alert("Заполни поля!");
-
-      try {
-        const res = await fetch(`${SERVER_URL}/api/admin/give_stars`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
-          body: JSON.stringify({ admin_id: tgUserId, target_id: parseInt(targetId), amount: parseInt(amount) })
-        });
+        const res = await fetch(`${SERVER_URL}/api/admin/data?user_id=${tgUserId}`, { headers: { 'ngrok-skip-browser-warning': 'true' }});
         const data = await res.json();
         if (data.status === 'ok') {
-          alert("✅ Успешно изменено!");
-          loadAdminData();
-        } else {
-          alert("Ошибка на сервере");
-        }
-      } catch (e) { alert("Ошибка отправки"); }
-    }
-
-    function adminSetRtp() {
-      const rtpId = document.getElementById('adminRtpId').value;
-      const rtpVal = document.getElementById('adminRtpVal').value;
-      if (!rtpId || !rtpVal) return alert("Заполни поля!");
-
-      let customRtpData = JSON.parse(localStorage.getItem('customUserRtp') || '{}');
-      customRtpData[rtpId] = parseFloat(rtpVal) / 100;
-      localStorage.setItem('customUserRtp', JSON.stringify(customRtpData));
-      alert(`✅ Для игрока ${rtpId} установлен шанс окупа ${rtpVal}%!`);
-      document.getElementById('adminRtpId').value = '';
-      document.getElementById('adminRtpVal').value = '';
-    }
-
-    function adminAddAdmin() {
-      const newId = document.getElementById('newAdminId').value;
-      if (!newId) return alert("Введи ID!");
-      
-      const numId = Number(newId);
-      if (!adminIds.includes(numId)) {
-        adminIds.push(numId);
-        localStorage.setItem('customAdminIds', JSON.stringify(adminIds));
-        alert(`✅ Пользователь ${numId} назначен администратором!`);
-        renderAdminList();
-      } else {
-        alert("Этот ID уже есть в списке админов.");
-      }
-      document.getElementById('newAdminId').value = '';
-    }
-
-    function adminRemoveAdmin(id) {
-      if (id === 8712421526) return alert("Главного администратора удалить нельзя!");
-      adminIds = adminIds.filter(adminId => adminId !== id);
-      localStorage.setItem('customAdminIds', JSON.stringify(adminIds));
-      alert(`🗑 Администратор ${id} удален!`);
-      renderAdminList();
-    }
-
-    async function fetchBalance() {
-      try {
-        const res = await fetch(`${SERVER_URL}/api/get_balance?user_id=${tgUserId}`, {
-          headers: { 'ngrok-skip-browser-warning': 'true' }
-        });
-        const data = await res.json();
-        if (data.status === 'ok') {
-          balance = data.balance;
-          updateBalanceDisplay();
+          document.getElementById('adminUsersList').innerHTML = data.users.map(u => `<div style="display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px solid #1e222d;"><span>ID: ${u.user_id} (${u.first_name})</span><span style="color:#ffb703;">${u.balance} ⭐</span></div>`).join('');
+          document.getElementById('adminListContainer').innerHTML = data.admins.map(id => `<div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #2a2f3d;"><span>ID: ${id}</span> <button onclick="adminAction('remove_admin', ${id})" style="background:#e63946; border:none; color:#fff; padding:2px 6px; border-radius:4px; font-size:10px;">Удалить</button></div>`).join('');
         }
       } catch (e) {}
     }
 
-    function updateBalanceDisplay() {
-      document.getElementById('balanceDisplay').textContent = `${balance.toLocaleString()} ⭐`;
+    async function adminAction(action, directTarget = null) {
+      let targetId, amount, rtp;
+      if (action === 'give_stars') { targetId = document.getElementById('adminTargetId').value; amount = document.getElementById('adminStarsAmount').value; }
+      if (action === 'set_rtp') { targetId = document.getElementById('adminRtpId').value; rtp = document.getElementById('adminRtpVal').value; }
+      if (action === 'add_admin') { targetId = document.getElementById('newAdminId').value; }
+      if (action === 'remove_admin') { targetId = directTarget; }
+
+      if (!targetId) return alert("Укажи ID!");
+      
+      await fetch(`${SERVER_URL}/api/admin/action`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
+        body: JSON.stringify({ admin_id: tgUserId, action: action, target_id: targetId, amount: amount, rtp: rtp })
+      });
+      alert("✅ Выполнено!");
+      loadAdminData();
     }
 
+    function updateBalanceDisplay() { document.getElementById('balanceDisplay').textContent = `${balance.toLocaleString()} ⭐`; }
     function openTopUpModal() { document.getElementById('topupModal').style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     function closeOverlay(id) { if (!isSpinning) document.getElementById(id).style.display = 'none'; }
@@ -787,31 +531,18 @@
       closeModal('topupModal');
       try {
         const response = await fetch(`${SERVER_URL}/api/create_invoice`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
           body: JSON.stringify({ amount: amount, user_id: tgUserId })
         });
         const data = await response.json();
-        if (data.status === 'ok' && data.invoice_link) {
-          tg.openInvoice(data.invoice_link, function(status) {
-            if (status === 'paid') setTimeout(fetchBalance, 1000);
-          });
-        }
-      } catch (e) { alert("Ошибка подключения!"); }
+        if (data.status === 'ok') tg.openInvoice(data.invoice_link, function(status) { if (status === 'paid') setTimeout(initApp, 1000); });
+      } catch (e) { alert("Ошибка!"); }
     }
+    function payCustomStars() { const val = parseInt(document.getElementById('customTopupInput').value); if(val>0) payStars(val); }
 
-    function payCustomStars() {
-      const customAmount = parseInt(document.getElementById('customTopupInput').value);
-      if (!customAmount || customAmount <= 0) {
-        alert("Введите корректное число Звёзд!");
-        return;
-      }
-      payStars(customAmount);
-    }
-
-    renderCases();
-    fetchBalance();
-    setInterval(renderCases, 30000);
+    // Старт
+    initApp();
+    setInterval(renderCases, 60000); // Обновление счетчика бесплатного кейса
   </script>
 </body>
 </html>
