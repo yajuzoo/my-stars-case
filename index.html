@@ -237,7 +237,7 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    const SERVER_URL = "https://3756-2a03-32c0-7000-cc88-d588-9b53-e53-54a2.ngrok-free.app";
+    const SERVER_URL = "https://006b-2a03-32c0-7000-cc88-d588-9b53-e53-54a2.ngrok-free.app";
     const tgUserId = tg.initDataUnsafe?.user?.id || 8712421526;
     
     // Динамический список админов (первичный + сохраняется в localStorage)
@@ -439,18 +439,16 @@
 
     // Персональный расчет выпадения с учетом повышенного шанса окупа
     function getWeightedDrop(items) {
-      // Проверяем, задан ли повышенный шанс (например, 70% окупа) для этого игрока в localStorage
       const customRtpData = JSON.parse(localStorage.getItem('customUserRtp') || '{}');
-      const userCustomWinRate = customRtpData[tgUserId]; // например, 0.7 (70%)
+      const userCustomWinRate = customRtpData[tgUserId];
 
       let modifiedItems = [...items];
 
       if (userCustomWinRate && currentCase.price > 0) {
-        // Увеличиваем вес дорогих/окупаемых предметов для этого пользователя
         modifiedItems = items.map(it => {
           let newItem = { ...it };
           if (newItem.value >= currentCase.price) {
-            newItem.weight *= (userCustomWinRate * 15); // Будет выпадать значительно чаще
+            newItem.weight *= (userCustomWinRate * 15);
           }
           return newItem;
         });
@@ -653,7 +651,6 @@
     }
 
     async function loadAdminData() {
-      // Защита от бесконечной загрузки баланса, если бэкенд не запущен или эндпоинт отсутствует
       try {
         const resBal = await fetch(`${SERVER_URL}/api/bot_balance?user_id=${tgUserId}`, {
           headers: { 'ngrok-skip-browser-warning': 'true' }
@@ -714,7 +711,7 @@
       if (!rtpId || !rtpVal) return alert("Заполни поля!");
 
       let customRtpData = JSON.parse(localStorage.getItem('customUserRtp') || '{}');
-      customRtpData[rtpId] = parseFloat(rtpVal) / 100; // переводим в коэффициент
+      customRtpData[rtpId] = parseFloat(rtpVal) / 100;
       localStorage.setItem('customUserRtp', JSON.stringify(customRtpData));
       alert(`✅ Для игрока ${rtpId} установлен шанс окупа ${rtpVal}%!`);
       document.getElementById('adminRtpId').value = '';
@@ -735,7 +732,6 @@
       }
       document.getElementById('newAdminId').value = '';
     }
-    // ------------------------------------
 
     async function fetchBalance() {
       try {
