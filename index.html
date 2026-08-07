@@ -367,6 +367,11 @@
         const wrapperWidth = document.querySelector('.roulette-wrapper').clientWidth;
         const targetOffset = -(45 * itemWidth - (wrapperWidth / 2) + (itemWidth / 2));
 
+        // Жестко сбрасываем позицию перед стартом, чтобы избежать багов со статичностью при повторных прокрутах
+        track.style.transition = 'none';
+        track.style.transform = 'translateX(0px)';
+        void track.offsetWidth; // Принудительный reflow браузера
+
         setTimeout(() => {
           track.style.transition = 'transform 4.5s cubic-bezier(0.15, 0.9, 0.2, 1)';
           track.style.transform = `translateX(${targetOffset}px)`;
