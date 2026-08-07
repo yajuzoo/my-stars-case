@@ -303,16 +303,23 @@
     }
 
     function buildVisualTrack() {
-      const track = document.getElementById('rouletteTrack');
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0px)';
-      let html = '';
-      for (let i = 0; i < 60; i++) {
-        const item = currentCase.items[Math.floor(Math.random() * currentCase.items.length)];
-        html += `<div class="roulette-item"><div class="icon">${item.icon}</div><div>${item.name}</div></div>`;
-      }
-      track.innerHTML = html;
-    }
+  const track = document.getElementById('rouletteTrack');
+  
+  // Отключаем анимацию и возвращаем ленту в начало
+  track.style.transition = 'none';
+  track.style.transform = 'translateX(0px)';
+  
+  // Обязательный костыль для браузера, чтобы он сразу применил сброс позиции
+  void track.offsetWidth; 
+
+  // Генерируем элементы
+  let html = '';
+  for (let i = 0; i < 60; i++) {
+    const item = currentCase.items[Math.floor(Math.random() * currentCase.items.length)];
+    html += `<div class="roulette-item"><div class="icon">${item.icon}</div><div>${item.name}</div></div>`;
+  }
+  track.innerHTML = html;
+}
 
     async function spinRoulette() {
       if (isSpinning) return;
